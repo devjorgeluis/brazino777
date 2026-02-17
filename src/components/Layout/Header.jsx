@@ -6,12 +6,7 @@ import SearchInput from "../SearchInput";
 import GameCard from "../GameCard";
 import { callApi } from "../../utils/Utils";
 import LoadApi from "../Loading/LoadApi";
-import ImgFavicon3 from "/src/assets/img/favicon-v3.png";
-import ImgProfile from "/src/assets/svg/profile.svg";
-import ImgBet from "/src/assets/svg/my-bets.svg";
-import ImgTransactions from "/src/assets/svg/transactions.svg";
-import ImgLogout from "/src/assets/svg/logout.svg";
-import ImgAvatar from "/src/assets/img/default-avatar.png";
+
 
 const Header = ({
     isLogin,
@@ -59,7 +54,7 @@ const Header = ({
 
     const search = (e) => {
         if (isProviderSelected) return;
-        
+
         let keyword = e.target.value;
         setTxtSearch(keyword);
 
@@ -139,209 +134,23 @@ const Header = ({
     return (
         <>
             <header>
-                <div className="header-wrapper">
-                    <div className="container-fluid container-h d-flex">
-                        <div className="header-left">
-                            <a onClick={() => navigate("/")} className="mobile-logo hm-show">
-                                <img src={ImgFavicon3} />
-                            </a>
-                        </div>
-                        <div className="header-right">
-                            {
-                                !isLogin && 
-                                <div className="dropdown d-inline-block d-xl-none dropdown-h-chat hm-show">
-                                    <button
-                                        className="btn btn-transparent"
-                                        type="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                        onClick={() => {
-                                            openSupportModal(false);
-                                        }}
-                                    >
-                                        <i className="fa-solid fa-headset"></i>
-                                    </button>
-                                </div>
-                            }
-                            <button
-                                className="btn btn-transparent btn-h-custom btn-h-custom-mini me-1 btn-search-main"
-                                onClick={handleSearchClick}
-                            >
-                                <i className="fa-solid fa-magnifying-glass"></i>
-                            </button>
-
-                            {
-                                isLogin ?
-                                    <div className="auth">
-                                        <div className="auth-data">
-                                            <div className="dropdown d-inline-block dropdown-currency">
-                                                <div
-                                                    className="dropdown-currency-btn"
-                                                    data-bs-toggle="dropdown"
-                                                >
-                                                    <div className="username">
-                                                        <div className="back">
-                                                            {contextData?.session?.user?.username || '-'}
-                                                            <div className="front">{contextData?.session?.user?.username || '-'}</div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="amount">
-                                                        ${formatBalance(userBalance)}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="dropdown d-inline-block avatar-container">
-                                            <div
-                                                className="btn btn-avatar"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="true"
-                                                onClick={handleToggleUserMenu}
-                                                style={{
-                                                    backgroundImage: `url(${contextData?.session?.user?.profile_image
-                                                            ? contextData.session.user.profile_image
-                                                            : ImgAvatar
-                                                        })`,
-                                                }}
-                                            ></div>
-
-                                            <ul
-                                                className={`dropdown-menu dropdown-menu-end ${showDropdown ? "show" : ""}`}
-                                                style={{ position: "absolute", inset: "0px auto auto 0px", margin: "0px", transform: "translate3d(-130px, 59.6491px, 0px)" }}
-                                            >
-                                                <li>
-                                                    <a onClick={() => {
-                                                        navigate("/profile"),
-                                                        handleToggleUserMenu();
-                                                    }} className="dropdown-item">
-                                                        <span className="dropdown-icon">
-                                                            <img src={ImgProfile} width="25px" />
-                                                        </span> Perfil
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a onClick={() => {
-                                                        navigate("/profile#transactions"),
-                                                        handleToggleUserMenu();
-                                                    }} className="dropdown-item">
-                                                        <span className="dropdown-icon">
-                                                            <img src={ImgTransactions} width="25px" />
-                                                        </span> Transacciones
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a onClick={() => {
-                                                        navigate("/profile#history"),
-                                                        handleToggleUserMenu();
-                                                    }} className="dropdown-item">
-                                                        <span className="dropdown-icon">
-                                                            <img src={ImgBet} width="25px" />
-                                                        </span> Mis apuestas
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a onClick={() => handleLogoutClick()} className="dropdown-item">
-                                                        <span className="dropdown-icon">
-                                                            <img src={ImgLogout} width="25px" />
-                                                        </span> Cerrar sesión
-                                                    </a>
-                                                </li>
-                                                <li><hr className="dropdown-divider" /></li>
-                                                <li><h6 className="dropdown-header">Soporte</h6></li>
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        onClick={() => {
-                                                            openSupportModal(false);
-                                                            handleToggleUserMenu();
-                                                        }}
-                                                    >
-                                                        <span
-                                                            className="dropdown-icon chat-web"
-                                                        >
-                                                            <i className="fa-regular fa-comments"></i>
-                                                        </span> Soporte web
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div> :
-                                    <div className="header-mobile-right">
-                                        <button className="btn btn-theme02 btn-h-custom" onClick={handleLoginClick}>Ingresar</button>
-                                        <div className="dropdown dropdown-h-chat ms-1 d-none d-xl-inline-block">
-                                            <button
-                                                className="btn btn-transparent"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                                onClick={() => {
-                                                    openSupportModal(false);
-                                                }}
-                                            >
-                                                <i className="fa-solid fa-headset"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                            }
+                <div className="header--container">
+                    <div className="header--left">
+                        <div className="hamburger-icon"></div>
+                        <a href="/" className="site-logo" aria-label="Site logo"></a>
+                    </div>
+                    <div className="header--links">
+                        <a href="/promotions" className="button button--competitions">Torneos</a
+                        ><a href="/bonuses" className="button button--bonus">Promociones</a
+                        ><a href="/help" className="button button--help">Ayuda</a>
+                        <div className="header--buttons">
+                            <a href="/auth/register" className="button button--register">Registro</a
+                            ><a href="/auth/login" className="button button--login">Entrar</a>
                         </div>
                     </div>
                 </div>
             </header>
-            <div className="float-casino">
-                <div className="float-casino-wrapper">
-                    <div className="container">
-                        <div className="float-casino-input-search">
-                            <div className="float-casino-search-container">
-                                <SearchInput
-                                    txtSearch={txtSearch}
-                                    setTxtSearch={setTxtSearch}
-                                    searchRef={searchRef}
-                                    search={search}
-                                    isMobile={isMobile}
-                                    games={games}
-                                    isLoadingGames={isLoadingGames}
-                                    setGames={setGames}
-                                    setIsLoadingGames={setIsLoadingGames}
-                                    searchDelayTimer={searchDelayTimer}
-                                    setSearchDelayTimer={setSearchDelayTimer}
-                                    isProviderSelected={isProviderSelected}
-                                />
-                            </div>
-                        </div>
-                        <div className="float-casino-search-body">
-                            {isLoadingGames && <LoadApi width={60} />}
-                            {
-                                games.length > 0 && txtSearch.length > 0 &&
-                                <>
-                                    <div className="float-casino-search-body-title">
-                                        Juegos encontrados <span>({games.length})</span>
-                                    </div>
-                                    <div className="float-casino-search-body-ex">
-                                        {games.map((game) => (
-                                            <GameCard
-                                                key={game.id}
-                                                id={game.id}
-                                                title={game.name}
-                                                isMobile={isMobile}
-                                                text={isLogin ? "Jugar" : "Ingresar"}
-                                                imageSrc={game.image_local !== null ? contextData.cdnUrl + game.image_local : game.image_url}
-                                                onGameClick={() => (isLogin ? launchGameFromSearch(game, "slot", "modal") : handleLoginClick())}
-                                            />
-                                        ))}
-                                    </div>
-                                </>
-                            }
-                            {
-                                games.length === 0 && !isLoadingGames && txtSearch.length > 0 &&
-                                <div className="float-casino-search-body-no-found">
-                                    <i className="fa-solid fa-user-astronaut"></i><br />No se encontraron juegos
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div className="float-casino-bg"></div>
-            </div>
+
         </>
     );
 };

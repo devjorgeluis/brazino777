@@ -7,7 +7,6 @@ import ImgCasino from "/src/assets/svg/casino.svg";
 import ImgLiveCasino from "/src/assets/svg/live-casino.svg";
 import ImgSports from "/src/assets/svg/sports.svg";
 import ImgLiveSports from "/src/assets/img/deslizalo.png";
-import ImgTime from "/src/assets/img/time-animate2.png";
 import ImgPhone from "/src/assets/svg/phone.svg";
 
 const Sidebar = ({ isSlotsOnly, isLogin, isMobile, supportParent, openSupportModal, isUserMenuOpen, setIsUserMenuOpen }) => {
@@ -316,22 +315,6 @@ const Sidebar = ({ isSlotsOnly, isLogin, isMobile, supportParent, openSupportMod
                         </div>
 
                         <hr />
-
-                        <div className="sidebar-extra">
-                            <div className="sidebar-time">
-                                <div className="sidebar-time-ex">
-                                    <div className="sidebar-time-figure">
-                                        <img src={ImgTime} alt="time" />
-                                    </div>
-
-                                    <div className="sidebar-time-text">
-                                        <span className="span">{currentTime}</span>
-                                    </div>
-                                </div>
-
-                                <p className="mt-1">Hora local</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

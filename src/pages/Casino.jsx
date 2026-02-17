@@ -6,7 +6,6 @@ import { NavigationContext } from "../components/Layout/NavigationContext";
 import { callApi } from "../utils/Utils";
 import Footer from "../components/Layout/Footer";
 import GameCard from "/src/components/GameCard";
-import Slideshow from "../components/Casino/Slideshow";
 import HotGameSlideshow from "../components/Home/HotGameSlideshow";
 import GameModal from "../components/Modal/GameModal";
 import LoadApi from "../components/Loading/LoadApi";
@@ -14,12 +13,12 @@ import LoginModal from "../components/Modal/LoginModal";
 import ProviderContainer from "../components/Casino/ProviderContainer";
 import CategoryContainer from "../components/CategoryContainer";
 
-import ImgCategoryHome from "/src/assets/svg/all.svg";
+import ImgCategoryHome from "/src/assets/svg/carnival-mask.svg";
 import ImgCategoryPopular from "/src/assets/svg/new.svg";
 import ImgCategoryBlackjack from "/src/assets/svg/blackjack.svg";
-import ImgCategoryRoulette from "/src/assets/svg/roulette.svg";
-import ImgCategoryCrash from "/src/assets/svg/speed.svg";
-import ImgCategoryMegaways from "/src/assets/svg/gameshow.svg";
+import ImgCategoryRoulette from "/src/assets/svg/bingo.svg";
+import ImgCategoryCrash from "/src/assets/svg/crash.svg";
+import ImgCategoryMegaways from "/src/assets/svg/megaway.svg";
 
 let selectedGameId = null;
 let selectedGameType = null;
@@ -412,8 +411,6 @@ const Casino = () => {
       ) : (
         <>
           <>
-            <Slideshow />
-
             <CategoryContainer
               categories={tags}
               selectedCategoryIndex={selectedCategoryIndex}

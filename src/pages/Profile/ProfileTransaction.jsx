@@ -3,10 +3,6 @@ import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import { AppContext } from "../../AppContext";
 import { callApi } from "../../utils/Utils";
 import LoadApi from "../../components/Loading/LoadApi";
-import ImgArrowLeft from "/src/assets/svg/arrow-left.svg";
-import ImgDoubleArrowLeft from "/src/assets/svg/double-arrow-left.svg";
-import ImgArrowRight from "/src/assets/svg/arrow-right.svg";
-import ImgDoubleArrowRight from "/src/assets/svg/double-arrow-right.svg";
 
 const ProfileTransaction = () => {
     const navigate = useNavigate();
@@ -142,9 +138,8 @@ const ProfileTransaction = () => {
 
         return (
             <nav className="p-paginator-bottom">
-                <div className="p-paginator p-component">
+                {/* <div className="p-paginator p-component">
 
-                    {/* First */}
                     <button
                         className={`p-paginator-first p-paginator-element p-link ${isFirstPage ? "p-disabled" : ""}`}
                         onClick={handleFirstPage}
@@ -153,7 +148,6 @@ const ProfileTransaction = () => {
                         <img src={ImgDoubleArrowLeft} alt="First" />
                     </button>
 
-                    {/* Prev */}
                     <button
                         className={`p-paginator-prev p-paginator-element p-link ${isFirstPage ? "p-disabled" : ""}`}
                         onClick={handlePrevPage}
@@ -162,7 +156,6 @@ const ProfileTransaction = () => {
                         <img src={ImgArrowLeft} alt="Previous" />
                     </button>
 
-                    {/* Page numbers */}
                     <span className="p-paginator-pages">
                         {visiblePages.map((page) => (
                             <button
@@ -176,7 +169,6 @@ const ProfileTransaction = () => {
                         ))}
                     </span>
 
-                    {/* Next */}
                     <button
                         className={`p-paginator-next p-paginator-element p-link ${isLastPage ? "p-disabled" : ""}`}
                         onClick={handleNextPage}
@@ -185,7 +177,6 @@ const ProfileTransaction = () => {
                         <img src={ImgArrowRight} alt="Next" />
                     </button>
 
-                    {/* Last */}
                     <button
                         className={`p-paginator-last p-paginator-element p-link ${isLastPage ? "p-disabled" : ""}`}
                         onClick={handleLastPage}
@@ -193,7 +184,7 @@ const ProfileTransaction = () => {
                     >
                         <img src={ImgDoubleArrowRight} alt="Last" />
                     </button>
-                </div>
+                </div> */}
             </nav>
         );
     };
@@ -243,19 +234,19 @@ const ProfileTransaction = () => {
                                                 transactions.map((transaction, index) => (
                                                     <tr key={index} className="p-row-even">
                                                         <td className={`${isMobile ? "td-mobile-mid" : ""}`}>
-                                                            { isMobile && <span className="td-mobile-show td-text-opacity">Fecha <br/></span> }
+                                                            {isMobile && <span className="td-mobile-show td-text-opacity">Fecha <br /></span>}
                                                             {formatDateDisplay(transaction.created_at)}
                                                         </td>
                                                         <td className={`${isMobile ? "td-mobile-mid" : ""}`}>
-                                                            { isMobile && <span className="td-mobile-show td-text-opacity">Monto <br/></span> }
+                                                            {isMobile && <span className="td-mobile-show td-text-opacity">Monto <br /></span>}
                                                             {formatBalance(transaction.value || transaction.amount || 0)}
                                                         </td>
                                                         <td className={`${isMobile ? "td-mobile-mid" : ""}`}>
-                                                            { isMobile && <span className="td-mobile-show td-text-opacity">Balance Previo <br/></span> }
+                                                            {isMobile && <span className="td-mobile-show td-text-opacity">Balance Previo <br /></span>}
                                                             {formatBalance(transaction.to_current_balance) || 0}
                                                         </td>
                                                         <td className={`${isMobile ? "td-mobile-mid" : ""}`}>
-                                                            { isMobile && <span className="td-mobile-show td-text-opacity">Balance Posterior <br/></span> }
+                                                            {isMobile && <span className="td-mobile-show td-text-opacity">Balance Posterior <br /></span>}
                                                             {formatBalance(transaction.to_new_balance) || 0}
                                                         </td>
                                                     </tr>

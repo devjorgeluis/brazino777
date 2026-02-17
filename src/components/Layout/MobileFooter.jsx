@@ -7,7 +7,6 @@ import ImgLiveCasino from "/src/assets/svg/live-casino.svg";
 import ImgSports from "/src/assets/svg/sports.svg";
 import ImgLiveSports from "/src/assets/img/deslizalo.png";
 import ImgTime from "/src/assets/img/time-animate2.png";
-import ImgLogin from "/src/assets/svg/login.svg";
 import ImgPhone from "/src/assets/svg/phone.svg";
 import ImgLogo from "/src/assets/img/logo.png";
 
@@ -295,7 +294,6 @@ const MobileFooter = ({
                                     onClick={() => handleLoginClick()}
                                     className={`${isBottomNavActive("/login") ? "router-link-active router-link-exact-active active" : ""}`}
                                 >
-                                    <img src={ImgLogin} width="20px" /><span className="title">Ingresar</span>
                                 </a>
                             </div>
                     }

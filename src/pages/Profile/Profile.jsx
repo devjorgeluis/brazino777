@@ -5,10 +5,6 @@ import Footer from "../../components/Layout/Footer";
 import ProfileHistory from "./ProfileHistory";
 import ProfileTransaction from "./ProfileTransaction";
 
-import ImgBalance from "/src/assets/svg/balance.svg";
-import ImgCamera from "/src/assets/img/camera-white.png";
-import ImgAvatar from "/src/assets/img/default-avatar.png";
-
 const Profile = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -77,37 +73,11 @@ const Profile = () => {
                                                 type="file"
                                                 accept="image/jpg, image/jpeg, image/png, image/gif"
                                             />
-
-                                            <figure className="personal-figure">
-                                                <img
-                                                    src={contextData?.session?.user?.profile_image || ImgAvatar}
-                                                    className="personal-avatar"
-                                                    alt="avatar"
-                                                />
-                                                <figcaption className="personal-figcaption">
-                                                    <img
-                                                        src={ImgCamera}
-                                                        alt="camera"
-                                                    />
-                                                </figcaption>
-                                            </figure>
                                         </label>
                                     </div>
 
                                     <div className="name">{contextData?.session?.user?.username}</div>
                                     <div className="mail">{contextData?.session?.user?.id}</div>
-                                </div>
-                            </div>
-
-                            <div className="jel-wallet-header-amounts">
-                                <div className="jel-wallet-header-amount">
-                                    <div className="jel-wallet-header-amount-ex">
-                                        <div className="icon">
-                                            <img src={ImgBalance} width="40" />
-                                        </div>
-                                        <div className="name">Saldo</div>
-                                        <div className="amount">${formatBalance(contextData?.session?.user?.balance || 0)}</div>
-                                    </div>
                                 </div>
                             </div>
                         </div>

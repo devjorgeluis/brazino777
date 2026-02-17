@@ -3,10 +3,6 @@ import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import { AppContext } from "../../AppContext";
 import { callApi } from "../../utils/Utils";
 import LoadApi from "../../components/Loading/LoadApi";
-import ImgArrowLeft from "/src/assets/svg/arrow-left.svg";
-import ImgDoubleArrowLeft from "/src/assets/svg/double-arrow-left.svg";
-import ImgArrowRight from "/src/assets/svg/arrow-right.svg";
-import ImgDoubleArrowRight from "/src/assets/svg/double-arrow-right.svg";
 
 const ProfileHistory = () => {
     const navigate = useNavigate();
@@ -143,9 +139,8 @@ const ProfileHistory = () => {
 
         return (
             <nav className="p-paginator-bottom">
-                <div className="p-paginator p-component">
+                {/* <div className="p-paginator p-component">
 
-                    {/* First */}
                     <button
                         className={`p-paginator-first p-paginator-element p-link ${isFirstPage ? "p-disabled" : ""}`}
                         onClick={handleFirstPage}
@@ -154,7 +149,6 @@ const ProfileHistory = () => {
                         <img src={ImgDoubleArrowLeft} alt="First" />
                     </button>
 
-                    {/* Prev */}
                     <button
                         className={`p-paginator-prev p-paginator-element p-link ${isFirstPage ? "p-disabled" : ""}`}
                         onClick={handlePrevPage}
@@ -163,7 +157,6 @@ const ProfileHistory = () => {
                         <img src={ImgArrowLeft} alt="Previous" />
                     </button>
 
-                    {/* Page numbers */}
                     <span className="p-paginator-pages">
                         {visiblePages.map((page) => (
                             <button
@@ -177,7 +170,6 @@ const ProfileHistory = () => {
                         ))}
                     </span>
 
-                    {/* Next */}
                     <button
                         className={`p-paginator-next p-paginator-element p-link ${isLastPage ? "p-disabled" : ""}`}
                         onClick={handleNextPage}
@@ -186,7 +178,6 @@ const ProfileHistory = () => {
                         <img src={ImgArrowRight} alt="Next" />
                     </button>
 
-                    {/* Last */}
                     <button
                         className={`p-paginator-last p-paginator-element p-link ${isLastPage ? "p-disabled" : ""}`}
                         onClick={handleLastPage}
@@ -194,7 +185,7 @@ const ProfileHistory = () => {
                     >
                         <img src={ImgDoubleArrowRight} alt="Last" />
                     </button>
-                </div>
+                </div> */}
             </nav>
         );
     };
