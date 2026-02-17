@@ -193,7 +193,7 @@ template {
     font-family: roboto-regular-webfont;
     font-style: normal;
     font-weight: 400;
-    src: url(/build/fonts/roboto-regular-webfont.802ff465.woff) format("woff")
+    src: url("../assets/fonts/roboto-regular-webfont.woff") format("woff")
 }
 
 @font-face {
@@ -201,7 +201,7 @@ template {
     font-family: roboto-medium-webfont;
     font-style: normal;
     font-weight: 400;
-    src: url(/build/fonts/roboto-medium-webfont.04efa89d.woff) format("woff")
+    src: url("../assets/fonts/roboto-medium-webfont.woff") format("woff")
 }
 
 @font-face {
@@ -209,7 +209,7 @@ template {
     font-family: robotocondensed-bold-webfont;
     font-style: normal;
     font-weight: 400;
-    src: url(/build/fonts/robotocondensed-bold-webfont.43e2e21f.woff) format("woff")
+    src: url("../assets/fonts/robotocondensed-bold-webfont.woff") format("woff")
 }
 
 @font-face {
@@ -217,7 +217,7 @@ template {
     font-family: Roboto-Bold-webfont;
     font-style: normal;
     font-weight: 400;
-    src: url(/build/fonts/Roboto-Bold-webfont.fed5d3bd.woff) format("woff")
+    src: url("../assets/fonts/Roboto-Bold-webfont.woff") format("woff")
 }
 
 @font-face {
@@ -225,31 +225,7 @@ template {
     font-family: PassionOne-Regular;
     font-style: normal;
     font-weight: 400;
-    src: url(/build/fonts/PassionOne-Regular.18504478.woff) format("woff")
-}
-
-@font-face {
-    font-display: swap;
-    font-family: PassionOne-Black;
-    font-style: normal;
-    font-weight: 400;
-    src: url(/build/fonts/PassionOne-Black.b19e62be.woff) format("woff")
-}
-
-@font-face {
-    font-display: swap;
-    font-family: PassionOne-Bold;
-    font-style: normal;
-    font-weight: 400;
-    src: url(/build/fonts/PassionOne-Bold.2ee528f2.woff) format("woff")
-}
-
-@font-face {
-    font-display: swap;
-    font-family: Roboto-Italic;
-    font-style: normal;
-    font-weight: 400;
-    src: url(/build/fonts/Roboto-Italic.35558e74.woff) format("woff")
+    src: url("../assets/fonts/PassionOne-Regular.woff") format("woff")
 }
 
 html {
@@ -416,7 +392,7 @@ header .header--container {
 }
 
 header .header--container .hamburger-icon {
-    background-image: url(/build/images/side-menu-open.664039c0.svg);
+    background-image: url("../assets/svg/side-menu-open.svg");
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: contain;
@@ -432,21 +408,21 @@ header .header--container .hamburger-icon:has(.freespin-icon) {
 header .header--container .hamburger-icon:active,
 header .header--container .hamburger-icon:focus,
 header .header--container .hamburger-icon:hover {
-    background-image: url(/build/images/side-menu-open-hover.a41556dd.svg);
+    background-image: url("../assets/svg/side-menu-open-hover.svg");
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: contain
 }
 
 header .header--container .hamburger-icon--close {
-    background-image: url(/build/images/side-menu-close.a4b50eb8.svg);
+    background-image: url("../assets/svg/side-menu-close.svg");
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: auto
 }
 
 header .header--container .site-logo {
-    background-image: url(/build/images/mobile-logo.0f63fddd.svg);
+    background-image: url("../assets/svg/mobile-logo.svg");
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -726,7 +702,7 @@ header .header--container .hamburger-icon .freespin-icon {
 
 @media (min-width:360px) {
     header .header--container .site-logo {
-        background-image: url(/build/images/logo.c2f95097.svg);
+        background-image: url("../assets/svg/logo.svg");
         height: 18px;
         margin-left: 11px;
         min-height: 15px;
@@ -735,7 +711,7 @@ header .header--container .hamburger-icon .freespin-icon {
     }
 
     header .header--container .site-logo--authenticated {
-        background-image: url(/build/images/mobile-logo.0f63fddd.svg);
+        background-image: url("../assets/svg/mobile-logo.svg");
         height: 16px;
         margin-left: 20px;
         min-height: 16px;
@@ -754,7 +730,7 @@ header .header--container .hamburger-icon .freespin-icon {
     }
 
     header .header--container .site-logo--authenticated {
-        background-image: url(/build/images/logo.c2f95097.svg);
+        background-image: url("../assets/svg/logo.svg");
         margin-left: 8px;
         min-width: 134px;
         width: 134px
@@ -844,7 +820,7 @@ header .header--container .hamburger-icon .freespin-icon {
     }
 
     header .header--container .hamburger-icon:hover {
-        background-image: url(/build/images/side-menu-open-hover.a41556dd.svg);
+        background-image: url("../assets/svg/side-menu-open-hover.svg");
         background-position: 50%;
         background-repeat: no-repeat;
         background-size: contain
