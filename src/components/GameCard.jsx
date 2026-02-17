@@ -1,63 +1,16 @@
 const GameCard = (props) => {
   return (
-    <div className="float-casino-search-item" onClick={props.onGameClick}>
-      <div className="game-art">
-        <a className="game-art-ex" href="#">
-          <span
-            className="game-art-figure"
-            style={{
-              backgroundImage: `url(${props.imageSrc})`,
-            }}
-          >
-            <span className="game-art-only">
-              <span className="game-art-only-i">
-                <i className="fa-solid fa-user front"></i>
-                <i className="fa-solid fa-user back"></i>
-              </span>
-              0
-            </span>
-
-            <span className="game-art-figure-hover">
-              <span className="game-art-figure-hover-ex">
-                <span className="game-art-figure-hover-item">
-                  <span
-                    className="game-art-figure-hover-item-top"
-                    style={{ display: "none" }}
-                  >
-                    Jackpot
-                  </span>
-                  <span className="game-art-figure-hover-item-bottom">
-                    {props.title || "Giga Match Gems"}
-                  </span>
-                </span>
-
-                <span
-                  className="game-art-figure-hover-item"
-                  style={{ display: "none" }}
-                >
-                  <span className="game-art-figure-hover-item-top">
-                    Effective RTP
-                  </span>
-                  <span className="game-art-figure-hover-item-bottom">
-                    {props.rtp || "98.00%"}
-                  </span>
-                </span>
-              </span>
-            </span>
-          </span>
-
-          <span className="game-art-name">
-            {props.title || "Giga Match Gems"}
-          </span>
-
-          <span className="game-art-date">
-            {props.provider || "casino"}
-          </span>
-
-          <span className="game-art-favorite">
-            <i className="fa-star fa-regular"></i>
-          </span>
-        </a>
+    <div className="games-block__game games-block__game--interactive" onClick={props.onGameClick}>
+      <a href="">
+        <img className="game-image" src={props.imageSrc} loading="lazy" alt={props.title}></img>
+      </a>
+      <div className="game-hover">
+        <p className="game-title">{props.title}</p>
+        <a href="/game/once_again_upon_a_time_hold_win_ss" className="button button--play" data-ajax="false">Jugar</a>
+      </div>
+      <div className="game-title-wrapper">
+        <p className="game-title">{props.title}</p>
+        <p className="game-producer">{props.provider}</p>
       </div>
     </div>
   );

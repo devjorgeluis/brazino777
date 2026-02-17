@@ -1,0 +1,788 @@
+@keyframes shockwaveJump {
+    0% {
+        transform: scale(1) rotate(0deg)
+    }
+
+    70% {
+        transform: scale(1.4) rotate(15deg)
+    }
+
+    80% {
+        transform: scale(.9) rotate(10deg)
+    }
+
+    90% {
+        transform: scale(1.1) rotate(5deg)
+    }
+
+    to {
+        transform: scale(1) rotate(0deg)
+    }
+}
+
+.games-block-wrapper .games-block {
+    grid-template-rows: auto auto
+}
+
+.games-block {
+    grid-gap: 10px 10px;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-left: 10px;
+    scrollbar-width: none
+}
+
+.games-block:after {
+    background-color: #fff;
+    content: "";
+    display: block;
+    grid-row: 1/-1;
+    height: 100%;
+    width: 5px;
+    z-index: 5
+}
+
+.games-block::-webkit-scrollbar {
+    display: none
+}
+
+.games-block .games-block__game {
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    height: 160px;
+    overflow: hidden;
+    position: relative;
+    /* width: 120px */
+}
+
+.games-block .games-block__game:before {
+    background: linear-gradient(180deg, rgba(35, 35, 35, 0) 38%, #232323 74%);
+    content: "";
+    height: 100%;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 0
+}
+
+@keyframes loading {
+    0% {
+        transform: skewX(-10deg) translateX(0)
+    }
+
+    to {
+        transform: skewX(-10deg) translateX(200%)
+    }
+}
+
+.games-block .games-block__game--skeleton {
+    background: #eee;
+    border-radius: 10px;
+    height: 160px;
+    min-height: 160px;
+    min-width: 120px;
+    width: 120px
+}
+
+.games-block .games-block__game--skeleton.loading:before {
+    animation: loading .6s infinite;
+    background: linear-gradient(90deg, transparent, hsla(0, 0%, 100%, .9), transparent);
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 50%
+}
+
+.games-block .games-block__game a:not(.button--demo) {
+    height: 100%;
+    padding-bottom: 30px;
+    width: 100%
+}
+
+.games-block .games-block__game a:not(.button--demo) img {
+    display: block;
+    height: 100%;
+    min-height: 100%;
+    min-width: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 100%
+}
+
+.games-block .games-block__game .game-title-wrapper {
+    align-items: center;
+    bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    left: 0;
+    padding-inline: 3px;
+    pointer-events: none;
+    position: absolute;
+    width: 100%
+}
+
+.games-block .games-block__game .game-title {
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    font-family: PassionOne-Regular, sans-serif;
+    font-size: 16px;
+    line-height: 16px;
+    margin: 0 4px 4px
+}
+
+.games-block .games-block__game .game-producer,
+.games-block .games-block__game .game-title {
+    -webkit-text-fill-color: #fff;
+    color: #fff;
+    font-weight: 400;
+    max-width: 100%;
+    overflow: hidden;
+    text-align: center
+}
+
+.games-block .games-block__game .game-producer {
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 10px;
+    line-height: 14px;
+    margin-block: 0;
+    padding-inline: 4px;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap
+}
+
+.games-block .games-block__game .game-hover {
+    align-items: center;
+    aspect-ratio: 1/1;
+    background: linear-gradient(180deg, rgba(35, 35, 35, .25), #232323 72%);
+    border-radius: 10px;
+    display: none;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%
+}
+
+.games-block .games-block__game .game-hover .button--demo {
+    -webkit-text-fill-color: #fff;
+    color: #fff;
+    font-family: roboto-medium-webfont, sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 12px;
+    margin-top: 8px;
+    text-align: center;
+    -webkit-text-decoration-line: underline;
+    text-decoration-line: underline;
+    text-transform: uppercase
+}
+
+.games-block .games-block__game .game-hover .button--play {
+    -webkit-text-fill-color: #1a1a1a;
+    align-items: center;
+    background: linear-gradient(180deg, #ffe600, #ffb800);
+    border-radius: 50px;
+    box-shadow: inset 0 -2px 0 #f90;
+    color: #1a1a1a;
+    cursor: pointer;
+    display: flex;
+    font-family: roboto-medium-webfont, sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    height: 29px;
+    justify-content: center;
+    line-height: 12px;
+    min-height: 29px;
+    min-width: 77px;
+    padding: 0;
+    text-align: center;
+    text-shadow: 0 1px 0 #ffe249;
+    text-transform: uppercase;
+    transition: all .1s linear;
+    width: 77px !important
+}
+
+.games-block .games-block__game .game-hover .button--play:hover {
+    background: linear-gradient(180deg, #ffb800, #ffe600)
+}
+
+.games-block .games-block__game .game-hover .game-title {
+    display: none
+}
+
+.games-block .games-block__game .game-hover--active {
+    display: flex;
+    opacity: 1
+}
+
+.games-block .games-block__game .game-add-favourite {
+    cursor: pointer;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    z-index: 5
+}
+
+.games-block .games-block__game .game-add-favourite form label {
+    align-items: center;
+    background: linear-gradient(180deg, rgba(59, 59, 59, .113), rgba(35, 35, 35, .45));
+    border-radius: 100%;
+    cursor: pointer;
+    height: 24px;
+    justify-content: center;
+    width: 24px;
+    z-index: 1
+}
+
+.games-block .games-block__game .game-add-favourite form label.is-favorite.animate span {
+    animation: shockwaveJump .5s linear;
+    background-image: url(/build/images/star.72e14524.svg)
+}
+
+.games-block .games-block__game .game-add-favourite form label.is-favorite:not(.animate) span {
+    background-image: url(/build/images/star.72e14524.svg)
+}
+
+.games-block .games-block__game .game-add-favourite form label input {
+    cursor: pointer;
+    height: 100%;
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 100%
+}
+
+.games-block .games-block__game .game-add-favourite form label span {
+    background-image: url(/build/images/star-empty.31f87339.svg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: block;
+    height: 12px;
+    min-height: 12px;
+    min-width: 12px;
+    width: 12px
+}
+
+.games-block .games-block__game .game-locked {
+    background: linear-gradient(180deg, rgba(35, 35, 35, .25), #232323 72%);
+    border-radius: 10px;
+    cursor: pointer;
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    width: 100%;
+    z-index: 1
+}
+
+.games-block .games-block__game .game-locked:after {
+    background-image: url(/build/images/games-lock-new.48bdc641.svg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: "";
+    display: block;
+    height: 24px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 24px
+}
+
+@media (min-width: 500px) {
+    .games-block .games-block__game .game-locked:after {
+        top: 54%
+    }
+}
+
+@media (min-width: 1000px) {
+    .games-block .games-block__game .game-locked:after {
+        height: 70px;
+        width: 50px
+    }
+}
+
+.games-block .games-block__game .game-locked span {
+    display: none
+}
+
+@media (min-width: 600px) {
+    .games-block .games-block__game .game-locked {
+        height: calc(100% - 34px)
+    }
+}
+
+@media (min-width: 1000px) {
+    .games-block .games-block__game .game-locked {
+        height: calc(100% - 41px)
+    }
+}
+
+@media (min-width: 1300px) {
+    .games-block .games-block__game .game-locked {
+        height: calc(100% - 47px)
+    }
+}
+
+.games-block .games-block__game .game-image {
+    background-color: #035d03;
+    background-image: url(/build/images/games-default.171c309d.svg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 100%
+}
+
+.games-block .games-block__game .tournament-game-label {
+    border-radius: 10px 0 0 0;
+    height: 36%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: auto
+}
+
+.games-block .games-block__game .game-jackpot {
+    align-items: center;
+    background-color: #ffba00;
+    border-radius: 50px;
+    display: flex;
+    height: 16px;
+    justify-content: center;
+    left: 10px;
+    max-width: -moz-fit-content;
+    max-width: fit-content;
+    min-height: 16px;
+    min-width: 84px;
+    padding: 2px 5px;
+    position: absolute;
+    top: 10px
+}
+
+.games-block .games-block__game .game-jackpot__amount,
+.games-block .games-block__game .game-jackpot__currency {
+    font-family: roboto-bold-webfont, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 12px;
+    text-transform: uppercase
+}
+
+.games-block .games-block__game .game-jackpot__currency {
+    margin-right: 5px
+}
+
+.games-block .games-block__game .game-hover--active~.game-jackpot {
+    display: none
+}
+
+.button--load-games--hidden {
+    display: none !important
+}
+
+.button--load-games {
+    all: unset;
+    border: 2px solid #035d03;
+    border-radius: 50px;
+    cursor: pointer;
+    display: block;
+    height: 26px;
+    margin: 20px auto 0;
+    min-width: 56px;
+    padding: 0 15px;
+    text-align: center;
+    z-index: 5
+}
+
+.button--load-games.button--load-games--hidden {
+    display: none
+}
+
+.button--load-games span {
+    -webkit-text-fill-color: #035d03;
+    color: #035d03;
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 26px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase
+}
+
+.button--load-games:hover {
+    background-color: #035d03
+}
+
+.button--load-games:hover span {
+    -webkit-text-fill-color: #fff;
+    color: #fff
+}
+
+.games-block-wrapper.amusnet-block .games-block,
+.games-block-wrapper.amusnet-jackpot-block .games-block,
+.games-block-wrapper.exclusive-tournament-block .games-block,
+.games-block-wrapper.megaways-block .games-block,
+.games-block-wrapper.new-block .games-block,
+.games-block-wrapper.new-provider-block .games-block,
+.games-block-wrapper.only-on-brazino-block .games-block,
+.games-block-wrapper.scratch-cards-block .games-block {
+    grid-template-rows: auto
+}
+
+.games-block .games-block__game .game-add-favourite form label {
+    display: flex
+}
+
+.games-block .games-block__game .game-tag {
+    background-image: url(/build/images/game-tag-bg.5c2bba90.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 73.5px;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    width: 87.5px
+}
+
+@media (min-width: 600px) {
+    .games-block .games-block__game .game-tag {
+        height: 105px;
+        width: 125px
+    }
+}
+
+.games-block .games-block__game .game-tag-title {
+    align-items: center;
+    color: #fff;
+    display: flex;
+    font-family: roboto-medium-webfont, sans-serif;
+    font-size: 12.649px;
+    font-style: italic;
+    font-weight: 500;
+    height: 82%;
+    justify-content: center;
+    line-height: 100%;
+    text-shadow: 0 .9333333969px .9333333969px rgba(0, 0, 0, .31);
+    text-transform: uppercase;
+    width: 82%
+}
+
+@media (min-width: 600px) {
+    .games-block .games-block__game .game-tag-title {
+        font-size: 18.069px;
+        height: 80%;
+        text-shadow: 0 1.3333333731px 1.3333333731px rgba(0, 0, 0, .31);
+        width: 80%
+    }
+}
+
+.games-block .games-block__game .game-tag-title span {
+    display: flex;
+    height: 15px;
+    justify-content: center;
+    transform: rotate(-38.771deg)
+}
+
+@media (min-width: 600px) {
+    .games-block .games-block__game .game-tag-title span {
+        height: 18px
+    }
+}
+
+.button--load-games.spinning {
+    background: #035d03;
+    border-radius: 50%;
+    height: 26px;
+    min-width: 26px;
+    padding: 0;
+    position: relative;
+    transition-duration: .2s;
+    transition-property: width, min-width, background-color, color, border-radius;
+    transition-timing-function: ease-out;
+    width: 26px
+}
+
+.button--load-games.spinning:after {
+    animation: rotation 1s linear infinite;
+    background: #035d03;
+    border: 3px solid;
+    border-color: #fff #fff transparent;
+    border-radius: 50%;
+    content: "";
+    display: inline-block;
+    height: 22px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 22px
+}
+
+@keyframes rotation {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg)
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(1turn)
+    }
+}
+
+.button--load-games.spinning span {
+    display: none
+}
+
+@media (min-width: 600px) {
+    .button--load-games {
+        margin-top: 30px
+    }
+}
+
+@media (min-width: 1000px) {
+    .games-block {
+        grid-gap: 16px;
+        margin: 0 auto;
+        padding-left: 0;
+        width: 100%
+    }
+
+    .games-block:after {
+        display: none
+    }
+
+    .games-block .games-block__game {
+        height: 253px;
+        width: 190px
+    }
+
+    .games-block .games-block__game:hover .game-title-wrapper {
+        display: none
+    }
+
+    .games-block .games-block__game:hover .game-hover {
+        display: flex;
+        opacity: 1
+    }
+
+    .games-block .games-block__game a:not(.button--demo) {
+        padding-bottom: 50px
+    }
+
+    .games-block .games-block__game--skeleton {
+        height: 253px;
+        min-height: 253px;
+        min-width: 190px;
+        width: 190px
+    }
+
+    .games-block .games-block__game .game-title {
+        font-size: 24px;
+        line-height: 24px;
+        margin-bottom: 2px
+    }
+
+    .games-block .games-block__game .game-producer {
+        font-size: 14px;
+        line-height: 18px
+    }
+
+    .games-block .games-block__game .game-hover {
+        height: 100%;
+        min-height: 100%;
+        min-width: 100%;
+        width: 100%
+    }
+
+    .games-block .games-block__game .game-hover .game-title {
+        display: none
+    }
+
+    .games-block .games-block__game .game-hover .button--demo {
+        font-size: 14px;
+        line-height: 16px
+    }
+
+    .games-block .games-block__game .game-hover .button--play {
+        font-size: 14px;
+        height: 40px;
+        line-height: 16px;
+        min-height: 40px;
+        min-width: 102px;
+        width: 102px !important
+    }
+
+    .games-block .games-block__game .game-add-favourite form label {
+        height: 32px;
+        width: 32px
+    }
+
+    .games-block .games-block__game .game-add-favourite form label span {
+        height: 16px;
+        width: 16px
+    }
+
+    .games-block .games-block__game .game-jackpot {
+        height: 20px;
+        min-height: 20px;
+        min-width: 117px;
+        padding: 2px 7px
+    }
+
+    .games-block .games-block__game .game-jackpot__amount,
+    .games-block .games-block__game .game-jackpot__currency {
+        font-size: 14px;
+        line-height: 16px
+    }
+
+    .button--load-games {
+        height: 36px;
+        min-width: 96px
+    }
+
+    .button--load-games span {
+        font-size: 14px
+    }
+
+    .button--load-games.spinning {
+        height: 36px;
+        min-width: 36px;
+        width: 36px
+    }
+
+    .button--load-games.spinning:after {
+        height: 28px;
+        width: 28px
+    }
+}
+
+@media (min-width: 1300px) {
+    .games-block {
+        max-width: 1280px;
+        padding: 0
+    }
+
+    .games-block .games-block__game .game-jackpot {
+        left: 20px;
+        top: 20px
+    }
+}
+
+.games-block .odometer.odometer-auto-theme.odometer-animating-down.odometer-animating .odometer-ribbon-inner,
+.games-block .odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,
+.games-block .odometer.odometer-theme-default.odometer-animating-down.odometer-animating .odometer-ribbon-inner,
+.games-block .odometer.odometer-theme-default.odometer-animating-up .odometer-ribbon-inner {
+    transition: transform 1s !important
+}
+
+.games-block .odometer .odometer-inside .odometer-digit:last-child,
+.games-block .odometer .odometer-inside .odometer-digit:nth-last-child(2) {
+    display: none !important
+}
+
+.odometer.odometer-auto-theme,
+.odometer.odometer-auto-theme .odometer-digit,
+.odometer.odometer-theme-default,
+.odometer.odometer-theme-default .odometer-digit {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,
+.odometer.odometer-theme-default .odometer-digit .odometer-digit-spacer {
+    display: inline-block;
+    vertical-align: middle;
+    visibility: hidden
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner,
+.odometer.odometer-theme-default .odometer-digit .odometer-digit-inner {
+    bottom: 0;
+    display: block;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    text-align: left;
+    top: 0
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon,
+.odometer.odometer-theme-default .odometer-digit .odometer-ribbon {
+    display: block
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,
+.odometer.odometer-theme-default .odometer-digit .odometer-ribbon-inner {
+    -webkit-backface-visibility: hidden;
+    display: block
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-value,
+.odometer.odometer-theme-default .odometer-digit .odometer-value {
+    display: block;
+    -webkit-transform: translateZ(0)
+}
+
+.odometer.odometer-auto-theme .odometer-digit .odometer-value.odometer-last-value,
+.odometer.odometer-theme-default .odometer-digit .odometer-value.odometer-last-value {
+    position: absolute
+}
+
+.odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,
+.odometer.odometer-theme-default.odometer-animating-up .odometer-ribbon-inner {
+    transition: transform 2s
+}
+
+.odometer.odometer-auto-theme.odometer-animating-down .odometer-ribbon-inner,
+.odometer.odometer-auto-theme.odometer-animating-up.odometer-animating .odometer-ribbon-inner,
+.odometer.odometer-theme-default.odometer-animating-down .odometer-ribbon-inner,
+.odometer.odometer-theme-default.odometer-animating-up.odometer-animating .odometer-ribbon-inner {
+    transform: translateY(-100%)
+}
+
+.odometer.odometer-auto-theme.odometer-animating-down.odometer-animating .odometer-ribbon-inner,
+.odometer.odometer-theme-default.odometer-animating-down.odometer-animating .odometer-ribbon-inner {
+    transform: translateY(0);
+    transition: transform 2s
+}
+
+.odometer.odometer-auto-theme,
+.odometer.odometer-theme-default {
+    font-family: Helvetica Neue, sans-serif;
+    line-height: 1.1em
+}
+
+.odometer.odometer-auto-theme .odometer-value,
+.odometer.odometer-theme-default .odometer-value {
+    text-align: center
+}

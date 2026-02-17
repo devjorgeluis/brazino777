@@ -51,12 +51,12 @@ const Slideshow = () => {
           spaceBetween={80}
           loop={true}
           autoplay={{
-            delay: 300000,
+            delay: 3000,
             disableOnInteraction: false,
           }}
           breakpoints={{
             320: { spaceBetween: 0, slidesPerView: 1 },
-            1200: { spaceBetween: 80, slidesPerView: 1 },
+            1200: { spaceBetween: 80, slidesPerView: 1.3 },
           }}
           className="swiper-wrapper swiper-wrapper-container"
         >

@@ -323,9 +323,9 @@ const Layout = () => {
                         isUserMenuOpen={isUserMenuOpen}
                         setIsUserMenuOpen={setIsUserMenuOpen}
                     />
-                    <div className="wrapper">
+                    <main>
                         <Outlet context={{ isSlotsOnly, isLogin, isMobile, topGames, topArcade, topCasino, topLiveCasino }} />
-                    </div>
+                    </main>
                 </div>
 
                 {shouldShowGameModal && gameModalData.gameUrl && (

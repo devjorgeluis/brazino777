@@ -1,13 +1,11 @@
-import { useContext, useCallback, useRef } from 'react';
+import { useContext, useCallback, useRef, useEffect, useState } from 'react';
 import { useOutletContext } from "react-router-dom";
 import { AppContext } from '../../AppContext';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import SlideGameCard from '../SlideGameCard';
-// import IconArrowLeft from "/src/assets/svg/arrow-left.svg";
-// import IconArrowRight from "/src/assets/svg/arrow-right.svg";
+import GameCard from '../GameCard';
 
 const HotGameSlideshow = ({ games, name, title, onGameClick }) => {
     const { contextData } = useContext(AppContext);
@@ -15,6 +13,8 @@ const HotGameSlideshow = ({ games, name, title, onGameClick }) => {
     const prevRef = useRef(null);
     const nextRef = useRef(null);
     const { isMobile } = useOutletContext();
+    const [isPrevDisabled, setIsPrevDisabled] = useState(true);
+    const [isNextDisabled, setIsNextDisabled] = useState(false);
 
     const handleGameClick = (game, isDemo = false) => {
         if (onGameClick) {
@@ -23,91 +23,135 @@ const HotGameSlideshow = ({ games, name, title, onGameClick }) => {
     };
 
     const handleNext = useCallback(() => {
-        if (!swiperRef.current) return;
+        if (!swiperRef.current || isNextDisabled) return;
         swiperRef.current.swiper.slideNext();
-    }, []);
+    }, [isNextDisabled]);
 
     const handlePrev = useCallback(() => {
-        if (!swiperRef.current) return;
+        if (!swiperRef.current || isPrevDisabled) return;
         swiperRef.current.swiper.slidePrev();
+    }, [isPrevDisabled]);
+
+    const updateNavigationState = useCallback(() => {
+        if (!swiperRef.current) return;
+        
+        const swiper = swiperRef.current.swiper;
+        setIsPrevDisabled(swiper.isBeginning);
+        setIsNextDisabled(swiper.isEnd);
     }, []);
 
+    useEffect(() => {
+        if (!swiperRef.current) return;
+        
+        const swiper = swiperRef.current.swiper;
+        
+        updateNavigationState();
+        
+        swiper.on('slideChange', updateNavigationState);
+        swiper.on('reachBeginning', () => setIsPrevDisabled(true));
+        swiper.on('reachEnd', () => setIsNextDisabled(true));
+        swiper.on('fromEdge', () => {
+            setIsPrevDisabled(false);
+            setIsNextDisabled(false);
+        });
+
+        return () => {
+            swiper.off('slideChange', updateNavigationState);
+            swiper.off('reachBeginning', () => setIsPrevDisabled(true));
+            swiper.off('reachEnd', () => setIsNextDisabled(true));
+            swiper.off('fromEdge', () => {
+                setIsPrevDisabled(false);
+                setIsNextDisabled(false);
+            });
+        };
+    }, [updateNavigationState]);
+
+    useEffect(() => {
+        setTimeout(updateNavigationState, 100);
+    }, [games, updateNavigationState]);
+
     return (
-        <div className="jel-slider-default-five">
-            <div className="container">
-                <div className="jel-games-module mb-0">
-                    <div className="jel-games-module-ex">
-                        <div className="jel-games-module-title">
-                            <div className="jel-games-module-title-icon color-01">
-                                <i className="fa-solid fa-crown"></i>
-                            </div>
-                            <h2 className="jel-games-module-title-text mb-0" style={{ fontSize: 16 }}>{title}</h2>
-                        </div>
-                    </div>
-                </div>
-                <div className="jel-slider-default-five-ex">
-                    {
-                        games.length > 6 ?
-                        <>
-                            <Swiper
-                                ref={swiperRef}
-                                modules={[Navigation]}
-                                slidesPerView={6}
-                                spaceBetween={0}
-                                breakpoints={{
-                                    0: { slidesPerView: 3 },
-                                    576: { slidesPerView: 4 },
-                                    992: { slidesPerView: 6 }
-                                }}
-                                navigation={{
-                                    prevEl: prevRef.current,
-                                    nextEl: nextRef.current,
-                                }}
-                                className="swiper-container swiper-initialized swiper-horizontal"
+        <div className="new-block games-block-wrapper">
+            <h2 className="title title--new title--categories">
+                <a className="title__text">
+                    {title}
+                </a>
+                <span className="title__slider">
+                    <span 
+                        className={`title__slider__left ${isPrevDisabled ? 'disabled' : ''}`} 
+                        onClick={handlePrev}
+                        role="button"
+                        tabIndex={0}
+                        aria-disabled={isPrevDisabled}
+                    ></span>
+                    <span 
+                        className={`title__slider__right ${isNextDisabled ? 'disabled' : ''}`} 
+                        onClick={handleNext}
+                        role="button"
+                        tabIndex={0}
+                        aria-disabled={isNextDisabled}
+                    ></span>
+                </span>
+            </h2>
+            <div className="games-block">
+                {
+                    games.length >= 6 ?
+                    <>
+                        <Swiper
+                            ref={swiperRef}
+                            modules={[Navigation]}
+                            slidesPerView={6.2}
+                            spaceBetween={10}
+                            breakpoints={{
+                                0: { slidesPerView: 2.8 },
+                                576: { slidesPerView: 5.8 },
+                                992: { slidesPerView: 6.2 }
+                            }}
+                            navigation={{
+                                prevEl: prevRef.current,
+                                nextEl: nextRef.current,
+                            }}
+                            className="swiper-wrapper"
+                            onInit={updateNavigationState}
+                        >
+                            {games?.map((game, index) => (
+                                <SwiperSlide
+                                    key={`hot-${title}-${name}-${game.id ?? index}-${index}`}
+                                >
+                                    <GameCard
+                                        id={game.id}
+                                        category="slide"
+                                        provider={title}
+                                        title={game.name}
+                                        imageSrc={game.image_local !== null ? contextData.cdnUrl + game.image_local : game.image_url}
+                                        onGameClick={() => {
+                                            handleGameClick(game);
+                                        }}
+                                    />
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </> :
+                    <div className="swiper-wrapper">
+                        {games?.map((game, index) => (
+                            <div
+                                className="swiper-slide"
+                                key={`hot-${title}-${name}-${game.id ?? index}-${index}`}
                             >
-                                {games?.map((game, index) => (
-                                    <SwiperSlide
-                                        key={`hot-${title}-${name}-${game.id ?? index}-${index}`}
-                                    >
-                                        <SlideGameCard
-                                            id={game.id}
-                                            category="slide"
-                                            provider={title}
-                                            title={game.name}
-                                            imageSrc={game.image_local !== null ? contextData.cdnUrl + game.image_local : game.image_url}
-                                            onGameClick={() => {
-                                                handleGameClick(game);
-                                            }}
-                                        />
-                                    </SwiperSlide>
-                                ))}
-                                <div className="swiper-button-next" onClick={handleNext}><i className="fa-solid fa-angle-right"></i></div>
-                                <div className="swiper-button-prev" onClick={handlePrev}><i className="fa-solid fa-angle-left"></i></div>
-                            </Swiper>
-                        </> :
-                        <div className="swiper-container swiper-initialized swiper-horizontal">
-                            <div className="swiper-wrapper">
-                                {games?.map((game, index) => (
-                                    <div
-                                        className="swiper-slide"
-                                        key={`hot-${title}-${name}-${game.id ?? index}-${index}`}
-                                    >
-                                        <SlideGameCard
-                                            id={game.id}
-                                            category="slide"
-                                            provider={title}
-                                            title={game.name}
-                                            imageSrc={game.image_local !== null ? contextData.cdnUrl + game.image_local : game.image_url}
-                                            onGameClick={() => {
-                                                handleGameClick(game);
-                                            }}
-                                        />
-                                    </div>
-                                ))}
+                                <GameCard
+                                    id={game.id}
+                                    category="slide"
+                                    provider={title}
+                                    title={game.name}
+                                    imageSrc={game.image_local !== null ? contextData.cdnUrl + game.image_local : game.image_url}
+                                    onGameClick={() => {
+                                        handleGameClick(game);
+                                    }}
+                                />
                             </div>
-                        </div>
-                    }
-                </div>
+                        ))}
+                    </div>
+                }
             </div>
         </div>
     );

@@ -248,7 +248,7 @@
 }
 
 .index--page .index--container .games-block-wrapper .title .see-all:after {
-    background-image: url(/build/images/arrow-title-left.99b392a3.svg);
+    background-image: url("../assets/svg/arrow-title-left.svg");
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: contain;
@@ -295,7 +295,7 @@
 
 .index--page .index--container .games-block-wrapper .title__slider__left:before,
 .index--page .index--container .games-block-wrapper .title__slider__right:before {
-    background-image: url(/build/images/arrow-title-left.99b392a3.svg);
+    background-image: url("../assets/svg/arrow-title-left.svg");
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: contain;

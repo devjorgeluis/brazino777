@@ -29,7 +29,7 @@ const Home = () => {
   const [topLiveCasino, setTopLiveCasino] = useState([]);
   const [games, setGames] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [mainCategories, setMainCategories] = useState([]);  
+  const [mainCategories, setMainCategories] = useState([]);
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [pageData, setPageData] = useState({});
   const [gameUrl, setGameUrl] = useState("");
@@ -107,7 +107,7 @@ const Home = () => {
 
     setShowFullDivLoading(true);
     setCategories([]);
-    setGames([]);    
+    setGames([]);
 
     callApi(contextData, "GET", "/get-page?page=" + page, (result) => callbackGetPage(result, page), null);
   };
@@ -136,7 +136,7 @@ const Home = () => {
       if (page === "home") {
         setMainCategories(result.data.categories);
       }
-      
+
       const firstFiveCategories = result.data.categories.slice(0, 5);
       if (firstFiveCategories.length > 0) {
         pendingCategoryFetchesRef.current = firstFiveCategories.length;
@@ -199,7 +199,7 @@ const Home = () => {
       setIsLoadingGames(false);
     } else {
       configureImageSrc(result);
-      
+
       if (pageCurrent == 0) {
         setGames(result.content);
         setSearchGames(result.content);
@@ -319,7 +319,7 @@ const Home = () => {
     selectedGameImg = null;
     setGameUrl("");
     setShouldShowGameModal(false);
-  
+
     try {
       const el = document.getElementsByClassName("game-view-container")[0];
       if (el) {
@@ -344,7 +344,7 @@ const Home = () => {
       setIsProviderSelected(true);
 
       setSearchGames([]);
-      
+
       fetchContent(
         provider,
         provider.id,
@@ -356,9 +356,9 @@ const Home = () => {
       setTxtSearch('');
       document.body.classList.remove('hc-opened-search');
       setSearchGames([]);
-      
+
       setIsProviderSelected(false);
-      
+
       const firstCategory = categories[0];
       if (firstCategory) {
         fetchContent(firstCategory, firstCategory.id, firstCategory.table_name, 0, true);
@@ -367,7 +367,7 @@ const Home = () => {
   };
 
   return (
-    <div className="main-page">
+    <div className="index--page">
       {showLoginModal && (
         <LoginModal
           isOpen={showLoginModal}
@@ -419,62 +419,64 @@ const Home = () => {
           {!selectedProvider &&
             <>
               <Slideshow />
-              {topGames.length > 0 && (
-                <HotGameSlideshow
-                  games={topGames}
-                  name="games"
-                  title="Juegos Populares"
-                  onGameClick={(game) => {
-                    if (isLogin) {
-                      launchGame(game, "slot", "modal");
-                    } else {
-                      handleLoginClick();
-                    }
-                  }}
-                />
-              )}
-              {topCasino.length > 0 && isSlotsOnly === "false" && (
-                <HotGameSlideshow
-                  games={topCasino}
-                  name="casino"
-                  title="Casino"
-                  onGameClick={(game) => {
-                    if (isLogin) {
-                      launchGame(game, "slot", "modal");
-                    } else {
-                      handleLoginClick();
-                    }
-                  }}
-                />
-              )}
-              {topLiveCasino.length > 0 && isSlotsOnly === "false" && (
-                <HotGameSlideshow
-                  games={topLiveCasino}
-                  name="liveCasino"
-                  title="Casino en Vivo"
-                  onGameClick={(game) => {
-                    if (isLogin) {
-                      launchGame(game, "slot", "modal");
-                    } else {
-                      handleLoginClick();
-                    }
-                  }}
-                />
-              )}
-              {topArcade.length > 0 && isSlotsOnly === "false" && (
-                <HotGameSlideshow
-                  games={topArcade}
-                  name="arcade"
-                  title="Crash Games"
-                  onGameClick={(game) => {
-                    if (isLogin) {
-                      launchGame(game, "slot", "modal");
-                    } else {
-                      handleLoginClick();
-                    }
-                  }}
-                />
-              )}
+              <div className="index--container">
+                {topGames.length > 0 && (
+                  <HotGameSlideshow
+                    games={topGames}
+                    name="games"
+                    title="Juegos Populares"
+                    onGameClick={(game) => {
+                      if (isLogin) {
+                        launchGame(game, "slot", "modal");
+                      } else {
+                        handleLoginClick();
+                      }
+                    }}
+                  />
+                )}
+                {topCasino.length > 0 && isSlotsOnly === "false" && (
+                  <HotGameSlideshow
+                    games={topCasino}
+                    name="casino"
+                    title="Casino"
+                    onGameClick={(game) => {
+                      if (isLogin) {
+                        launchGame(game, "slot", "modal");
+                      } else {
+                        handleLoginClick();
+                      }
+                    }}
+                  />
+                )}
+                {topLiveCasino.length > 0 && isSlotsOnly === "false" && (
+                  <HotGameSlideshow
+                    games={topLiveCasino}
+                    name="liveCasino"
+                    title="Casino en Vivo"
+                    onGameClick={(game) => {
+                      if (isLogin) {
+                        launchGame(game, "slot", "modal");
+                      } else {
+                        handleLoginClick();
+                      }
+                    }}
+                  />
+                )}
+                {topArcade.length > 0 && isSlotsOnly === "false" && (
+                  <HotGameSlideshow
+                    games={topArcade}
+                    name="arcade"
+                    title="Crash Games"
+                    onGameClick={(game) => {
+                      if (isLogin) {
+                        launchGame(game, "slot", "modal");
+                      } else {
+                        handleLoginClick();
+                      }
+                    }}
+                  />
+                )}
+              </div>
             </>
           }
 
