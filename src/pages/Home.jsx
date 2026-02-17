@@ -21,7 +21,8 @@ let pageCurrent = 0;
 const Home = () => {
   const { contextData } = useContext(AppContext);
   const { setShowFullDivLoading } = useContext(NavigationContext);
-  const { setTxtSearch, searchGames, setSearchGames, setIsProviderSelected } = useContext(LayoutContext);
+  const { setTxtSearch, searchGames, setSearchGames, setIsProviderSelected } =
+    useContext(LayoutContext);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [topGames, setTopGames] = useState([]);
   const [topArcade, setTopArcade] = useState([]);
@@ -45,9 +46,9 @@ const Home = () => {
 
   useEffect(() => {
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
+      if (document.visibilityState === "visible") {
         const currentPath = window.location.pathname;
-        if (currentPath === '/' || currentPath === '') {
+        if (currentPath === "/" || currentPath === "") {
           setShowFullDivLoading(true);
           pendingPageRef.current.clear();
           lastProcessedPageRef.current = { page: null, ts: 0 };
@@ -64,9 +65,9 @@ const Home = () => {
       }
     };
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
@@ -109,7 +110,13 @@ const Home = () => {
     setCategories([]);
     setGames([]);
 
-    callApi(contextData, "GET", "/get-page?page=" + page, (result) => callbackGetPage(result, page), null);
+    callApi(
+      contextData,
+      "GET",
+      "/get-page?page=" + page,
+      (result) => callbackGetPage(result, page),
+      null,
+    );
   };
 
   const callbackGetPage = (result, page) => {
@@ -121,7 +128,10 @@ const Home = () => {
     }
 
     const now = Date.now();
-    if (lastProcessedPageRef.current.page === page && now - lastProcessedPageRef.current.ts < 3000) {
+    if (
+      lastProcessedPageRef.current.page === page &&
+      now - lastProcessedPageRef.current.ts < 3000
+    ) {
       setShowFullDivLoading(false);
       return;
     }
@@ -131,7 +141,12 @@ const Home = () => {
     setSelectedProvider(null);
     setPageData(result.data);
 
-    if (result.data && result.data.page_group_type === "categories" && result.data.categories && result.data.categories.length > 0) {
+    if (
+      result.data &&
+      result.data.page_group_type === "categories" &&
+      result.data.categories &&
+      result.data.categories.length > 0
+    ) {
       setCategories(result.data.categories);
       if (page === "home") {
         setMainCategories(result.data.categories);
@@ -142,7 +157,14 @@ const Home = () => {
         pendingCategoryFetchesRef.current = firstFiveCategories.length;
         setShowFullDivLoading(true);
         firstFiveCategories.forEach((item, index) => {
-          fetchContentForCategory(item, item.id, item.table_name, index, true, result.data.page_group_code);
+          fetchContentForCategory(
+            item,
+            item.id,
+            item.table_name,
+            index,
+            true,
+            result.data.page_group_code,
+          );
         });
       }
     } else if (result.data && result.data.page_group_type === "games") {
@@ -163,7 +185,14 @@ const Home = () => {
     setShowLoginModal(false);
   };
 
-  const fetchContent = (category, categoryId, tableName, categoryIndex, resetCurrentPage, pageGroupCode) => {
+  const fetchContent = (
+    category,
+    categoryId,
+    tableName,
+    categoryIndex,
+    resetCurrentPage,
+    pageGroupCode,
+  ) => {
     let pageSize = 500;
     setIsLoadingGames(true);
 
@@ -172,7 +201,10 @@ const Home = () => {
       setGames([]);
     }
 
-    const groupCode = categoryType === "categories" ? pageGroupCode || pageData.page_group_code : "default_pages_home"
+    const groupCode =
+      categoryType === "categories"
+        ? pageGroupCode || pageData.page_group_code
+        : "default_pages_home";
 
     let apiUrl =
       "/get-content?page_group_type=categories&page_group_code=" +
@@ -213,7 +245,14 @@ const Home = () => {
     setIsLoadingGames(false);
   };
 
-  const fetchContentForCategory = (category, categoryId, tableName, categoryIndex, resetCurrentPage, pageGroupCode = null) => {
+  const fetchContentForCategory = (
+    category,
+    categoryId,
+    tableName,
+    categoryIndex,
+    resetCurrentPage,
+    pageGroupCode = null,
+  ) => {
     const pageSize = 12;
     const groupCode = pageGroupCode || pageData.page_group_code;
 
@@ -226,19 +265,30 @@ const Home = () => {
       categoryId +
       "&page=0&length=" +
       pageSize +
-      (selectedProvider && selectedProvider.id ? "&provider=" + selectedProvider.id : "");
+      (selectedProvider && selectedProvider.id
+        ? "&provider=" + selectedProvider.id
+        : "");
 
-    callApi(contextData, "GET", apiUrl, (result) => callbackFetchContentForCategory(result, category, categoryIndex), null);
+    callApi(
+      contextData,
+      "GET",
+      apiUrl,
+      (result) =>
+        callbackFetchContentForCategory(result, category, categoryIndex),
+      null,
+    );
   };
 
   const callbackFetchContentForCategory = (result, category, categoryIndex) => {
     if (result.status === 500 || result.status === 422) {
-
     } else {
       configureImageSrc(result);
     }
 
-    pendingCategoryFetchesRef.current = Math.max(0, pendingCategoryFetchesRef.current - 1);
+    pendingCategoryFetchesRef.current = Math.max(
+      0,
+      pendingCategoryFetchesRef.current - 1,
+    );
     if (pendingCategoryFetchesRef.current === 0) {
       setShowFullDivLoading(false);
     }
@@ -265,8 +315,17 @@ const Home = () => {
     selectedGameType = type != null ? type : selectedGameType;
     selectedGameLauncher = launcher != null ? launcher : selectedGameLauncher;
     selectedGameName = game?.name || selectedGameName;
-    selectedGameImg = game?.image_local != null ? contextData.cdnUrl + game.image_local : selectedGameImg;
-    callApi(contextData, "GET", "/get-game-url?game_id=" + selectedGameId, callbackLaunchGame, null);
+    selectedGameImg =
+      game?.image_local != null
+        ? contextData.cdnUrl + game.image_local
+        : selectedGameImg;
+    callApi(
+      contextData,
+      "GET",
+      "/get-game-url?game_id=" + selectedGameId,
+      callbackLaunchGame,
+      null,
+    );
   };
 
   const callbackLaunchGame = (result) => {
@@ -276,7 +335,9 @@ const Home = () => {
         try {
           window.location.href = result.url;
         } catch (err) {
-          try { window.open(result.url, "_blank", "noopener,noreferrer"); } catch (err) { }
+          try {
+            window.open(result.url, "_blank", "noopener,noreferrer");
+          } catch (err) {}
         }
         // Reset game active state for mobile
         selectedGameId = null;
@@ -332,36 +393,38 @@ const Home = () => {
     } catch (err) {
       // ignore DOM errors
     }
-    try { getPage('casino'); } catch (e) { }
+    try {
+      getPage("casino");
+    } catch (e) {}
   };
 
   const handleProviderSelect = (provider, index = 0) => {
     setSelectedProvider(provider);
 
     if (provider) {
-      document.body.classList.add('hc-opened-search');
-      setTxtSearch(provider.name || '');
+      document.body.classList.add("hc-opened-search");
+      setTxtSearch(provider.name || "");
       setIsProviderSelected(true);
 
       setSearchGames([]);
 
-      fetchContent(
-        provider,
-        provider.id,
-        provider.table_name,
-        index,
-        true
-      );
+      fetchContent(provider, provider.id, provider.table_name, index, true);
     } else {
-      setTxtSearch('');
-      document.body.classList.remove('hc-opened-search');
+      setTxtSearch("");
+      document.body.classList.remove("hc-opened-search");
       setSearchGames([]);
 
       setIsProviderSelected(false);
 
       const firstCategory = categories[0];
       if (firstCategory) {
-        fetchContent(firstCategory, firstCategory.id, firstCategory.table_name, 0, true);
+        fetchContent(
+          firstCategory,
+          firstCategory.id,
+          firstCategory.table_name,
+          0,
+          true,
+        );
       }
     }
   };
@@ -385,14 +448,14 @@ const Home = () => {
               const game = {
                 id: gameData.id,
                 name: selectedGameName,
-                image_local: selectedGameImg?.replace(contextData.cdnUrl, '')
+                image_local: selectedGameImg?.replace(contextData.cdnUrl, ""),
               };
               launchGame(game, selectedGameType, selectedGameLauncher);
             } else if (selectedGameId) {
               const game = {
                 id: selectedGameId,
                 name: selectedGameName,
-                image_local: selectedGameImg?.replace(contextData.cdnUrl, '')
+                image_local: selectedGameImg?.replace(contextData.cdnUrl, ""),
               };
               launchGame(game, selectedGameType, selectedGameLauncher);
             }
@@ -402,7 +465,7 @@ const Home = () => {
               const game = {
                 id: selectedGameId,
                 name: selectedGameName,
-                image_local: selectedGameImg?.replace(contextData.cdnUrl, '')
+                image_local: selectedGameImg?.replace(contextData.cdnUrl, ""),
               };
               launchGame(game, selectedGameType, "tab");
             }
@@ -416,7 +479,7 @@ const Home = () => {
         />
       ) : (
         <>
-          {!selectedProvider &&
+          {!selectedProvider && (
             <>
               <Slideshow />
               <div className="index--container">
@@ -478,7 +541,7 @@ const Home = () => {
                 )}
               </div>
             </>
-          }
+          )}
 
           <ProviderContainer
             categories={categories}
@@ -486,7 +549,6 @@ const Home = () => {
             setSelectedProvider={setSelectedProvider}
             onProviderSelect={handleProviderSelect}
           />
-          <Footer isSlotsOnly={isSlotsOnly} />
         </>
       )}
     </div>

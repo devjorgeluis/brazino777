@@ -7,6 +7,7 @@ import './css/categoryBlock.css'
 import './css/vueLocaleBlock.css'
 import './css/vueSliderBlock.css'
 import './css/gamesBlock.css'
+import './css/footerGameCategoriesBlock.css'
 
 import App from './App.jsx'
 

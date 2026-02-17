@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import ImgFooterProvidersIcon from "/src/assets/svg/footerProvidersIcon.svg";
 
 const ProviderContainer = ({
     categories,
@@ -33,66 +34,64 @@ const ProviderContainer = ({
     }, []);
 
     return (
-        <div className="jel-games-providers-module">
-            <div className="container">
-                <div className="jel-games-providers-module-ex">
-                    <div className="jel-games-providers-module-title">
-                        <div className="jel-games-providers-module-title-icon"><i className="fa-solid fa-dice"></i></div>
-                        <div className="jel-games-providers-module-title-text">Proveedores</div>
-                    </div>
+        <div className="providers providers--show">
+            <h2 className="title wrapper-providers__block-item-title-see-more">
+                <span className="image-wrapper">
+                    <img src={ImgFooterProvidersIcon} alt="slots" loading="lazy" />
+                </span>
+                <div className="title__text">Proveedores</div>
+                <span className="title__slider">
+                    <span className="title__slider__left"></span>
+                    <span className="title__slider__right"></span>
+                </span>
+            </h2>
 
-                    <div className="jel-games-providers-module-body">
-                        <div className="jel-games-providers-module-body-ex">
-                            <Swiper
-                                ref={swiperRef}
-                                modules={[Navigation]}
-                                spaceBetween={0}
-                                slidesPerView={6}
-                                navigation={{
-                                    prevEl: prevRef.current,
-                                    nextEl: nextRef.current,
-                                }}
-                                breakpoints={{
-                                    320: { slidesPerView: 2 },
-                                    768: { slidesPerView: 4 },
-                                    1280: { slidesPerView: 6 },
-                                }}
-                                className="swiper-container swiper-initialized swiper-horizontal"
-                            >
-                                {
-                                    providers.map((provider, idx) => {
-                                        const imageUrl = provider.image_local
-                                            ? `${contextData.cdnUrl}${provider.image_local}`
-                                            : provider.image_url;
+            <div className="footer-game-categories-block">
+                <ul className="footer-game-categories-block__categories">
+                    <Swiper
+                        ref={swiperRef}
+                        modules={[Navigation]}
+                        spaceBetween={0}
+                        slidesPerView={7.8}
+                        navigation={{
+                            prevEl: prevRef.current,
+                            nextEl: nextRef.current,
+                        }}
+                        breakpoints={{
+                            320: { slidesPerView: 2 },
+                            768: { slidesPerView: 4 },
+                            1280: { slidesPerView: 7.8 },
+                        }}
+                    >
+                        {
+                            providers.map((provider, idx) => {
+                                const imageUrl = provider.image_local
+                                    ? `${contextData.cdnUrl}${provider.image_local}`
+                                    : provider.image_url;
 
-                                        return (
-                                            <SwiperSlide key={idx} className="swiper-slide">
-                                                <div className="jel-games-provider-art" onClick={(e) => handleClick(e, provider)}>
-                                                    <a className="jel-games-provider-art-ex cursor-pointer">
-                                                        {
-                                                            provider.image_local ? 
-                                                            <span className="jel-games-provider-art-figure" title={provider?.name} style={{backgroundImage: `url(${imageUrl})`}}></span> :
-                                                            <span className="jel-games-provider-art-figure jel-games-provider-art-text">{ provider?.name }</span>
-                                                        }
+                                return (
+                                    <SwiperSlide key={idx} className="swiper-slide">
+                                        <li key={idx} className="category" onClick={(e) => handleClick(e, provider)}>
+                                            <a>
+                                                <span className="image-wrapper">
+                                                    <img src={imageUrl} alt={provider?.name} />
+                                                </span>
+                                                <span className="text-wrapper">{ provider?.name }</span>
+                                            </a>
+                                        </li>
+                                    </SwiperSlide>
+                                )
+                            })
+                        }
 
-                                                        <span className="btn jel-games-provider-btn">Ver juegos</span>
-                                                    </a>
-                                                </div>
-                                            </SwiperSlide>
-                                        )
-                                    })
-                                }
-
-                                {
-                                    providers.length > 5 && <>
-                                        <div className="swiper-button-next" onClick={handleNext}><i className="fa-solid fa-angle-right"></i></div>
-                                        <div className="swiper-button-prev" onClick={handlePrev}><i className="fa-solid fa-angle-left"></i></div>  
-                                    </>
-                                }
-                            </Swiper>
-                        </div>
-                    </div>
-                </div>
+                        {
+                            providers.length > 5 && <>
+                                <div className="swiper-button-next" onClick={handleNext}><i className="fa-solid fa-angle-right"></i></div>
+                                <div className="swiper-button-prev" onClick={handlePrev}><i className="fa-solid fa-angle-left"></i></div>  
+                            </>
+                        }
+                    </Swiper>
+                </ul>
             </div>
         </div>
     );
