@@ -300,6 +300,7 @@ const Layout = () => {
                     <Header
                         isLogin={isLogin}
                         isMobile={isMobile}
+                        isSlotsOnly={isSlotsOnly}
                         userBalance={userBalance}
                         handleLoginClick={handleLoginClick}
                         handleLogoutClick={handleLogoutClick}

@@ -17,6 +17,10 @@ h1 {
     margin: .67em 0
 }
 
+a {
+    cursor: pointer;
+}
+
 hr {
     box-sizing: content-box;
     height: 0;
@@ -1664,7 +1668,7 @@ aside .side-menu__items li .item--help .item__image {
 aside .side-menu .auth-buttons {
     align-items: center;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin: 25px 0;
     padding: 0 13px
 }
@@ -1741,7 +1745,7 @@ aside .side-menu .side-menu__social .social-link:hover img {
 }
 
 aside .side-menu .close-menu {
-    background-image: url(/build/images/side-menu-close.a4b50eb8.svg);
+    background-image: url("../assets/svg/side-menu-close.svg");
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -1756,7 +1760,7 @@ aside .side-menu .close-menu {
 aside .side-menu .close-menu:active,
 aside .side-menu .close-menu:focus,
 aside .side-menu .close-menu:hover {
-    background-image: url(/build/images/side-menu-close-hover.9469e018.svg);
+    background-image: url("../assets/svg/side-menu-close-hover.svg");
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover
@@ -1970,7 +1974,7 @@ aside .side-menu .auth_mobile_info .side_profile a span {
     }
 
     aside .side-menu .close-menu:hover {
-        background-image: url(/build/images/side-menu-close-hover.9469e018.svg);
+        background-image: url("../assets/svg/side-menu-close-hover.svg");
         background-position: 50%;
         background-repeat: no-repeat;
         background-size: cover

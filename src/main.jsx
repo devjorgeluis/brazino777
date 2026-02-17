@@ -3,6 +3,8 @@ import AppContextProvider from './AppContext.jsx'
 
 import './css/app.css'
 import './css/main.css'
+import './css/categoryBlock.css'
+import './css/vueLocaleBlock.css'
 
 import App from './App.jsx'
 
