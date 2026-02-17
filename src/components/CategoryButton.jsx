@@ -1,20 +1,12 @@
 const CategoryButton = ({ name, image, active = false, onClick }) => {
-  const baseClass = "swiper-slide";
-  const baseSubClass = "filter-lc-ex";
-
-  const activeClass = active ? "swiper-slide-active" : "";
-  const activeSubClass = active ? "active" : "";
+  const baseClass = "category-block__item category-block__item-- category-block__item--carnival";
+  const activeClass = active ? "category-block__item--selected" : "";
 
   return (
-    <div className={`${baseClass} ${activeClass}`} onClick={onClick}>
-      <div className="filter-lc">
-        <div className={`${baseSubClass} ${activeSubClass}`}>
-          <img src={image} alt={name} width={35} />
-          <br />
-          {name}
-        </div>
-      </div>
-    </div>
+    <a className={`${baseClass} ${activeClass}`} onClick={onClick}>
+      <img src={image} alt={name} width={35} />
+      <span className="category-block__item__text">{name}</span>
+    </a>
   );
 };
 

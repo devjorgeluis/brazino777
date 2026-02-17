@@ -7,9 +7,17 @@ import { callApi } from "../utils/Utils";
 import Footer from "../components/Layout/Footer";
 import Slideshow from "../components/Home/Slideshow";
 import HotGameSlideshow from "../components/Home/HotGameSlideshow";
+import CategoryContainer from "../components/CategoryContainer";
 import ProviderContainer from "../components/ProviderContainer";
 import GameModal from "../components/Modal/GameModal";
 import LoginModal from "../components/Modal/LoginModal";
+
+import ImgCategoryHome from "/src/assets/svg/carnival-mask.svg";
+import ImgCategoryPopular from "/src/assets/svg/new.svg";
+import ImgCategoryBlackjack from "/src/assets/svg/blackjack.svg";
+import ImgCategoryRoulette from "/src/assets/svg/bingo.svg";
+import ImgCategoryCrash from "/src/assets/svg/crash.svg";
+import ImgCategoryMegaways from "/src/assets/svg/megaway.svg";
 
 let selectedGameId = null;
 let selectedGameType = null;
@@ -21,17 +29,19 @@ let pageCurrent = 0;
 const Home = () => {
   const { contextData } = useContext(AppContext);
   const { setShowFullDivLoading } = useContext(NavigationContext);
-  const { setTxtSearch, searchGames, setSearchGames, setIsProviderSelected } =
-    useContext(LayoutContext);
+  const { setTxtSearch, searchGames, setSearchGames, setIsProviderSelected } = useContext(LayoutContext);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [topGames, setTopGames] = useState([]);
   const [topArcade, setTopArcade] = useState([]);
   const [topCasino, setTopCasino] = useState([]);
   const [topLiveCasino, setTopLiveCasino] = useState([]);
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
+  const [tags, setTags] = useState([]);
   const [games, setGames] = useState([]);
   const [categories, setCategories] = useState([]);
   const [mainCategories, setMainCategories] = useState([]);
   const [selectedProvider, setSelectedProvider] = useState(null);
+  const [activeCategory, setActiveCategory] = useState({});
   const [pageData, setPageData] = useState({});
   const [gameUrl, setGameUrl] = useState("");
   const [categoryType, setCategoryType] = useState("");
@@ -70,6 +80,27 @@ const Home = () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
+
+  useEffect(() => {
+    const isSlotsOnlyFalse = isSlotsOnly === false || isSlotsOnly === "false";
+    let tmpTags = isSlotsOnlyFalse
+      ? [
+        { name: "Lobby", code: "home", image: ImgCategoryHome },
+        { name: "Hot", code: "hot", image: ImgCategoryPopular },
+        { name: "Jokers", code: "joker", image: ImgCategoryBlackjack },
+        { name: "Ruletas", code: "roulette", image: ImgCategoryRoulette },
+        { name: "Crash", code: "arcade", image: ImgCategoryCrash },
+        { name: "Megaways", code: "megaways", image: ImgCategoryMegaways },
+      ]
+      : [
+        { name: "Lobby", code: "home", image: ImgCategoryHome },
+        { name: "Hot", code: "hot", image: ImgCategoryPopular },
+        { name: "Jokers", code: "joker", image: ImgCategoryBlackjack },
+        { name: "Megaways", code: "megaways", image: ImgCategoryMegaways },
+      ];
+
+    setTags(tmpTags);
+  }, [isSlotsOnly]);
 
   useEffect(() => {
     selectedGameId = null;
@@ -429,8 +460,13 @@ const Home = () => {
     }
   };
 
+  const handleCategorySelect = (category) => {
+    setActiveCategory(category);
+    setSelectedProvider(null);
+  };
+
   return (
-    <div className="index--page">
+    <main className="index--page">
       {showLoginModal && (
         <LoginModal
           isOpen={showLoginModal}
@@ -482,6 +518,21 @@ const Home = () => {
           {!selectedProvider && (
             <>
               <Slideshow />
+              <CategoryContainer
+                categories={tags}
+                selectedCategoryIndex={selectedCategoryIndex}
+                onCategoryClick={(tag, _id, _table, index) => {
+                  if (window.location.hash !== `#${tag.code}`) {
+                    window.location.hash = `#${tag.code}`;
+                  } else {
+                    setSelectedCategoryIndex(index);
+                    getPage(tag.code);
+                  }
+                }}
+                onCategorySelect={handleCategorySelect}
+                isMobile={isMobile}
+                pageType="casino"
+              />
               <div className="index--container">
                 {topGames.length > 0 && (
                   <HotGameSlideshow
@@ -551,7 +602,7 @@ const Home = () => {
           />
         </>
       )}
-    </div>
+    </main>
   );
 };
 

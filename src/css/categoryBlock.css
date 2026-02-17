@@ -335,7 +335,7 @@ aside .category-block__item img {
 
 @media (min-width:1300px) {
     main>.category-block {
-        margin: 0 auto 40px
+        margin: 40px auto
     }
 }
 
