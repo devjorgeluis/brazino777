@@ -66,7 +66,7 @@ const SearchInput = ({
     };
 
     return (
-        <>
+        <div id="vue-search-form-block">
             {showLoginModal && (
                 <LoginModal
                     isOpen={showLoginModal}
@@ -134,7 +134,7 @@ const SearchInput = ({
                     </>
                 )}
             </form>
-        </>
+        </div>
     );
 };
 

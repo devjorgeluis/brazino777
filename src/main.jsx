@@ -10,6 +10,7 @@ import './css/gamesBlock.css'
 import './css/footerGameCategoriesBlock.css'
 import './css/gamesBlock.css'
 import './css/vueSearchFormBlock.css'
+import './css/vueProducerBlock.css'
 
 import App from './App.jsx'
 

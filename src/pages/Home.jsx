@@ -9,6 +9,7 @@ import Slideshow from "../components/Home/Slideshow";
 import HotGameSlideshow from "../components/Home/HotGameSlideshow";
 import CategoryContainer from "../components/CategoryContainer";
 import ProviderContainer from "../components/ProviderContainer";
+import ProviderSelect from "../components/ProviderSelect";
 import GameModal from "../components/Modal/GameModal";
 import LoginModal from "../components/Modal/LoginModal";
 import SearchInput from "../components/SearchInput";
@@ -587,6 +588,12 @@ const Home = () => {
                 pageType="casino"
               />
               <section className="search-and-producers">
+                <ProviderSelect
+                  categories={categories}
+                  selectedProvider={selectedProvider}
+                  setSelectedProvider={setSelectedProvider}
+                  onProviderSelect={handleProviderSelect}
+                />
                 <SearchInput
                   txtSearch={txtSearch}
                   setTxtSearch={setTxtSearch}
