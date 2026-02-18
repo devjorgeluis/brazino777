@@ -1,8 +1,6 @@
 import { useState, useContext, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { LayoutContext } from "./Layout/LayoutContext";
-import { AppContext } from "../AppContext";
-import LoginModal from "./Modal/LoginModal";
-import LoadApi from "./Loading/LoadApi";
 
 const SearchInput = ({
     txtSearch,
@@ -11,17 +9,21 @@ const SearchInput = ({
     search,
     isMobile,
     games,
-    isLoadingGames
+    isLoadingGames,
+    onSearchSubmit,
+    onGameSelect,
+    onClear
 }) => {
-    const { contextData } = useContext(AppContext);
-    const { setShowMobileSearch, isLogin, launchGameFromSearch } = useContext(LayoutContext);
-    const [showLoginModal, setShowLoginModal] = useState(false);
-
+    const { setShowMobileSearch } = useContext(LayoutContext);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-
     const searchContainerRef = useRef(null);
+    const suppressDropdownRef = useRef(false);
 
     useEffect(() => {
+        if (suppressDropdownRef.current) {
+            suppressDropdownRef.current = false;
+            return;
+        }
         const hasResultsOrLoading =
             (games?.length > 0 || isLoadingGames) ||
             (txtSearch.trim() !== "" && !isLoadingGames);
@@ -57,26 +59,17 @@ const SearchInput = ({
         }
     };
 
-    const handleLoginClick = () => {
-        setShowLoginModal(true);
-    };
-
-    const handleLoginConfirm = () => {
-        setShowLoginModal(false);
-    };
-
     return (
         <div id="vue-search-form-block">
-            {showLoginModal && (
-                <LoginModal
-                    isOpen={showLoginModal}
-                    onClose={() => setShowLoginModal(false)}
-                    onConfirm={handleLoginConfirm}
-                />
-            )}
             <form className={`form form--search ${txtSearch.trim() !== "" ? 'active' : ''}`} ref={searchContainerRef}>
                 <section className="form--search__input">
-                    <span className="close-search show" onClick={() => setIsDropdownVisible(false)}></span>
+                    <span
+                        className="close-search show"
+                        onClick={() => {
+                            setIsDropdownVisible(false),
+                                onClear();
+                        }}
+                    ></span>
                     <p>
                         <label htmlFor="search">
                             <input
@@ -95,16 +88,23 @@ const SearchInput = ({
                     </p>
                 </section>
                 <section className="form--search__submit">
-                    <button type="button" className="button button--search" aria-label="Search button"></button>
+                    <button
+                        type="button"
+                        className="button button--search"
+                        aria-label="Search button"
+                        onClick={() => {
+                            suppressDropdownRef.current = true;
+                            setIsDropdownVisible(false);
+                            onSearchSubmit();
+                        }}
+                    ></button>
                 </section>
                 {isDropdownVisible && (
                     <>
                         {(games?.length > 0 || isLoadingGames) && (
                             <>
                                 {isLoadingGames ? (
-                                    <div className="mt-3">
-                                        <LoadApi />
-                                    </div>
+                                    <></>
                                 ) : (
                                     <div className="form--search__games-search active">
                                         <div className="games-list">
@@ -114,11 +114,8 @@ const SearchInput = ({
                                                         key={idx}
                                                         className="game"
                                                         onClick={() => {
-                                                            if (isLogin) {
-                                                                launchGameFromSearch(game, "slot", "modal");
-                                                            } else {
-                                                                handleLoginClick();
-                                                            }
+                                                            suppressDropdownRef.current = true;
+                                                            onGameSelect(game);
                                                             setIsDropdownVisible(false);
                                                         }}
                                                     >

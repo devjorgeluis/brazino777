@@ -1,5 +1,4 @@
 import { useContext, useCallback, useRef, useEffect, useState } from 'react';
-import { useOutletContext } from "react-router-dom";
 import { AppContext } from '../../AppContext';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';

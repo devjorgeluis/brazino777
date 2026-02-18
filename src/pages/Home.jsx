@@ -1,18 +1,17 @@
 import { useContext, useState, useEffect, useRef } from "react";
-import { useOutletContext, useLocation } from "react-router-dom";
+import { useOutletContext, useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { NavigationContext } from "../components/Layout/NavigationContext";
 import { LayoutContext } from "../components/Layout/LayoutContext";
 import { callApi } from "../utils/Utils";
-import Footer from "../components/Layout/Footer";
 import Slideshow from "../components/Home/Slideshow";
 import HotGameSlideshow from "../components/Home/HotGameSlideshow";
 import CategoryContainer from "../components/CategoryContainer";
 import ProviderContainer from "../components/ProviderContainer";
 import ProviderSelect from "../components/ProviderSelect";
 import GameModal from "../components/Modal/GameModal";
-import LoginModal from "../components/Modal/LoginModal";
 import SearchInput from "../components/SearchInput";
+import GameCard from "../components/GameCard";
 
 import ImgCategoryHome from "/src/assets/svg/carnival-mask.svg";
 import ImgCategoryPopular from "/src/assets/svg/new.svg";
@@ -20,6 +19,7 @@ import ImgCategoryBlackjack from "/src/assets/svg/blackjack.svg";
 import ImgCategoryRoulette from "/src/assets/svg/bingo.svg";
 import ImgCategoryCrash from "/src/assets/svg/crash.svg";
 import ImgCategoryMegaways from "/src/assets/svg/megaway.svg";
+import LoadApi from "../components/Loading/LoadApi";
 
 let selectedGameId = null;
 let selectedGameType = null;
@@ -31,8 +31,8 @@ let pageCurrent = 0;
 const Home = () => {
   const { contextData } = useContext(AppContext);
   const { setShowFullDivLoading } = useContext(NavigationContext);
+  const { searchGames, setSearchGames } = useContext(LayoutContext);
   const [txtSearch, setTxtSearch] = useState("");
-  const [showLoginModal, setShowLoginModal] = useState(false);
   const [topGames, setTopGames] = useState([]);
   const [topArcade, setTopArcade] = useState([]);
   const [topCasino, setTopCasino] = useState([]);
@@ -48,6 +48,7 @@ const Home = () => {
   const [gameUrl, setGameUrl] = useState("");
   const [categoryType, setCategoryType] = useState("");
   const [isLoadingGames, setIsLoadingGames] = useState(false);
+  const [isSearchView, setIsSearchView] = useState(false);
   const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
   const refGameModal = useRef();
   const pendingPageRef = useRef(new Set());
@@ -57,6 +58,7 @@ const Home = () => {
   const location = useLocation();
   const searchRef = useRef(null);
   const [searchDelayTimer, setSearchDelayTimer] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -114,12 +116,25 @@ const Home = () => {
     selectedGameImg = null;
     setGameUrl("");
     setShouldShowGameModal(false);
-
+    setActiveCategory({});
     getPage("home");
     getStatus();
 
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  useEffect(() => {
+    const hashCode = location.hash.replace('#', '') || 'home';
+    const tagIndex = tags.findIndex(t => t.code === hashCode);
+
+    const finalIndex = tagIndex !== -1 ? tagIndex : 0;
+    const finalCode = tagIndex !== -1 ? hashCode : 'casino';
+
+    setSelectedCategoryIndex(finalIndex);
+
+    getPage(finalCode);
+    window.scrollTo(0, 0);
+  }, [location.pathname, location.hash, tags]);  
 
   const getStatus = () => {
     callApi(contextData, "GET", "/get-status", callbackGetStatus, null);
@@ -174,6 +189,7 @@ const Home = () => {
 
     setCategoryType(result.data?.page_group_type);
     setSelectedProvider(null);
+    setIsSearchView(false);
     setPageData(result.data);
 
     if (
@@ -202,8 +218,12 @@ const Home = () => {
           );
         });
       }
+      const firstCategory = result.data.categories[0];
+      setActiveCategory(firstCategory);
     } else if (result.data && result.data.page_group_type === "games") {
       setCategories(mainCategories.length > 0 ? mainCategories : []);
+      setGames(result.data.categories || []);
+      setActiveCategory(tags[tagIndex] || { name: page });
       configureImageSrc(result);
       pageCurrent = 1;
       setShowFullDivLoading(false);
@@ -213,11 +233,12 @@ const Home = () => {
   };
 
   const handleLoginClick = () => {
-    setShowLoginModal(true);
+    navigate("/login");
   };
 
-  const handleLoginConfirm = () => {
-    setShowLoginModal(false);
+  const loadMoreGames = () => {
+    if (!activeCategory) return;
+    fetchContent(activeCategory, activeCategory.id, activeCategory.table_name, selectedCategoryIndex, false);
   };
 
   const fetchContent = (
@@ -228,13 +249,16 @@ const Home = () => {
     resetCurrentPage,
     pageGroupCode,
   ) => {
-    let pageSize = 500;
+    let pageSize = 30;
     setIsLoadingGames(true);
 
     if (resetCurrentPage) {
       pageCurrent = 0;
       setGames([]);
     }
+
+    setActiveCategory(category);
+    setSelectedCategoryIndex(categoryIndex);
 
     const groupCode =
       categoryType === "categories"
@@ -424,110 +448,115 @@ const Home = () => {
   };
 
   const handleProviderSelect = (provider, index = 0) => {
+    setIsSearchView(false);
     setSelectedProvider(provider);
     setTxtSearch("");
+    window.scrollTo(0, 0);
 
-    if (provider) {
-      setActiveCategory(null);
-      setSelectedCategoryIndex(-1);
-
-      fetchContent(
-        provider,
-        provider.id,
-        provider.table_name,
-        index,
-        true
-      );
-    } else {
+    if (categories.length > 0 && provider) {
+      setActiveCategory(provider);
+      fetchContent(provider, provider.id, provider.table_name, index, true);
+    } else if (!provider && categories.length > 0) {
       const firstCategory = categories[0];
-      if (firstCategory) {
-        setActiveCategory(firstCategory);
-        setSelectedCategoryIndex(0);
-        fetchContent(firstCategory, firstCategory.id, firstCategory.table_name, 0, true);
-      }
+      setActiveCategory(firstCategory);
+      fetchContent(firstCategory, firstCategory.id, firstCategory.table_name, 0, true);
     }
   };
 
   const handleCategorySelect = (category) => {
+    setIsSearchView(false);  // ADD
     setActiveCategory(category);
+    setSelectedProvider(null);
+    setTxtSearch("");
+  };
+
+  const handleSearchClear = () => {
+    setTxtSearch("");
+    setGames([]);
+    setIsSearchView(false);
+    setIsLoadingGames(false);
+  };
+
+  const search = (e) => {
+    let keyword = e.target.value;
+    setTxtSearch(keyword);
+
+    if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
+      do_search(keyword);
+    } else {
+      if (
+        (e.keyCode >= 48 && e.keyCode <= 57) ||
+        (e.keyCode >= 65 && e.keyCode <= 90) ||
+        e.keyCode == 8 ||
+        e.keyCode == 46
+      ) {
+        do_search(keyword);
+      }
+    }
+
+    if (e.key === "Enter" || e.keyCode === 13 || e.key === "Escape" || e.keyCode === 27) {
+      searchRef.current?.blur();
+    }
+  };
+
+  const do_search = (keyword) => {
+    clearTimeout(searchDelayTimer);
+
+    if (keyword == "") {
+      setGames([]);
+      setIsLoadingGames(false);
+      setIsSearchView(false);
+      return;
+    }
+
+    setGames([]);
+    setIsLoadingGames(true);
+
+    let pageSize = 50;
+
+    let searchDelayTimerTmp = setTimeout(function () {
+      callApi(
+        contextData,
+        "GET",
+        "/search-content?keyword=" + txtSearch + "&page_group_code=" + "default_pages_home" + "&length=" + pageSize,
+        callbackSearch,
+        null
+      );
+    }, 1000);
+
+    setSearchDelayTimer(searchDelayTimerTmp);
+  };
+
+  const configureImageSrc = (result) => {
+    (result.content || []).forEach((element) => {
+      element.imageDataSrc = element.image_local !== null ? contextData.cdnUrl + element.image_local : element.image_url;
+    });
+  };
+
+  const callbackSearch = (result) => {
+    if (result.status === 500 || result.status === 422) {
+      // Handle error if needed
+    } else {
+      configureImageSrc(result);
+      setGames(result.content);
+    }
+    setIsLoadingGames(false);
+  };
+
+  const handleSearchSubmit = () => {
+    if (!txtSearch.trim()) return;
+    setIsSearchView(true);
     setSelectedProvider(null);
   };
 
-    const search = (e) => {
-        let keyword = e.target.value;
-        setTxtSearch(keyword);
-
-        if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
-            do_search(keyword);
-        } else {
-            if (
-                (e.keyCode >= 48 && e.keyCode <= 57) ||
-                (e.keyCode >= 65 && e.keyCode <= 90) ||
-                e.keyCode == 8 ||
-                e.keyCode == 46
-            ) {
-                do_search(keyword);
-            }
-        }
-
-        if (e.key === "Enter" || e.keyCode === 13 || e.key === "Escape" || e.keyCode === 27) {
-            searchRef.current?.blur();
-        }
-    };
-
-    const do_search = (keyword) => {
-        clearTimeout(searchDelayTimer);
-
-        if (keyword == "") {
-            setGames([]);
-            setIsLoadingGames(false);
-            return;
-        }
-
-        setGames([]);
-        setIsLoadingGames(true);
-
-        let pageSize = 50;
-
-        let searchDelayTimerTmp = setTimeout(function () {
-            callApi(
-                contextData,
-                "GET",
-                "/search-content?keyword=" + txtSearch + "&page_group_code=" + "default_pages_home" + "&length=" + pageSize,
-                callbackSearch,
-                null
-            );
-        }, 1000);
-
-        setSearchDelayTimer(searchDelayTimerTmp);
-    };
-
-    const configureImageSrc = (result) => {
-        (result.content || []).forEach((element) => {
-            element.imageDataSrc = element.image_local !== null ? contextData.cdnUrl + element.image_local : element.image_url;
-        });
-    };
-
-    const callbackSearch = (result) => {
-        if (result.status === 500 || result.status === 422) {
-            // Handle error if needed
-        } else {
-            configureImageSrc(result);
-            setGames(result.content);
-        }
-        setIsLoadingGames(false);
-    };
-
+  const handleGameSelect = (game) => {
+    setIsSearchView(true);
+    setSelectedProvider(null);
+    setGames([game]);
+  };
 
   return (
     <main className="index--page">
-      {showLoginModal && (
-        <LoginModal
-          isOpen={showLoginModal}
-          onClose={() => setShowLoginModal(false)}
-          onConfirm={handleLoginConfirm}
-        />
-      )}
       {shouldShowGameModal && selectedGameId !== null ? (
         <GameModal
           gameUrl={gameUrl}
@@ -569,101 +598,150 @@ const Home = () => {
         />
       ) : (
         <>
-          {!selectedProvider && (
-            <>
-              <Slideshow />
-              <CategoryContainer
-                categories={tags}
-                selectedCategoryIndex={selectedCategoryIndex}
-                onCategoryClick={(tag, _id, _table, index) => {
-                  if (window.location.hash !== `#${tag.code}`) {
-                    window.location.hash = `#${tag.code}`;
-                  } else {
-                    setSelectedCategoryIndex(index);
-                    getPage(tag.code);
-                  }
-                }}
-                onCategorySelect={handleCategorySelect}
-                isMobile={isMobile}
-                pageType="casino"
-              />
-              <section className="search-and-producers">
-                <ProviderSelect
-                  categories={categories}
-                  selectedProvider={selectedProvider}
-                  setSelectedProvider={setSelectedProvider}
-                  onProviderSelect={handleProviderSelect}
-                />
-                <SearchInput
-                  txtSearch={txtSearch}
-                  setTxtSearch={setTxtSearch}
-                  searchRef={searchRef}
-                  search={search}
-                  isMobile={isMobile}
-                  games={games}
-                  isLoadingGames={isLoadingGames}
-                />
-              </section>
-              <div className="index--container">
-                {topGames.length > 0 && (
-                  <HotGameSlideshow
-                    games={topGames}
-                    name="games"
-                    title="Juegos Populares"
-                    onGameClick={(game) => {
-                      if (isLogin) {
-                        launchGame(game, "slot", "modal");
-                      } else {
-                        handleLoginClick();
-                      }
-                    }}
-                  />
-                )}
-                {topCasino.length > 0 && isSlotsOnly === "false" && (
-                  <HotGameSlideshow
-                    games={topCasino}
-                    name="casino"
-                    title="Casino"
-                    onGameClick={(game) => {
-                      if (isLogin) {
-                        launchGame(game, "slot", "modal");
-                      } else {
-                        handleLoginClick();
-                      }
-                    }}
-                  />
-                )}
-                {topLiveCasino.length > 0 && isSlotsOnly === "false" && (
-                  <HotGameSlideshow
-                    games={topLiveCasino}
-                    name="liveCasino"
-                    title="Casino en Vivo"
-                    onGameClick={(game) => {
-                      if (isLogin) {
-                        launchGame(game, "slot", "modal");
-                      } else {
-                        handleLoginClick();
-                      }
-                    }}
-                  />
-                )}
-                {topArcade.length > 0 && isSlotsOnly === "false" && (
-                  <HotGameSlideshow
-                    games={topArcade}
-                    name="arcade"
-                    title="Crash Games"
-                    onGameClick={(game) => {
-                      if (isLogin) {
-                        launchGame(game, "slot", "modal");
-                      } else {
-                        handleLoginClick();
-                      }
-                    }}
-                  />
-                )}
-              </div>
-            </>
+          {!selectedProvider && !isSearchView && (
+            <Slideshow />
           )}
+
+          <CategoryContainer
+            categories={tags}
+            selectedCategoryIndex={selectedCategoryIndex}
+            onCategoryClick={(tag, _id, _table, index) => {
+              if (window.location.hash !== `#${tag.code}`) {
+                window.location.hash = `#${tag.code}`;
+              } else {
+                setSelectedCategoryIndex(index);
+                getPage(tag.code);
+              }
+            }}
+            onCategorySelect={handleCategorySelect}
+            isMobile={isMobile}
+            pageType="casino"
+          />
+          <section className="search-and-producers">
+            <ProviderSelect
+              categories={categories}
+              selectedProvider={selectedProvider}
+              setSelectedProvider={setSelectedProvider}
+              onProviderSelect={handleProviderSelect}
+            />
+            <SearchInput
+              txtSearch={txtSearch}
+              setTxtSearch={setTxtSearch}
+              searchRef={searchRef}
+              search={search}
+              isMobile={isMobile}
+              games={games}
+              isLoadingGames={isLoadingGames}
+              onSearchSubmit={handleSearchSubmit}
+              onGameSelect={handleGameSelect}
+              onClear={handleSearchClear}
+            />
+          </section>
+
+          {!selectedProvider && !isSearchView &&
+            <div className="index--container">
+              {topGames.length > 0 && (
+                <HotGameSlideshow
+                  games={topGames}
+                  name="games"
+                  title="Juegos Populares"
+                  onGameClick={(game) => {
+                    if (isLogin) {
+                      launchGame(game, "slot", "modal");
+                    } else {
+                      handleLoginClick();
+                    }
+                  }}
+                />
+              )}
+              {topCasino.length > 0 && isSlotsOnly === "false" && (
+                <HotGameSlideshow
+                  games={topCasino}
+                  name="casino"
+                  title="Casino"
+                  onGameClick={(game) => {
+                    if (isLogin) {
+                      launchGame(game, "slot", "modal");
+                    } else {
+                      handleLoginClick();
+                    }
+                  }}
+                />
+              )}
+              {topLiveCasino.length > 0 && isSlotsOnly === "false" && (
+                <HotGameSlideshow
+                  games={topLiveCasino}
+                  name="liveCasino"
+                  title="Casino en Vivo"
+                  onGameClick={(game) => {
+                    if (isLogin) {
+                      launchGame(game, "slot", "modal");
+                    } else {
+                      handleLoginClick();
+                    }
+                  }}
+                />
+              )}
+              {topArcade.length > 0 && isSlotsOnly === "false" && (
+                <HotGameSlideshow
+                  games={topArcade}
+                  name="arcade"
+                  title="Crash Games"
+                  onGameClick={(game) => {
+                    if (isLogin) {
+                      launchGame(game, "slot", "modal");
+                    } else {
+                      handleLoginClick();
+                    }
+                  }}
+                />
+              )}
+            </div>
+          }
+
+          {(selectedProvider?.name || isSearchView) && <div className="category--page">
+            <div className="category--games">
+              <div className="games-block-wrapper">
+                <h2 className="title title--aviatrix title--producers">
+                  <a className="title__text">
+                    {selectedProvider?.name || `Resultados: "${txtSearch}"`}
+                  </a>
+                  <a className="see-all" onClick={loadMoreGames}>
+                    Ver más
+                  </a>
+                </h2>
+
+                <div className="games-block">
+                  {games.map((game) => (
+                    <GameCard
+                      key={"live-popular" + game.id}
+                      id={game.id}
+                      provider={activeCategory?.name || 'Casino'}
+                      title={game.name}
+                      imageSrc={game.image_local !== null ? contextData.cdnUrl + game.image_local : game.image_url}
+                      onClick={() => (isLogin ? launchGame(game, "slot", "tab") : handleLoginClick())}
+                    />
+                  ))}
+                </div>
+
+                {isLoadingGames && <LoadApi />}
+
+                {
+                  !isSearchView &&
+                  <button
+                    onClick={loadMoreGames}
+                    type="button"
+                    className="button button--load-games"
+                  >
+                    <span className="button--load-games__text">
+                      Mostrar más
+                    </span>
+                  </button>
+                }
+              </div>
+            </div>
+          </div>
+          }
 
           <ProviderContainer
             categories={categories}

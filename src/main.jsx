@@ -3,6 +3,7 @@ import AppContextProvider from './AppContext.jsx'
 
 import './css/app.css'
 import './css/main.css'
+import './css/category.css'
 import './css/categoryBlock.css'
 import './css/vueLocaleBlock.css'
 import './css/vueSliderBlock.css'
