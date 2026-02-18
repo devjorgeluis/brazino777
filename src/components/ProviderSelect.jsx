@@ -126,7 +126,9 @@ const ProviderSelect = ({
                                         className={selectedProvider?.id === provider.id ? 'selected' : ''}
                                     >
                                         <a>
-                                            <img src={imageUrl} alt={provider?.name} />
+                                            {
+                                                imageUrl && <img src={imageUrl} alt={provider?.name} />
+                                            }
                                             <span>{provider?.name}</span>
                                         </a>
                                     </li>

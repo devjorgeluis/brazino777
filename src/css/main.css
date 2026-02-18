@@ -183,6 +183,10 @@
     padding-bottom: 40px
 }
 
+.index--page.live-casino-page {
+    padding-top: 40px;
+}
+
 .index--page .index--container {
     margin: 0 auto;
     max-width: 1280px

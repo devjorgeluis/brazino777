@@ -25,30 +25,30 @@ const ProviderContainer = ({
     };
 
     const handleNext = useCallback(() => {
-        if (!swiperRef.current || isNextDisabled) return;
+        if (!swiperRef.current?.swiper || isNextDisabled) return;
         swiperRef.current.swiper.slideNext();
     }, [isNextDisabled]);
 
     const handlePrev = useCallback(() => {
-        if (!swiperRef.current || isPrevDisabled) return;
+        if (!swiperRef.current?.swiper || isPrevDisabled) return;
         swiperRef.current.swiper.slidePrev();
     }, [isPrevDisabled]);
 
     const updateNavigationState = useCallback(() => {
-            if (!swiperRef.current) return;
-            
-            const swiper = swiperRef.current.swiper;
-            setIsPrevDisabled(swiper.isBeginning);
-            setIsNextDisabled(swiper.isEnd);
-        }, []);
-    
-    useEffect(() => {
-        if (!swiperRef.current) return;
-        
+        if (!swiperRef.current?.swiper) return;
+
         const swiper = swiperRef.current.swiper;
-        
+        setIsPrevDisabled(swiper.isBeginning);
+        setIsNextDisabled(swiper.isEnd);
+    }, []);
+
+    useEffect(() => {
+        if (!swiperRef.current?.swiper) return;
+
+        const swiper = swiperRef.current.swiper;
+
         updateNavigationState();
-        
+
         swiper.on('slideChange', updateNavigationState);
         swiper.on('reachBeginning', () => setIsPrevDisabled(true));
         swiper.on('reachEnd', () => setIsNextDisabled(true));
@@ -70,7 +70,7 @@ const ProviderContainer = ({
 
     useEffect(() => {
         setTimeout(updateNavigationState, 100);
-    }, [providers, updateNavigationState]);    
+    }, [providers, updateNavigationState]);
 
     return (
         <div className="providers providers--show">
@@ -82,15 +82,15 @@ const ProviderContainer = ({
                 {
                     providers.length > 5 &&
                     <span className="title__slider">
-                        <span 
-                            className={`title__slider__left ${isPrevDisabled ? 'disabled' : ''}`} 
+                        <span
+                            className={`title__slider__left ${isPrevDisabled ? 'disabled' : ''}`}
                             onClick={handlePrev}
                             role="button"
                             tabIndex={0}
                             aria-disabled={isPrevDisabled}
                         ></span>
-                        <span 
-                            className={`title__slider__right ${isNextDisabled ? 'disabled' : ''}`} 
+                        <span
+                            className={`title__slider__right ${isNextDisabled ? 'disabled' : ''}`}
                             onClick={handleNext}
                             role="button"
                             tabIndex={0}
@@ -128,7 +128,9 @@ const ProviderContainer = ({
                                         <li key={idx} className="category" onClick={(e) => handleClick(e, provider)}>
                                             <a>
                                                 <span className="image-wrapper">
-                                                    <img src={imageUrl} alt={provider?.name} />
+                                                    {
+                                                        imageUrl ? <img src={imageUrl} alt={provider?.name} /> : <>{provider?.name}</>
+                                                    }
                                                 </span>
                                                 <span className="text-wrapper">{provider?.name}</span>
                                             </a>

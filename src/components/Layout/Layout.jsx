@@ -9,7 +9,6 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import MobileFooter from "./MobileFooter";
-import LoginModal from "../Modal/LoginModal";
 import SupportModal from "../Modal/SupportModal";
 import MyProfileModal from "../Modal/MyProfileModal";
 import FullDivLoading from "../Loading/FullDivLoading";
@@ -34,7 +33,6 @@ const Layout = () => {
     const [topArcade, setTopArcade] = useState([]);
     const [topCasino, setTopCasino] = useState([]);
     const [topLiveCasino, setTopLiveCasino] = useState([]);
-    const [showLoginModal, setShowLoginModal] = useState(false);
     const [isSlotsOnly, setIsSlotsOnly] = useState("");
     const [showFullDivLoading, setShowFullDivLoading] = useState(false);
     const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
@@ -176,11 +174,7 @@ const Layout = () => {
     };
 
     const handleLoginClick = () => {
-        setShowLoginModal(true);
-    };
-
-    const handleLoginSuccess = (balance) => {
-        setUserBalance(balance);
+        navigate("/login");
     };
 
     const handleLogoutClick = () => {
@@ -286,14 +280,6 @@ const Layout = () => {
                 {!isSportsPage && <ChatButton />}
                 <ScrollButton />
 
-                {showLoginModal && (
-                    <LoginModal
-                        isMobile={isMobile}
-                        isOpen={showLoginModal}
-                        onClose={() => setShowLoginModal(false)}
-                        onLoginSuccess={handleLoginSuccess}
-                    />
-                )}
                 {showMyProfileModal && (
                     <MyProfileModal
                         isOpen={showMyProfileModal}

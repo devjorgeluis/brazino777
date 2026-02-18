@@ -8,7 +8,7 @@ import GameCard from "/src/components/GameCard";
 import HotGameSlideshow from "../components/Home/HotGameSlideshow";
 import GameModal from "../components/Modal/GameModal";
 import LoadApi from "../components/Loading/LoadApi";
-import ProviderContainer from "../components/Casino/ProviderContainer";
+import ProviderContainer from "../components/ProviderContainer";
 import CategoryContainer from "../components/CategoryContainer";
 import ProviderSelect from "../components/ProviderSelect";
 import SearchInput from "../components/SearchInput";
@@ -238,7 +238,7 @@ const Casino = () => {
   };
 
   const fetchContent = (category, categoryId, tableName, categoryIndex, resetCurrentPage, pageGroupCode) => {
-    let pageSize = 500;
+    let pageSize = 30;
     setIsLoadingGames(true);
 
     if (resetCurrentPage) {
@@ -470,7 +470,7 @@ const Casino = () => {
 
   return (
     <main className="index--page">
-      {shouldShowGameModal && selectedGameId !== null && !isMobile ? (
+      {shouldShowGameModal && selectedGameId !== null ? (
         <GameModal
           gameUrl={gameUrl}
           gameName={selectedGameName}

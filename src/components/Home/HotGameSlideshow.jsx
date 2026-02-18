@@ -21,17 +21,17 @@ const HotGameSlideshow = ({ games, name, title, onGameClick }) => {
     };
 
     const handleNext = useCallback(() => {
-        if (!swiperRef.current || isNextDisabled) return;
+        if (!swiperRef.current?.swiper || isNextDisabled) return;
         swiperRef.current.swiper.slideNext();
     }, [isNextDisabled]);
 
     const handlePrev = useCallback(() => {
-        if (!swiperRef.current || isPrevDisabled) return;
+        if (!swiperRef.current?.swiper || isPrevDisabled) return;
         swiperRef.current.swiper.slidePrev();
     }, [isPrevDisabled]);
 
     const updateNavigationState = useCallback(() => {
-        if (!swiperRef.current) return;
+        if (!swiperRef.current?.swiper) return;
         
         const swiper = swiperRef.current.swiper;
         setIsPrevDisabled(swiper.isBeginning);
@@ -39,7 +39,7 @@ const HotGameSlideshow = ({ games, name, title, onGameClick }) => {
     }, []);
 
     useEffect(() => {
-        if (!swiperRef.current) return;
+        if (!swiperRef.current?.swiper) return;
         
         const swiper = swiperRef.current.swiper;
         
@@ -74,22 +74,25 @@ const HotGameSlideshow = ({ games, name, title, onGameClick }) => {
                 <a className="title__text">
                     {title}
                 </a>
-                <span className="title__slider">
-                    <span 
-                        className={`title__slider__left ${isPrevDisabled ? 'disabled' : ''}`} 
-                        onClick={handlePrev}
-                        role="button"
-                        tabIndex={0}
-                        aria-disabled={isPrevDisabled}
-                    ></span>
-                    <span 
-                        className={`title__slider__right ${isNextDisabled ? 'disabled' : ''}`} 
-                        onClick={handleNext}
-                        role="button"
-                        tabIndex={0}
-                        aria-disabled={isNextDisabled}
-                    ></span>
-                </span>
+                {
+                    games.length > 5 && 
+                    <span className="title__slider">
+                        <span 
+                            className={`title__slider__left ${isPrevDisabled ? 'disabled' : ''}`} 
+                            onClick={handlePrev}
+                            role="button"
+                            tabIndex={0}
+                            aria-disabled={isPrevDisabled}
+                        ></span>
+                        <span 
+                            className={`title__slider__right ${isNextDisabled ? 'disabled' : ''}`} 
+                            onClick={handleNext}
+                            role="button"
+                            tabIndex={0}
+                            aria-disabled={isNextDisabled}
+                        ></span>
+                    </span>
+                }
             </h2>
             <div className="games-block">
                 {
