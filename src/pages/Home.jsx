@@ -49,6 +49,7 @@ const Home = () => {
   const [categoryType, setCategoryType] = useState("");
   const [isLoadingGames, setIsLoadingGames] = useState(false);
   const [isSearchView, setIsSearchView] = useState(false);
+  const [searchLabel, setSearchLabel] = useState("");
   const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
   const refGameModal = useRef();
   const pendingPageRef = useRef(new Set());
@@ -134,7 +135,7 @@ const Home = () => {
 
     getPage(finalCode);
     window.scrollTo(0, 0);
-  }, [location.pathname, location.hash, tags]);  
+  }, [location.pathname, location.hash, tags]);
 
   const getStatus = () => {
     callApi(contextData, "GET", "/get-status", callbackGetStatus, null);
@@ -190,6 +191,7 @@ const Home = () => {
     setCategoryType(result.data?.page_group_type);
     setSelectedProvider(null);
     setIsSearchView(false);
+    setSearchLabel("");
     setPageData(result.data);
 
     if (
@@ -223,7 +225,10 @@ const Home = () => {
     } else if (result.data && result.data.page_group_type === "games") {
       setCategories(mainCategories.length > 0 ? mainCategories : []);
       setGames(result.data.categories || []);
-      setActiveCategory(tags[tagIndex] || { name: page });
+
+      // const hashCode = location.hash.replace('#', '');
+      // const tagIndex = tags.findIndex(t => t.code === hashCode);
+      // setActiveCategory(tags[tagIndex] || { name: page });
       configureImageSrc(result);
       pageCurrent = 1;
       setShowFullDivLoading(false);
@@ -449,6 +454,7 @@ const Home = () => {
 
   const handleProviderSelect = (provider, index = 0) => {
     setIsSearchView(false);
+    setSearchLabel("");
     setSelectedProvider(provider);
     setTxtSearch("");
     window.scrollTo(0, 0);
@@ -464,7 +470,8 @@ const Home = () => {
   };
 
   const handleCategorySelect = (category) => {
-    setIsSearchView(false);  // ADD
+    setIsSearchView(false);
+    setSearchLabel("");
     setActiveCategory(category);
     setSelectedProvider(null);
     setTxtSearch("");
@@ -472,6 +479,7 @@ const Home = () => {
 
   const handleSearchClear = () => {
     setTxtSearch("");
+    setSearchLabel("");
     setGames([]);
     setIsSearchView(false);
     setIsLoadingGames(false);
@@ -506,6 +514,7 @@ const Home = () => {
       setGames([]);
       setIsLoadingGames(false);
       setIsSearchView(false);
+      setSearchLabel("");
       return;
     }
 
@@ -545,11 +554,15 @@ const Home = () => {
 
   const handleSearchSubmit = () => {
     if (!txtSearch.trim()) return;
+    setSearchLabel(txtSearch);
     setIsSearchView(true);
     setSelectedProvider(null);
   };
 
   const handleGameSelect = (game) => {
+    const gameName = game.name || game.title || "Juego";
+    setSearchLabel(gameName);
+    setTxtSearch("");
     setIsSearchView(true);
     setSelectedProvider(null);
     setGames([game]);
@@ -704,7 +717,7 @@ const Home = () => {
               <div className="games-block-wrapper">
                 <h2 className="title title--aviatrix title--producers">
                   <a className="title__text">
-                    {selectedProvider?.name || `Resultados: "${txtSearch}"`}
+                    {selectedProvider?.name || `Resultados: "${searchLabel}"`}
                   </a>
                   <a className="see-all" onClick={loadMoreGames}>
                     Ver más
