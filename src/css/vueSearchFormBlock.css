@@ -1,0 +1,304 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+.search-and-producers {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-inline: auto;
+    position: relative;
+    width: calc(100% - 20px);
+    z-index: 10
+}
+
+#vue-search-form-block {
+    height: 40px;
+    margin-left: 10px;
+    min-width: 40px
+}
+
+#vue-search-form-block[v-cloak] {
+    border: 2px solid #035d03;
+    border-radius: 50px
+}
+
+.form--search {
+    height: 40px;
+    position: relative;
+    width: 40px
+}
+
+.form--search__input {
+    display: none;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    z-index: 5
+}
+
+.form--search__input input {
+    -webkit-text-fill-color: #3b3b3b;
+    border: 2px solid #035d03;
+    border-radius: 50px;
+    color: #3b3b3b;
+    display: block;
+    font-family: roboto-regular-webfont, Sans-serif;
+    font-size: 14px;
+    height: 40px;
+    margin: 0;
+    padding-left: 15px;
+    position: relative;
+    width: 100%;
+    z-index: 10
+}
+
+.form--search__input input::-moz-placeholder {
+    -webkit-text-fill-color: #b8b8b8;
+    color: red !important;
+    color: #b8b8b8;
+    font-family: roboto-regular-webfont, Sans-serif;
+    font-size: 14px;
+    line-height: 16px
+}
+
+.form--search__input input::placeholder {
+    -webkit-text-fill-color: #b8b8b8;
+    color: red !important;
+    color: #b8b8b8;
+    font-family: roboto-regular-webfont, Sans-serif;
+    font-size: 14px;
+    line-height: 16px
+}
+
+.form--search .close-search {
+    cursor: pointer;
+    height: 20px;
+    left: auto;
+    margin: 0 !important;
+    opacity: 1;
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    z-index: 11
+}
+
+.form--search .close-search.show {
+    display: block
+}
+
+.form--search .close-search:after,
+.form--search .close-search:before {
+    background: #005b00;
+    border: 2px solid #005b00;
+    border-radius: 2px;
+    content: "";
+    height: 100%;
+    position: absolute
+}
+
+.form--search .close-search:before {
+    transform: translateX(7px) rotate(-45deg)
+}
+
+.form--search .close-search:after {
+    transform: translateX(7px) rotate(45deg)
+}
+
+.form--search .close-search:hover {
+    filter: invert(29%) sepia(100%) saturate(1590%) hue-rotate(93deg) brightness(86%) contrast(97%)
+}
+
+.form--search__submit {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 6
+}
+
+.form--search__submit button {
+    background-color: #035d03;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: block;
+    height: 40px;
+    position: relative;
+    width: 40px;
+    z-index: 2
+}
+
+.form--search__submit button:after {
+    background-image: url("../assets/svg/search-new.svg");
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    content: "";
+    height: 15px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 15px
+}
+
+.form--search__submit button:hover:after {
+    filter: invert(24%) sepia(30%) saturate(6026%) hue-rotate(1deg) brightness(109%) contrast(102%)
+}
+
+.form--search__games-search {
+    align-items: flex-start;
+    background-color: #232323;
+    border-radius: 0 0 10px 10px;
+    display: none;
+    flex-direction: column;
+    max-height: 265px;
+    padding: 25px 20px 15px;
+    position: absolute;
+    text-align: left;
+    top: 25px;
+    width: 100%;
+    z-index: 0
+}
+
+.form--search__games-search.active {
+    display: flex
+}
+
+.form--search__games-search .games-list {
+    height: 100%;
+    max-height: 210px;
+    overflow-y: scroll;
+    width: 100%;
+    word-break: break-word;
+    z-index: 4
+}
+
+.form--search__games-search .games-list::-webkit-scrollbar {
+    width: 1px
+}
+
+.form--search__games-search .games-list::-webkit-scrollbar-thumb {
+    background-color: #ffba00;
+    border-radius: 10px
+}
+
+.form--search__games-search .games-list::-webkit-scrollbar-track {
+    background-color: #dcdcdc;
+    border-radius: 10px
+}
+
+.form--search__games-search .games-list a {
+    -webkit-text-fill-color: #fff;
+    color: #fff;
+    display: block;
+    font-family: roboto-regular-webfont;
+    font-size: 14px;
+    line-height: 30px;
+    text-decoration: none;
+    text-transform: capitalize
+}
+
+.form--search__games-search .games-list .game-not-found {
+    -webkit-text-fill-color: #fff;
+    color: #fff
+}
+
+.form--search__games-search--hidden {
+    display: none
+}
+
+.form--expand {
+    height: 40px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100
+}
+
+.form--expand .form--search__input {
+    display: block
+}
+
+@media (min-width: 800px) {
+    .search-and-producers {
+        width: calc(100% - 20px)
+    }
+}
+
+@media (min-width: 1000px) {
+    .search-and-producers {
+        margin-bottom: 40px;
+        max-width: 1280px;
+        padding: 0
+    }
+
+    #vue-search-form-block {
+        flex: 1 1 60%;
+        height: 50px;
+        margin-left: 15px
+    }
+
+    .form--search {
+        height: 50px;
+        position: relative;
+        width: 100%
+    }
+
+    .form--search__input {
+        display: block;
+        height: 50px
+    }
+
+    .form--search__input input {
+        border: 2px solid #035d03;
+        border-radius: 30px;
+        display: block;
+        height: 50px;
+        padding: 0 45px 0 30px;
+        position: relative
+    }
+
+    .form--search__submit button {
+        height: 50px;
+        width: 50px
+    }
+
+    .form--search__submit button:after {
+        height: 20px;
+        width: 20px
+    }
+
+    .form--search .close-search {
+        display: none;
+        right: 60px
+    }
+
+    .form--search .close-search.show {
+        display: none
+    }
+
+    .form--search.active .close-search {
+        display: block
+    }
+
+    .form--search .form--search__games-search {
+        padding: 40px 20px 15px
+    }
+
+    .form--search .form--search__games-search .games-list .game:hover {
+        -webkit-text-fill-color: #ffba00;
+        color: #ffba00
+    }
+
+    .form--expand {
+        left: unset;
+        top: unset
+    }
+}

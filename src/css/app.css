@@ -5303,3 +5303,7 @@ aside .aside__balance .balance {
     padding-right: 10px;
     text-transform: uppercase
 }
+
+.mt-3 {
+    margin-top: 1rem;
+}

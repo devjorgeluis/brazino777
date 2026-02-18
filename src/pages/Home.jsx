@@ -11,6 +11,7 @@ import CategoryContainer from "../components/CategoryContainer";
 import ProviderContainer from "../components/ProviderContainer";
 import GameModal from "../components/Modal/GameModal";
 import LoginModal from "../components/Modal/LoginModal";
+import SearchInput from "../components/SearchInput";
 
 import ImgCategoryHome from "/src/assets/svg/carnival-mask.svg";
 import ImgCategoryPopular from "/src/assets/svg/new.svg";
@@ -29,7 +30,7 @@ let pageCurrent = 0;
 const Home = () => {
   const { contextData } = useContext(AppContext);
   const { setShowFullDivLoading } = useContext(NavigationContext);
-  const { setTxtSearch, searchGames, setSearchGames, setIsProviderSelected } = useContext(LayoutContext);
+  const [txtSearch, setTxtSearch] = useState("");
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [topGames, setTopGames] = useState([]);
   const [topArcade, setTopArcade] = useState([]);
@@ -53,6 +54,8 @@ const Home = () => {
   const lastProcessedPageRef = useRef({ page: null, ts: 0 });
   const { isSlotsOnly, isLogin, isMobile } = useOutletContext();
   const location = useLocation();
+  const searchRef = useRef(null);
+  const [searchDelayTimer, setSearchDelayTimer] = useState();
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -325,16 +328,6 @@ const Home = () => {
     }
   };
 
-  const configureImageSrc = (result) => {
-    (result.content || []).forEach((element) => {
-      let imageDataSrc = element.image_url;
-      if (element.image_local !== null) {
-        imageDataSrc = contextData.cdnUrl + element.image_local;
-      }
-      element.imageDataSrc = imageDataSrc;
-    });
-  };
-
   const launchGame = (game, type, launcher) => {
     // Only show modal when explicitly using modal launcher
     if (launcher === "modal") {
@@ -368,7 +361,7 @@ const Home = () => {
         } catch (err) {
           try {
             window.open(result.url, "_blank", "noopener,noreferrer");
-          } catch (err) {}
+          } catch (err) { }
         }
         // Reset game active state for mobile
         selectedGameId = null;
@@ -426,36 +419,30 @@ const Home = () => {
     }
     try {
       getPage("casino");
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const handleProviderSelect = (provider, index = 0) => {
     setSelectedProvider(provider);
+    setTxtSearch("");
 
     if (provider) {
-      document.body.classList.add("hc-opened-search");
-      setTxtSearch(provider.name || "");
-      setIsProviderSelected(true);
+      setActiveCategory(null);
+      setSelectedCategoryIndex(-1);
 
-      setSearchGames([]);
-
-      fetchContent(provider, provider.id, provider.table_name, index, true);
+      fetchContent(
+        provider,
+        provider.id,
+        provider.table_name,
+        index,
+        true
+      );
     } else {
-      setTxtSearch("");
-      document.body.classList.remove("hc-opened-search");
-      setSearchGames([]);
-
-      setIsProviderSelected(false);
-
       const firstCategory = categories[0];
       if (firstCategory) {
-        fetchContent(
-          firstCategory,
-          firstCategory.id,
-          firstCategory.table_name,
-          0,
-          true,
-        );
+        setActiveCategory(firstCategory);
+        setSelectedCategoryIndex(0);
+        fetchContent(firstCategory, firstCategory.id, firstCategory.table_name, 0, true);
       }
     }
   };
@@ -464,6 +451,72 @@ const Home = () => {
     setActiveCategory(category);
     setSelectedProvider(null);
   };
+
+    const search = (e) => {
+        let keyword = e.target.value;
+        setTxtSearch(keyword);
+
+        if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
+            do_search(keyword);
+        } else {
+            if (
+                (e.keyCode >= 48 && e.keyCode <= 57) ||
+                (e.keyCode >= 65 && e.keyCode <= 90) ||
+                e.keyCode == 8 ||
+                e.keyCode == 46
+            ) {
+                do_search(keyword);
+            }
+        }
+
+        if (e.key === "Enter" || e.keyCode === 13 || e.key === "Escape" || e.keyCode === 27) {
+            searchRef.current?.blur();
+        }
+    };
+
+    const do_search = (keyword) => {
+        clearTimeout(searchDelayTimer);
+
+        if (keyword == "") {
+            setGames([]);
+            setIsLoadingGames(false);
+            return;
+        }
+
+        setGames([]);
+        setIsLoadingGames(true);
+
+        let pageSize = 50;
+
+        let searchDelayTimerTmp = setTimeout(function () {
+            callApi(
+                contextData,
+                "GET",
+                "/search-content?keyword=" + txtSearch + "&page_group_code=" + "default_pages_home" + "&length=" + pageSize,
+                callbackSearch,
+                null
+            );
+        }, 1000);
+
+        setSearchDelayTimer(searchDelayTimerTmp);
+    };
+
+    const configureImageSrc = (result) => {
+        (result.content || []).forEach((element) => {
+            element.imageDataSrc = element.image_local !== null ? contextData.cdnUrl + element.image_local : element.image_url;
+        });
+    };
+
+    const callbackSearch = (result) => {
+        if (result.status === 500 || result.status === 422) {
+            // Handle error if needed
+        } else {
+            configureImageSrc(result);
+            setGames(result.content);
+        }
+        setIsLoadingGames(false);
+    };
+
 
   return (
     <main className="index--page">
@@ -533,6 +586,17 @@ const Home = () => {
                 isMobile={isMobile}
                 pageType="casino"
               />
+              <section className="search-and-producers">
+                <SearchInput
+                  txtSearch={txtSearch}
+                  setTxtSearch={setTxtSearch}
+                  searchRef={searchRef}
+                  search={search}
+                  isMobile={isMobile}
+                  games={games}
+                  isLoadingGames={isLoadingGames}
+                />
+              </section>
               <div className="index--container">
                 {topGames.length > 0 && (
                   <HotGameSlideshow
