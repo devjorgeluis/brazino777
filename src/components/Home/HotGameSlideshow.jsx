@@ -12,7 +12,6 @@ const HotGameSlideshow = ({ games, name, title, onGameClick }) => {
     const swiperRef = useRef(null);
     const prevRef = useRef(null);
     const nextRef = useRef(null);
-    const { isMobile } = useOutletContext();
     const [isPrevDisabled, setIsPrevDisabled] = useState(true);
     const [isNextDisabled, setIsNextDisabled] = useState(false);
 

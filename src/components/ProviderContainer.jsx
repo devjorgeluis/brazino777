@@ -1,4 +1,4 @@
-import { useContext, useCallback, useRef } from "react";
+import { useContext, useCallback, useState, useEffect, useRef } from "react";
 import { AppContext } from "../AppContext";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -15,6 +15,8 @@ const ProviderContainer = ({
     const swiperRef = useRef(null);
     const prevRef = useRef(null);
     const nextRef = useRef(null);
+    const [isPrevDisabled, setIsPrevDisabled] = useState(true);
+    const [isNextDisabled, setIsNextDisabled] = useState(false);
 
     const providers = categories.filter((cat) => cat.code && cat.code !== "home");
 
@@ -24,14 +26,52 @@ const ProviderContainer = ({
     };
 
     const handleNext = useCallback(() => {
-        if (!swiperRef.current) return;
+        if (!swiperRef.current || isNextDisabled) return;
         swiperRef.current.swiper.slideNext();
-    }, []);
+    }, [isNextDisabled]);
 
     const handlePrev = useCallback(() => {
-        if (!swiperRef.current) return;
+        if (!swiperRef.current || isPrevDisabled) return;
         swiperRef.current.swiper.slidePrev();
-    }, []);
+    }, [isPrevDisabled]);
+
+    const updateNavigationState = useCallback(() => {
+            if (!swiperRef.current) return;
+            
+            const swiper = swiperRef.current.swiper;
+            setIsPrevDisabled(swiper.isBeginning);
+            setIsNextDisabled(swiper.isEnd);
+        }, []);
+    
+    useEffect(() => {
+        if (!swiperRef.current) return;
+        
+        const swiper = swiperRef.current.swiper;
+        
+        updateNavigationState();
+        
+        swiper.on('slideChange', updateNavigationState);
+        swiper.on('reachBeginning', () => setIsPrevDisabled(true));
+        swiper.on('reachEnd', () => setIsNextDisabled(true));
+        swiper.on('fromEdge', () => {
+            setIsPrevDisabled(false);
+            setIsNextDisabled(false);
+        });
+
+        return () => {
+            swiper.off('slideChange', updateNavigationState);
+            swiper.off('reachBeginning', () => setIsPrevDisabled(true));
+            swiper.off('reachEnd', () => setIsNextDisabled(true));
+            swiper.off('fromEdge', () => {
+                setIsPrevDisabled(false);
+                setIsNextDisabled(false);
+            });
+        };
+    }, [updateNavigationState]);
+
+    useEffect(() => {
+        setTimeout(updateNavigationState, 100);
+    }, [providers, updateNavigationState]);    
 
     return (
         <div className="providers providers--show">
@@ -40,10 +80,25 @@ const ProviderContainer = ({
                     <img src={ImgFooterProvidersIcon} alt="slots" loading="lazy" />
                 </span>
                 <div className="title__text">Proveedores</div>
-                <span className="title__slider">
-                    <span className="title__slider__left"></span>
-                    <span className="title__slider__right"></span>
-                </span>
+                {
+                    providers.length > 5 &&
+                    <span className="title__slider">
+                        <span 
+                            className={`title__slider__left ${isPrevDisabled ? 'disabled' : ''}`} 
+                            onClick={handlePrev}
+                            role="button"
+                            tabIndex={0}
+                            aria-disabled={isPrevDisabled}
+                        ></span>
+                        <span 
+                            className={`title__slider__right ${isNextDisabled ? 'disabled' : ''}`} 
+                            onClick={handleNext}
+                            role="button"
+                            tabIndex={0}
+                            aria-disabled={isNextDisabled}
+                        ></span>
+                    </span>
+                }
             </h2>
 
             <div className="footer-game-categories-block">
@@ -51,15 +106,15 @@ const ProviderContainer = ({
                     <Swiper
                         ref={swiperRef}
                         modules={[Navigation]}
-                        spaceBetween={0}
+                        spaceBetween={15}
                         slidesPerView={7.8}
                         navigation={{
                             prevEl: prevRef.current,
                             nextEl: nextRef.current,
                         }}
                         breakpoints={{
-                            320: { slidesPerView: 2 },
-                            768: { slidesPerView: 4 },
+                            320: { slidesPerView: 2.8 },
+                            768: { slidesPerView: 5.8 },
                             1280: { slidesPerView: 7.8 },
                         }}
                     >
@@ -76,19 +131,12 @@ const ProviderContainer = ({
                                                 <span className="image-wrapper">
                                                     <img src={imageUrl} alt={provider?.name} />
                                                 </span>
-                                                <span className="text-wrapper">{ provider?.name }</span>
+                                                <span className="text-wrapper">{provider?.name}</span>
                                             </a>
                                         </li>
                                     </SwiperSlide>
                                 )
                             })
-                        }
-
-                        {
-                            providers.length > 5 && <>
-                                <div className="swiper-button-next" onClick={handleNext}><i className="fa-solid fa-angle-right"></i></div>
-                                <div className="swiper-button-prev" onClick={handlePrev}><i className="fa-solid fa-angle-left"></i></div>  
-                            </>
                         }
                     </Swiper>
                 </ul>

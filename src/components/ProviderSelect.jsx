@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { AppContext } from "../AppContext";
 
 const ProviderSelect = ({
@@ -7,11 +7,15 @@ const ProviderSelect = ({
     selectedProvider
 }) => {
     const { contextData } = useContext(AppContext);
-    const providers = categories.filter((cat) => cat.code && cat.code !== "home");
+    
+    const providers = useMemo(() => 
+        categories.filter((cat) => cat.code && cat.code !== "home"),
+        [categories]
+    );
     
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
-    const [filteredProviders, setFilteredProviders] = useState(providers);
+    const [filteredProviders, setFilteredProviders] = useState([]);
     const dropdownRef = useRef(null);
 
     useEffect(() => {

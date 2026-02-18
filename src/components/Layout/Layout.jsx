@@ -7,13 +7,15 @@ import { NavigationContext } from "./NavigationContext";
 import { callApi } from "../../utils/Utils";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import Footer from "./Footer";
 import MobileFooter from "./MobileFooter";
 import LoginModal from "../Modal/LoginModal";
 import SupportModal from "../Modal/SupportModal";
 import MyProfileModal from "../Modal/MyProfileModal";
-// import HistoryModal from "../Modal/HistoryModal";
 import FullDivLoading from "../Loading/FullDivLoading";
 import GameModal from "../Modal/GameModal";
+import ChatButton from "../ChatButton";
+import ScrollButton from "../ScrollButton";
 
 const Layout = () => {
     const { contextData } = useContext(AppContext);
@@ -281,6 +283,9 @@ const Layout = () => {
                 value={{ selectedPage, setSelectedPage, getPage, showFullDivLoading, setShowFullDivLoading }}
             >
                 <FullDivLoading show={showFullDivLoading} />
+                {!isSportsPage && <ChatButton />}
+                <ScrollButton />
+
                 {showLoginModal && (
                     <LoginModal
                         isMobile={isMobile}
@@ -324,6 +329,10 @@ const Layout = () => {
                         setIsUserMenuOpen={setIsUserMenuOpen}
                     />
                     <Outlet context={{ isSlotsOnly, isLogin, isMobile, topGames, topArcade, topCasino, topLiveCasino }} />
+
+                    <Footer
+                        isSlotsOnly={isSlotsOnly}
+                    />
                 </div>
 
                 {shouldShowGameModal && gameModalData.gameUrl && (

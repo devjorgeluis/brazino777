@@ -581,7 +581,6 @@
 
     .games-block .games-block__game {
         height: 253px;
-        width: 190px
     }
 
     .games-block .games-block__game:hover .game-title-wrapper {

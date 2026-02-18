@@ -22,6 +22,7 @@ main>.category-block--align-center {
     main>.category-block {
         justify-content: space-between;
         margin-bottom: 40px;
+        margin-top: 20px;
         margin-inline: 20px;
         max-width: 1280px;
         padding: 1px 0

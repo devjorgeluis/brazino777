@@ -1046,10 +1046,8 @@ footer .footer--container .payment-logos.payment-logos__other .logo-item.logo-it
 footer .footer--container .footer-content_nav {
     grid-column-gap: 10px;
     grid-row-gap: 30px;
-    border-bottom: 1px solid #3b3b3b;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    padding-bottom: 30px;
     position: relative
 }
 
@@ -1258,7 +1256,7 @@ footer .footer_license-text--default {
     footer .footer_license-text {
         font-size: 12px;
         line-height: 16px;
-        margin: 30px 0 40px;
+        margin: 0 0 40px;
         padding-inline: 10px
     }
 }
@@ -3068,7 +3066,7 @@ body:has(#vue-mobile-menu) .chat-button {
 }
 
 .scroll-top-button:before {
-    background-image: url(/build/images/scrollTopArrow.9aad31aa.svg);
+    background-image: url("../assets/svg/scrollTopArrow.svg");
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;

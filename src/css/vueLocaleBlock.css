@@ -174,3 +174,175 @@
         padding: 10px 30px
     }
 }
+
+.globalClass_662e {
+    position: absolute!important;
+    right: 350px!important
+}
+
+.chat-button {
+    background: linear-gradient(0deg,#ffe600,#ffb800);
+    background-size: contain;
+    border-radius: 50%;
+    bottom: 50px;
+    box-shadow: inset 0 -5px 0 #f90,0 3px 6px 0 rgba(0,0,0,.75);
+    cursor: pointer;
+    display: initial!important;
+    height: 52px;
+    min-height: 52px;
+    min-width: 50px;
+    position: fixed;
+    right: 15px;
+    transition: background 1s ease-out;
+    width: 50px;
+    z-index: 110
+}
+
+.chat-button .loader-ring,.chat-button.spin:before {
+    display: none
+}
+
+.chat-button.hidden {
+    display: none!important
+}
+
+.chat-button:before {
+    background-image: url("../assets/svg/support_chat_icon2.svg");
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    content: "";
+    height: 27px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%,-55%);
+    width: 27px
+}
+
+.chat-button:hover {
+    background: linear-gradient(180deg,#ffe600,#ffb800);
+    transition: background 1s ease-out
+}
+
+.chat-button.spin {
+    background: linear-gradient(95deg,#faca17 20%,#ff9c48 80%),#ff9c48
+}
+
+.chat-button.spin .loader-ring {
+    display: block;
+    height: 30px;
+    left: 50%;
+    margin: -15px;
+    position: relative;
+    top: 50%;
+    width: 30px
+}
+
+.chat-button.spin .loader-ring__light {
+    animation: rotate-360 2s linear infinite;
+    border-radius: 30px;
+    box-shadow: inset 0 4px 0 #fff;
+    height: 30px;
+    width: 30px
+}
+
+.chat-button.spin .loader-ring__track {
+    border-radius: 30px;
+    box-shadow: inset 0 0 10px 4px hsla(0,0%,100%,.3);
+    height: 30px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 30px
+}
+
+@keyframes rotate-360 {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    to {
+        transform: rotate(1turn)
+    }
+}
+
+@media (min-width: 600px) {
+    .chat-button {
+        bottom:54px;
+        cursor: pointer;
+        height: 60px;
+        min-height: 60px;
+        min-width: 58px;
+        right: 35px;
+        width: 58px
+    }
+}
+
+#jvlabelWrap,.__jivoCallbackBtn,.__jivoMobileButton,.wrap_240._show_bc1,.wrap_65c,.wrap_c06 {
+    display: none!important
+}
+
+.chat-frame {
+    background: #fff;
+    bottom: 0;
+    display: none;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    width: 100%;
+    z-index: 100
+}
+
+.chat-frame--show {
+    display: block
+}
+
+@media (min-width: 600px) {
+    .chat-frame {
+        background:#fff;
+        border-radius: 10px;
+        bottom: 20px;
+        box-shadow: 0 20px 40px 8px rgba(0,0,0,.25);
+        height: 500px;
+        right: 20px;
+        width: 450px
+    }
+
+    .chat-frame:before {
+        display: none
+    }
+}
+
+.chat-frame iframe {
+    height: 100%;
+    width: 100%
+}
+
+.chat-frame-close {
+    background-color: unset;
+    background-image: url(/build/images/chat-close-mobile.a18b702c.svg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 15px;
+    border: none;
+    cursor: pointer;
+    filter: brightness(100) drop-shadow(1px 1px 1px black);
+    height: 40px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 40px
+}
+
+@media (min-width: 600px) {
+    .chat-frame-close {
+        background-image:url(/build/images/chat-close.54efffbd.svg);
+        background-size: contain;
+        filter: unset;
+        height: 28px;
+        left: -35px;
+        top: 0;
+        width: 28px
+    }
+}
