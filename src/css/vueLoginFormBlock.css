@@ -1,0 +1,839 @@
+@charset "UTF-8";
+
+.loader-background {
+    background-color: rgba(35, 35, 35, .7);
+    display: none;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 200
+}
+
+.loader-background--show {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center
+}
+
+.loader-background .loader-ring {
+    animation: loader 1.2s infinite;
+    border-color: #ffba00 #035d03;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 40px;
+    box-sizing: border-box;
+    height: 60px;
+    width: 60px
+}
+
+@keyframes loader {
+    0% {
+        animation-timing-function: cubic-bezier(.55, .055, .675, .19);
+        transform: rotate(0)
+    }
+
+    50% {
+        animation-timing-function: cubic-bezier(.215, .61, .355, 1);
+        transform: rotate(900deg)
+    }
+
+    to {
+        transform: rotate(5turn)
+    }
+}
+
+#vue-login-form-block {
+    min-height: auto
+}
+
+#vue-login-form-block .login-code {
+    flex-direction: column;
+    padding-block: 10px
+}
+
+#vue-login-form-block .login-code .confirm-code {
+    flex-direction: column
+}
+
+@media (min-width: 1300px) {
+    #vue-login-form-block .login-code .confirm-code {
+        margin-top: 30px
+    }
+}
+
+#vue-login-form-block .login-code .confirm-code__inputs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 25px
+}
+
+@media (min-width: 620px) {
+    #vue-login-form-block .login-code .confirm-code__inputs {
+        margin-top: 40px
+    }
+}
+
+#vue-login-form-block .login-code .confirm-code__inputs input {
+    border: 2px solid #3b3b3b;
+    border-radius: 10px;
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    height: 40px;
+    line-height: normal;
+    text-align: center;
+    text-transform: uppercase;
+    width: 40px
+}
+
+@media (min-width: 620px) {
+    #vue-login-form-block .login-code .confirm-code__inputs input {
+        font-size: 24px;
+        height: 50px;
+        width: 50px
+    }
+}
+
+#vue-login-form-block .login-code .confirm-code__inputs input:focus {
+    border: 2px solid #035d03
+}
+
+#vue-login-form-block .login-code .confirm-code__inputs input.error {
+    border: 2px solid #fd0000
+}
+
+#vue-login-form-block .login-code .confirm-code-error {
+    color: #fd0000;
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    margin-top: 10px;
+    text-align: center
+}
+
+@media (min-width: 620px) {
+    #vue-login-form-block .login-code .confirm-code-error {
+        font-size: 14px;
+        margin-top: 11px
+    }
+}
+
+#vue-login-form-block .login-code .confirm-code-resend {
+    color: #3b3b3b;
+    cursor: pointer;
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    margin-top: 10px;
+    text-align: center;
+    text-decoration: underline
+}
+
+@media (min-width: 620px) {
+    #vue-login-form-block .login-code .confirm-code-resend {
+        font-size: 14px;
+        margin-top: 11px
+    }
+}
+
+#vue-login-form-block .login-code__text {
+    color: #3b3b3b;
+    font-family: Roboto-regular-webfong, Sans-serif;
+    font-size: 14px;
+    margin-bottom: 5px;
+    margin-top: 0
+}
+
+#vue-login-form-block .login-code__text span {
+    color: #035d03
+}
+
+#vue-login-form-block .login-code-error {
+    color: #fd0000;
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    margin-top: 10px;
+    text-align: center
+}
+
+@media (min-width: 620px) {
+    #vue-login-form-block .login-code-error {
+        font-size: 14px;
+        margin-top: 11px
+    }
+}
+
+#vue-login-form-block .login-code-resend {
+    color: #3b3b3b;
+    cursor: pointer;
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    margin-top: 10px;
+    text-align: center;
+    text-decoration: underline
+}
+
+@media (min-width: 620px) {
+    #vue-login-form-block .login-code-resend {
+        font-size: 14px;
+        margin-top: 11px
+    }
+}
+
+#vue-login-form-block .login-code__title {
+    -webkit-text-fill-color: #035d03;
+    color: #035d03;
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 18px;
+    font-variant: small-caps;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 0 auto 26px;
+    max-width: 320px;
+    text-align: center;
+    text-transform: uppercase
+}
+
+@media (min-width: 620px) {
+    #vue-login-form-block .login-code__title {
+        font-size: 18px;
+        line-height: 21px;
+        margin-bottom: 40px;
+        max-width: 416px
+    }
+}
+
+#vue-login-form-block .login-code__text {
+    color: #232323;
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 16px !important;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    margin: unset;
+    margin-block: 10px;
+    text-align: center
+}
+
+@media (min-width: 620px) {
+    #vue-login-form-block .login-code__text {
+        font-size: 18px
+    }
+}
+
+#vue-login-form-block .error-message {
+    -webkit-text-fill-color: #f01;
+    color: #f01;
+    display: block;
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 12px;
+    line-height: 14px;
+    margin-top: 10px;
+    text-align: left
+}
+
+@media (min-width: 600px) {
+    #vue-login-form-block .error-message {
+        font-size: 14px;
+        line-height: 16px
+    }
+}
+
+#vue-login-form-block .error-message:first-letter {
+    text-transform: capitalize
+}
+
+.login--page {
+    padding: 40px 0 30px
+}
+
+.login--page h1 {
+    -webkit-text-fill-color: #035d03;
+    color: #035d03;
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 18px;
+    font-variant: small-caps;
+    line-height: 18px;
+    margin: 0 0 -2px;
+    text-align: center;
+    text-transform: uppercase
+}
+
+.login--page .form {
+    margin: 0 auto;
+    max-width: 300px;
+    padding: 24px 0 0
+}
+
+.login--page .form__inputs {
+    display: flex;
+    flex-direction: column
+}
+
+.login--page .form__inputs .input {
+    height: 40px;
+    margin-bottom: 12px;
+    min-height: 40px;
+    position: relative
+}
+
+.login--page .form__inputs .input label {
+    display: block;
+    height: 100%;
+    position: relative;
+    width: 300px;
+    z-index: 3
+}
+
+.login--page .form__inputs .input label input {
+    -webkit-text-fill-color: #3b3b3b;
+    border: 2px solid #3b3b3b;
+    border-radius: 50px;
+    color: #3b3b3b;
+    display: block;
+    font-family: roboto-medium-webfont, sans-serif;
+    font-size: 16px;
+    height: 100%;
+    padding: 0 50px 0 20px;
+    width: 100%
+}
+
+.login--page .form__inputs .input label input.error {
+    border: 2px solid #fd0000
+}
+
+.login--page .form__inputs .input label input:focus {
+    border: 2px solid #035d03
+}
+
+.login--page .form__inputs .input label input::placeholder {
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    display: none
+}
+
+.login--page .form__inputs .input label input::-moz-placeholder {
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    display: none
+}
+
+.login--page .form__inputs .input label input::-ms-input-placeholder {
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    display: none
+}
+
+.login--page .form__inputs .input label input::-webkit-input-placeholder {
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    display: none
+}
+
+.login--page .form__inputs .input label input:disabled {
+    border: 2px solid #b8b8b8 !important
+}
+
+.login--page .form__inputs .input label .label-text {
+    -webkit-text-fill-color: #035d03;
+    background: #fff;
+    color: #035d03;
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    left: 18px;
+    line-height: 11px;
+    padding-inline: 5px;
+    position: absolute;
+    text-transform: uppercase;
+    top: -4px;
+    z-index: 2
+}
+
+.login--page .form__inputs .input--captcha.input--error {
+    margin-bottom: 38px
+}
+
+.login--page .form__inputs .input--error {
+    margin-bottom: 26px;
+    position: relative
+}
+
+.login--page .form__inputs .input--error label input {
+    border: 2px solid #fd0000
+}
+
+.login--page .form__inputs .input--error .error-message,
+.login--page .form__inputs .input--error:before {
+    -webkit-text-fill-color: #f01;
+    color: #f01;
+    content: attr(data-message-error);
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 12px;
+    line-height: 14px;
+    order: 2;
+    text-align: left
+}
+
+.login--page .form__inputs .input--error .error-message:first-letter,
+.login--page .form__inputs .input--error:before:first-letter {
+    text-transform: capitalize
+}
+
+.login--page .form__inputs .input--valid .success-message {
+    display: none !important
+}
+
+.login--page .form__inputs .input.active {
+    z-index: 5
+}
+
+.login--page .form__inputs .input.active .error-message {
+    display: none !important
+}
+
+.login--page .form__inputs .input .informations-content {
+    background-color: #232323;
+    border-radius: 10px;
+    padding: 35px 20px 20px;
+    position: absolute;
+    top: 15px;
+    width: 100%;
+    z-index: -1
+}
+
+.login--page .form__inputs .input .informations-content__text {
+    color: #fff;
+    display: block;
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 12px;
+    line-height: 18px
+}
+
+.login--page .form__inputs .input .informations-content__text:first-child {
+    margin-bottom: 10px
+}
+
+.login--page .form__inputs .input .informations-content__text p {
+    margin: 0 0 2px
+}
+
+.login--page .form__inputs .input .informations-content:not(.login--page .form__inputs .input .informations-content.show) {
+    display: none
+}
+
+.login--page .form__inputs .input .informations-content ul {
+    margin: 0;
+    padding-left: 18px
+}
+
+.login--page .form__inputs .input .informations-content ul li:before {
+    color: #fff;
+    content: "•";
+    display: inline-block;
+    font-weight: 700;
+    margin-left: -16px;
+    width: 16px
+}
+
+@media (min-width: 620px) {
+    .login--page .form__inputs .input .informations-content {
+        padding: 48px 20px 20px
+    }
+
+    .login--page .form__inputs .input .informations-content__text {
+        font-size: 14px;
+        line-height: 20px
+    }
+
+    .login--page .form__inputs .input .informations-content__text p {
+        margin-bottom: 5px
+    }
+}
+
+.login--page .form__inputs .input .input-information {
+    background-image: url(/build/images/input-information.3ac05d6e.svg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    cursor: pointer;
+    display: block;
+    height: 100%;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    z-index: 3
+}
+
+.login--page .form__inputs .input .input-information.show {
+    background-image: url(/build/images/input-information-hover.9874f39a.svg);
+    background-size: 20px
+}
+
+@media (min-width: 620px) {
+    .login--page .form__inputs .input .input-information.show {
+        background-size: 25px
+    }
+
+    .login--page .form__inputs .input .input-information {
+        background-size: 25px;
+        height: 100%;
+        width: 25px
+    }
+}
+
+@media (min-width: 1000px) {
+    .login--page .form__inputs .input .input-information:hover {
+        background-image: url(/build/images/input-information-hover.9874f39a.svg)
+    }
+}
+
+@media (min-width: 620px) {
+    .login--page .form__inputs .input {
+        height: 50px;
+        margin-bottom: 22px;
+        min-height: 50px
+    }
+
+    .login--page .form__inputs .input label {
+        width: 100%
+    }
+
+    .login--page .form__inputs .input label input {
+        font-size: 14px
+    }
+
+    .login--page .form__inputs .input label .label-text {
+        font-size: 12px;
+        line-height: 14px;
+        top: -6px !important
+    }
+
+    .login--page .form__inputs .input--error {
+        margin-bottom: 35px
+    }
+
+    .login--page .form__inputs .input--error .error-message {
+        font-size: 14px
+    }
+}
+
+.login--page .form__inputs .input--username .input-information,
+.login--page .form__inputs .input--username label {
+    z-index: 7
+}
+
+.login--page .form__inputs .input--confirm-password input,
+.login--page .form__inputs .input--current-password input,
+.login--page .form__inputs .input--new-password input,
+.login--page .form__inputs .input--oldPassword input,
+.login--page .form__inputs .input--password input,
+.login--page .form__inputs .input--repeatPassword input {
+    padding-right: 80px !important
+}
+
+.login--page .form__inputs .input--confirm-password:first-child,
+.login--page .form__inputs .input--current-password:first-child,
+.login--page .form__inputs .input--new-password:first-child,
+.login--page .form__inputs .input--oldPassword:first-child,
+.login--page .form__inputs .input--password:first-child,
+.login--page .form__inputs .input--repeatPassword:first-child {
+    z-index: 5
+}
+
+.login--page .form__inputs .input--confirm-password:nth-child(2),
+.login--page .form__inputs .input--current-password:nth-child(2),
+.login--page .form__inputs .input--new-password:nth-child(2),
+.login--page .form__inputs .input--oldPassword:nth-child(2),
+.login--page .form__inputs .input--password:nth-child(2),
+.login--page .form__inputs .input--repeatPassword:nth-child(2) {
+    z-index: 4
+}
+
+.login--page .form__inputs .input--confirm-password .show-hide-password,
+.login--page .form__inputs .input--confirm-password label,
+.login--page .form__inputs .input--current-password .show-hide-password,
+.login--page .form__inputs .input--current-password label,
+.login--page .form__inputs .input--new-password .show-hide-password,
+.login--page .form__inputs .input--new-password label,
+.login--page .form__inputs .input--oldPassword .show-hide-password,
+.login--page .form__inputs .input--oldPassword label,
+.login--page .form__inputs .input--password .show-hide-password,
+.login--page .form__inputs .input--password label,
+.login--page .form__inputs .input--repeatPassword .show-hide-password,
+.login--page .form__inputs .input--repeatPassword label {
+    z-index: 3
+}
+
+.login--page .form__inputs .input--confirm-password .show-hide-password,
+.login--page .form__inputs .input--current-password .show-hide-password,
+.login--page .form__inputs .input--new-password .show-hide-password,
+.login--page .form__inputs .input--oldPassword .show-hide-password,
+.login--page .form__inputs .input--password .show-hide-password,
+.login--page .form__inputs .input--repeatPassword .show-hide-password {
+    background-image: url("../assets/svg/eye.svg");
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    cursor: pointer;
+    display: block;
+    height: 100%;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px
+}
+
+.login--page .form__inputs .input--confirm-password .show-hide-password--show,
+.login--page .form__inputs .input--confirm-password .show-hide-password.selected,
+.login--page .form__inputs .input--current-password .show-hide-password--show,
+.login--page .form__inputs .input--current-password .show-hide-password.selected,
+.login--page .form__inputs .input--new-password .show-hide-password--show,
+.login--page .form__inputs .input--new-password .show-hide-password.selected,
+.login--page .form__inputs .input--oldPassword .show-hide-password--show,
+.login--page .form__inputs .input--oldPassword .show-hide-password.selected,
+.login--page .form__inputs .input--password .show-hide-password--show,
+.login--page .form__inputs .input--password .show-hide-password.selected,
+.login--page .form__inputs .input--repeatPassword .show-hide-password--show,
+.login--page .form__inputs .input--repeatPassword .show-hide-password.selected {
+    background-image: url("../assets/svg/eye-hover.svg");
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 20px
+}
+
+@media (min-width: 1000px) {
+
+    .login--page .form__inputs .input--confirm-password .show-hide-password:hover,
+    .login--page .form__inputs .input--current-password .show-hide-password:hover,
+    .login--page .form__inputs .input--new-password .show-hide-password:hover,
+    .login--page .form__inputs .input--oldPassword .show-hide-password:hover,
+    .login--page .form__inputs .input--password .show-hide-password:hover,
+    .login--page .form__inputs .input--repeatPassword .show-hide-password:hover {
+        background-image: url("../assets/svg/eye-hover.svg");
+    }
+}
+
+.login--page .form__inputs .input--confirm-password .input-information,
+.login--page .form__inputs .input--current-password .input-information,
+.login--page .form__inputs .input--new-password .input-information,
+.login--page .form__inputs .input--oldPassword .input-information,
+.login--page .form__inputs .input--password .input-information,
+.login--page .form__inputs .input--repeatPassword .input-information {
+    right: 45px
+}
+
+@media (min-width: 620px) {
+
+    .login--page .form__inputs .input--confirm-password .show-hide-password,
+    .login--page .form__inputs .input--current-password .show-hide-password,
+    .login--page .form__inputs .input--new-password .show-hide-password,
+    .login--page .form__inputs .input--oldPassword .show-hide-password,
+    .login--page .form__inputs .input--password .show-hide-password,
+    .login--page .form__inputs .input--repeatPassword .show-hide-password {
+        background-size: 25px;
+        height: 100%;
+        width: 25px
+    }
+
+    .login--page .form__inputs .input--confirm-password .show-hide-password--show,
+    .login--page .form__inputs .input--confirm-password .show-hide-password.selected,
+    .login--page .form__inputs .input--current-password .show-hide-password--show,
+    .login--page .form__inputs .input--current-password .show-hide-password.selected,
+    .login--page .form__inputs .input--new-password .show-hide-password--show,
+    .login--page .form__inputs .input--new-password .show-hide-password.selected,
+    .login--page .form__inputs .input--oldPassword .show-hide-password--show,
+    .login--page .form__inputs .input--oldPassword .show-hide-password.selected,
+    .login--page .form__inputs .input--password .show-hide-password--show,
+    .login--page .form__inputs .input--password .show-hide-password.selected,
+    .login--page .form__inputs .input--repeatPassword .show-hide-password--show,
+    .login--page .form__inputs .input--repeatPassword .show-hide-password.selected {
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-size: 25px
+    }
+
+    .login--page .form__inputs .input--confirm-password .input-information,
+    .login--page .form__inputs .input--current-password .input-information,
+    .login--page .form__inputs .input--new-password .input-information,
+    .login--page .form__inputs .input--oldPassword .input-information,
+    .login--page .form__inputs .input--password .input-information,
+    .login--page .form__inputs .input--repeatPassword .input-information {
+        right: 50px
+    }
+}
+
+.login--page .form__submit input {
+    display: none
+}
+
+.login--page .form__submit--error {
+    position: relative
+}
+
+.login--page .form__submit--error .error-message {
+    -webkit-text-fill-color: #f01;
+    color: #f01;
+    content: attr(data-message-error);
+    display: block;
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 12px;
+    line-height: 14px;
+    top: calc(100% + 2px)
+}
+
+.login--page .form__submit--error .error-message:first-letter {
+    text-transform: capitalize
+}
+
+.login--page .form__submit .button--submit-form {
+    -webkit-text-fill-color: #1a1a1a;
+    all: unset;
+    background: linear-gradient(180deg, #ffe600, #ffb800);
+    border-radius: 50px;
+    box-shadow: inset 0 -2px 0 #f90;
+    color: #1a1a1a;
+    cursor: pointer;
+    display: block;
+    font-family: roboto-medium-webfont, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 auto 18px;
+    min-height: 40px;
+    padding: 0 28px;
+    text-align: center;
+    text-shadow: 0 1px 0 #ffe249;
+    text-transform: uppercase;
+    transition: all .1s linear
+}
+
+.login--page .form__submit .button--submit-form:hover {
+    background: linear-gradient(180deg, #ffb800, #ffe600)
+}
+
+@media (min-width: 620px) {
+    .login--page .form {
+        max-width: 416px;
+        padding: 60px 0 0
+    }
+
+    .login--page .form__submit .button--submit-form {
+        box-shadow: inset 0 -5px 0 #f90;
+        font-size: 18px;
+        height: 60px;
+        line-height: 60px;
+        min-width: 174px
+    }
+}
+
+.login--page .form .form__submit .button--submit-form {
+    margin-bottom: 25px
+}
+
+.login--page .form .form__submit--error .error-message {
+    position: relative;
+    top: -10px
+}
+
+.login--page .form .form__links {
+    text-align: center
+}
+
+.login--page .form .form__links--register {
+    margin-bottom: 15px
+}
+
+.login--page .form .form__links a {
+    -webkit-text-fill-color: #3b3b3b;
+    color: #3b3b3b;
+    cursor: pointer;
+    font-family: roboto-regular-webfont, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+    text-decoration: underline;
+    text-transform: uppercase
+}
+
+.login--page .form .form__links a:hover {
+    -webkit-text-fill-color: #035d03;
+    color: #035d03
+}
+
+@media (min-width: 620px) {
+    .login--page {
+        height: 590px;
+        padding: 60px 0
+    }
+
+    .login--page h1 {
+        font-size: 22px;
+        line-height: 26px
+    }
+
+    .login--page .form {
+        padding-top: 43px
+    }
+
+    .login--page .form .input input::-moz-placeholder {
+        -moz-user-select: none;
+        user-select: none
+    }
+
+    .login--page .form .input input::placeholder {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none
+    }
+
+    .login--page .form .form__submit--error {
+        margin-bottom: -15px
+    }
+
+    .login--page .form .form__submit--error .button--submit-form {
+        position: relative;
+        top: 2px
+    }
+
+    .login--page .form .form__submit--error .error-message {
+        font-size: 14px;
+        line-height: 15px;
+        top: -14px
+    }
+
+    .login--page .form .form__links {
+        margin-bottom: -7px;
+        margin-top: 22px
+    }
+
+    .login--page .form .form__links:last-of-type {
+        margin-bottom: 0
+    }
+}
+
+@media (min-width: 992px) {
+    .login--page {
+        height: 588px
+    }
+}

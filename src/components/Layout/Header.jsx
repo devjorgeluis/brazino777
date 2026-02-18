@@ -80,7 +80,7 @@ const Header = ({
                             <button className="button-support" onClick={() => { openSupportModal(false); }}>
                                 <img src={ImgSupport} />
                             </button>                             
-                            <a onClick={() => navigate("/sports")} className="button button--register">Entrar</a>
+                            <a onClick={() => navigate("/login")} className="button button--register">Entrar</a>
                         </div>
                     </div>
                 </div>

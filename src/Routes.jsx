@@ -4,6 +4,7 @@ import Casino from "./pages/Casino";
 import LiveCasino from "./pages/LiveCasino";
 import Sports from "./pages/Sports";
 import LiveSports from "./pages/LiveSports";
+import Login from "./pages/Login";
 import Profile from "./pages/Profile/Profile";
 import NoPage from "./pages/NoPage";
 import Layout from "./components/Layout/Layout";
@@ -19,6 +20,7 @@ export default function AppRoutes() {
                 <Route path="/sports" element={<Sports />} />
                 <Route path="/live-sports" element={<LiveSports />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="*" element={<NoPage />} />
             </Route>
         </Routes>
