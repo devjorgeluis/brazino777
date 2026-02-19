@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import LoadCasino from "../Loading/LoadCasino";
+import LoadPage from "../Loading/LoadPage";
 
 const GameModal = ({
   gameUrl,
@@ -64,7 +64,7 @@ const GameModal = ({
           </button>
         </div>
         <>
-          {!iframeLoaded && <LoadCasino />}
+          {!iframeLoaded && <LoadPage />}
           {gameUrl && (
             <iframe
               src={gameUrl}

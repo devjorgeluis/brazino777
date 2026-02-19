@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { callApi } from "../utils/Utils";
+import LoadPage from "../components/Loading/LoadPage";
 
 const Login = () => {
     const { contextData, updateSession } = useContext(AppContext);
@@ -55,56 +56,59 @@ const Login = () => {
     }, [showPassword]);
 
     return (
-        <main className="login--page">
-            <div id="vue-login-form-block">
-                <h1>Entrar y jugar</h1>
-                <form className="form form--login">
-                    <section className="form__inputs">
-                        <div className="input input--username">
-                            <label htmlFor="username">
-                                <span className="label-text">Nombre de usuario</span>
-                                <input
-                                    placeholder="Nombre de usuario"
-                                    autoComplete="username"
-                                    type="text"
-                                    name="username"
-                                    id="username"
-                                    aria-required="true"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                    disabled={isLoading}
-                                />
-                            </label>
-                        </div>
-                        <div className="input input--password">
-                            <label htmlFor="password">
-                                <span className="label-text">Contraseña</span>
-                                <input
-                                    placeholder="Contraseña"
-                                    autoComplete="current-password"
-                                    type={showPassword ? "text" : "password"}
-                                    name="password"
-                                    id="password"
-                                    aria-required="true"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    disabled={isLoading}
-                                />
-                                <span
-                                    className={`show-hide-password ${showPassword ? "show-hide-password--show" : ""}`}
-                                    onClick={() => setShowPassword(!showPassword)}
-                                ></span>
-                            </label>
-                        </div>
-                        <span></span>
-                        <section className={`form__submit ${errorMsg ? "form__submit--error" : ""}`}>
-                            {errorMsg && <span className="error-message">{errorMsg}</span>}
-                            <button type="button" className="button button--submit-form" onClick={() => handleSubmit()}>Entrar</button>
+        <>
+            { isLoading && <LoadPage /> }
+            <main className="login--page">
+                <div id="vue-login-form-block">
+                    <h1>Entrar y jugar</h1>
+                    <form className="form form--login">
+                        <section className="form__inputs">
+                            <div className="input input--username">
+                                <label htmlFor="username">
+                                    <span className="label-text">Nombre de usuario</span>
+                                    <input
+                                        placeholder="Nombre de usuario"
+                                        autoComplete="username"
+                                        type="text"
+                                        name="username"
+                                        id="username"
+                                        aria-required="true"
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
+                                        disabled={isLoading}
+                                    />
+                                </label>
+                            </div>
+                            <div className="input input--password">
+                                <label htmlFor="password">
+                                    <span className="label-text">Contraseña</span>
+                                    <input
+                                        placeholder="Contraseña"
+                                        autoComplete="current-password"
+                                        type={showPassword ? "text" : "password"}
+                                        name="password"
+                                        id="password"
+                                        aria-required="true"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        disabled={isLoading}
+                                    />
+                                    <span
+                                        className={`show-hide-password ${showPassword ? "show-hide-password--show" : ""}`}
+                                        onClick={() => setShowPassword(!showPassword)}
+                                    ></span>
+                                </label>
+                            </div>
+                            <span></span>
+                            <section className={`form__submit ${errorMsg ? "form__submit--error" : ""}`}>
+                                {errorMsg && <span className="error-message">{errorMsg}</span>}
+                                <button type="button" className="button button--submit-form" onClick={() => handleSubmit()}>Entrar</button>
+                            </section>
                         </section>
-                    </section>
-                </form>
-            </div>
-        </main>
+                    </form>
+                </div>
+            </main>
+        </>
     );
 };
 

@@ -1,8 +1,9 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../AppContext";
-import { LayoutContext } from "./LayoutContext";
 import ImgSupport from "/src/assets/svg/support-black.svg";
+import ImgRefresh from "/src/assets/svg/refresh_menu_2.svg";
+import ImgRefreshHover from "/src/assets/svg/refresh_menu-hover_2.svg";
 
 const Header = ({
     isLogin,
@@ -10,34 +11,12 @@ const Header = ({
     isSlotsOnly,
     userBalance,
     handleLoginClick,
-    handleLogoutClick,
     openSupportModal,
-    txtSearch,
-    setTxtSearch,
-    games,
-    setGames,
-    isProviderSelected = false,
+    refreshBalance
 }) => {
     const { contextData } = useContext(AppContext);
-    const [showDropdown, setShowDropdown] = useState(false);
-    const { setIsUserMenuOpen, launchGameFromSearch } = useContext(LayoutContext);
     const navigate = useNavigate();
-    const searchRef = useRef(null);
-    const [searchDelayTimer, setSearchDelayTimer] = useState();
-
-    const configureImageSrc = (result) => {
-        (result.content || []).forEach((element) => {
-            element.imageDataSrc =
-                element.image_local !== null
-                    ? contextData.cdnUrl + element.image_local
-                    : element.image_url;
-        });
-    };
-
-    const handleToggleUserMenu = () => {
-        setShowDropdown(!showDropdown);
-        setIsUserMenuOpen(!showDropdown);
-    }
+    const [isRefreshing, setIsRefreshing] = useState(false)
 
     const formatBalance = (value) => {
         const num = parseFloat(value);
@@ -48,12 +27,19 @@ const Header = ({
         });
     };
 
-    // Opens the sidebar by adding "mobile-show" to the <aside>
     const handleHamburgerClick = () => {
         const aside = document.querySelector('aside');
         if (aside) {
             aside.classList.add('mobile-show');
         }
+    };
+
+    const handleRefreshBalance = () => {
+        if (isRefreshing) return;
+        setIsRefreshing(true);
+        refreshBalance(() => {
+            setIsRefreshing(false);
+        });
     };
 
     return (
@@ -67,7 +53,7 @@ const Header = ({
                         ></div>
                         <a onClick={() => navigate("/")} className="site-logo" aria-label="Site logo"></a>
                     </div>
-                    <div className="header--links">
+                    <div className="header--links user--auth">
                         <a onClick={() => navigate("/casino")} className="button button--competitions">Casino</a>
                         {
                             isSlotsOnly === "false" && <>
@@ -79,8 +65,29 @@ const Header = ({
                         <div className="header--buttons">
                             <button className="button-support" onClick={() => { openSupportModal(false); }}>
                                 <img src={ImgSupport} />
-                            </button>                             
-                            <a onClick={() => navigate("/login")} className="button button--register">Entrar</a>
+                            </button>
+                            {
+                                isLogin ? 
+                                <div className="header--auth-buttons desktop">
+                                    <a onClick={() => navigate("/profile")} className="button button--profile button--profile--unverified " aria-label="profile button">
+                                        <img id="user_avatar_img" src="https://brazww-cdn.com/files/avatars/general-avatar.svg?v1178" loading="lazy" alt="User image" className="user__avatar" width="40" height="40" />
+                                        <span className="user_text">{contextData?.session?.user?.username}</span>
+                                    </a>
+                                    <div id="vue-balances-header" className="vue-balances vue-balances">
+                                        <div className="user">
+                                            <p className="user-balance">
+                                                <span className="balance-currency">$</span>
+                                                <span className="balance-amount">{formatBalance(userBalance || 0)}</span>
+                                            </p>
+                                            <div className={`update__image ${isRefreshing ? "spin" : ""}`} onClick={handleRefreshBalance}>
+                                                <img src={ImgRefresh} alt="refresh" className="update__image-default" loading="lazy" />
+                                                <img src={ImgRefreshHover} alt="refresh hover" className="update__icon-active" loading="lazy" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> : 
+                                <a onClick={handleLoginClick} className="button button--register">Entrar</a>
+                            }
                         </div>
                     </div>
                 </div>

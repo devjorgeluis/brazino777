@@ -128,9 +128,12 @@ const Layout = () => {
         };
     }, [isUserMenuOpen]);
 
-    const refreshBalance = () => {
+    const refreshBalance = (onComplete) => {
         setUserBalance("");
-        callApi(contextData, "GET", "/get-user-balance", callbackRefreshBalance, null);
+        callApi(contextData, "GET", "/get-user-balance", (result) => {
+            setUserBalance(result && result.balance);
+            onComplete?.();
+        }, null);
     };
 
     const callbackRefreshBalance = (result) => {
@@ -301,6 +304,7 @@ const Layout = () => {
                         games={searchGames}
                         setGames={setSearchGames}
                         isProviderSelected={isProviderSelected}
+                        refreshBalance={refreshBalance}
                     />
 
                     <Sidebar
