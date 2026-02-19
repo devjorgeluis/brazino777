@@ -1,7 +1,8 @@
 main>.category-block {
     display: flex;
     justify-content: flex-start;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     overflow: auto;
     padding: 1px 0;
     position: relative;

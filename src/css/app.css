@@ -1798,7 +1798,7 @@ aside .side-menu .auth_mobile_info .side_profile:hover {
 
 aside .side-menu .auth_mobile_info .side_profile a {
     align-items: center;
-    background-image: url(/build/images/arrow-right.49aa93ca.svg);
+    background-image: url("../assets/svg/arrow-right.svg");
     background-position: right 20px top 25px;
     background-repeat: no-repeat;
     background-size: auto;

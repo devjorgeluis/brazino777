@@ -289,7 +289,7 @@
 }
 
 #vue-slider-block .swiper-container .swiper-wrapper .swiper-slide .slider__text .button--slider .button__arrow {
-    background-image: url(/build/images/arrow-right.16cfca88.svg);
+    background-image: url("../assets/svg/arrow-right.svg");
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
