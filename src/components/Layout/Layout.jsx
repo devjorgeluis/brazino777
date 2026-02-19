@@ -8,7 +8,6 @@ import { callApi } from "../../utils/Utils";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
-import MobileFooter from "./MobileFooter";
 import SupportModal from "../Modal/SupportModal";
 import MyProfileModal from "../Modal/MyProfileModal";
 import FullDivLoading from "../Loading/FullDivLoading";
@@ -350,14 +349,6 @@ const Layout = () => {
                     supportParentOnly={supportParentOnly}
                     supportParent={supportParent}
                 />
-                {isMobile && !isSportsPage &&
-                    <MobileFooter
-                        isSlotsOnly={isSlotsOnly}
-                        isLogin={isLogin}
-                        supportParent={supportParent}
-                        openSupportModal={openSupportModal}
-                        handleLoginClick={handleLoginClick}
-                    />}
             </NavigationContext.Provider>
         </LayoutContext.Provider>
     );

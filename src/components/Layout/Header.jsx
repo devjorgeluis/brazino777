@@ -51,7 +51,7 @@ const Header = ({
                             className="hamburger-icon"
                             onClick={handleHamburgerClick}
                         ></div>
-                        <a onClick={() => navigate("/")} className="site-logo" aria-label="Site logo"></a>
+                        <a onClick={() => navigate("/")} className={`site-logo ${isLogin ? "site-logo--authenticated" : ""}`} aria-label="Site logo"></a>
                     </div>
                     <div className="header--links user--auth">
                         <a onClick={() => navigate("/casino")} className="button button--competitions">Casino</a>

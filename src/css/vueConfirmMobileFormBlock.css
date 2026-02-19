@@ -1,0 +1,1032 @@
+@charset "UTF-8";main {
+    font-family: roboto-regular-webfont,Sans-serif
+}
+
+main .verification__block--subscriptions {
+    z-index: unset!important
+}
+
+main .confirm-mobile-container .form {
+    margin: 0 auto;
+    max-width: 300px;
+    padding: 24px 0 0
+}
+
+main .confirm-mobile-container .form__inputs {
+    display: flex;
+    flex-direction: column
+}
+
+main .confirm-mobile-container .form__inputs .input {
+    height: 40px;
+    margin-bottom: 12px;
+    min-height: 40px;
+    position: relative
+}
+
+main .confirm-mobile-container .form__inputs .input label {
+    display: block;
+    height: 100%;
+    position: relative;
+    width: 300px;
+    z-index: 3
+}
+
+main .confirm-mobile-container .form__inputs .input label input {
+    -webkit-text-fill-color: #3b3b3b;
+    border: 2px solid #3b3b3b;
+    border-radius: 50px;
+    color: #3b3b3b;
+    display: block;
+    font-family: roboto-medium-webfont,sans-serif;
+    font-size: 16px;
+    height: 100%;
+    padding: 0 50px 0 20px;
+    width: 100%
+}
+
+main .confirm-mobile-container .form__inputs .input label input.error {
+    border: 2px solid #fd0000
+}
+
+main .confirm-mobile-container .form__inputs .input label input:focus {
+    border: 2px solid #035d03
+}
+
+main .confirm-mobile-container .form__inputs .input label input::placeholder {
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    display: none
+}
+
+main .confirm-mobile-container .form__inputs .input label input::-moz-placeholder {
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    display: none
+}
+
+main .confirm-mobile-container .form__inputs .input label input::-ms-input-placeholder {
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    display: none
+}
+
+main .confirm-mobile-container .form__inputs .input label input::-webkit-input-placeholder {
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    display: none
+}
+
+main .confirm-mobile-container .form__inputs .input label input:disabled {
+    border: 2px solid #b8b8b8!important
+}
+
+main .confirm-mobile-container .form__inputs .input label .label-text {
+    -webkit-text-fill-color: #035d03;
+    background: #fff;
+    color: #035d03;
+    font-family: roboto-regular-webfont,sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    left: 18px;
+    line-height: 11px;
+    padding-inline:5px;position: absolute;
+    text-transform: uppercase;
+    top: -4px;
+    z-index: 2
+}
+
+main .confirm-mobile-container .form__inputs .input--captcha.input--error {
+    margin-bottom: 38px
+}
+
+main .confirm-mobile-container .form__inputs .input--error {
+    margin-bottom: 26px;
+    position: relative
+}
+
+main .confirm-mobile-container .form__inputs .input--error label input {
+    border: 2px solid #fd0000
+}
+
+main .confirm-mobile-container .form__inputs .input--error .error-message,main .confirm-mobile-container .form__inputs .input--error:before {
+    -webkit-text-fill-color: #f01;
+    color: #f01;
+    content: attr(data-message-error);
+    font-family: roboto-regular-webfont,sans-serif;
+    font-size: 12px;
+    line-height: 14px;
+    order: 2;
+    text-align: left
+}
+
+main .confirm-mobile-container .form__inputs .input--error .error-message:first-letter,main .confirm-mobile-container .form__inputs .input--error:before:first-letter {
+    text-transform: capitalize
+}
+
+main .confirm-mobile-container .form__inputs .input--valid .success-message {
+    display: none!important
+}
+
+main .confirm-mobile-container .form__inputs .input.active {
+    z-index: 5
+}
+
+main .confirm-mobile-container .form__inputs .input.active .error-message {
+    display: none!important
+}
+
+main .confirm-mobile-container .form__inputs .input .informations-content {
+    background-color: #232323;
+    border-radius: 10px;
+    padding: 35px 20px 20px;
+    position: absolute;
+    top: 15px;
+    width: 100%;
+    z-index: -1
+}
+
+main .confirm-mobile-container .form__inputs .input .informations-content__text {
+    color: #fff;
+    display: block;
+    font-family: roboto-regular-webfont,sans-serif;
+    font-size: 12px;
+    line-height: 18px
+}
+
+main .confirm-mobile-container .form__inputs .input .informations-content__text:first-child {
+    margin-bottom: 10px
+}
+
+main .confirm-mobile-container .form__inputs .input .informations-content__text p {
+    margin: 0 0 2px
+}
+
+main .confirm-mobile-container .form__inputs .input .informations-content:not(main .confirm-mobile-container .form__inputs .input .informations-content.show) {
+    display: none
+}
+
+main .confirm-mobile-container .form__inputs .input .informations-content ul {
+    margin: 0;
+    padding-left: 18px
+}
+
+main .confirm-mobile-container .form__inputs .input .informations-content ul li:before {
+    color: #fff;
+    content: "•";
+    display: inline-block;
+    font-weight: 700;
+    margin-left: -16px;
+    width: 16px
+}
+
+@media (min-width: 620px) {
+    main .confirm-mobile-container .form__inputs .input .informations-content {
+        padding:48px 20px 20px
+    }
+
+    main .confirm-mobile-container .form__inputs .input .informations-content__text {
+        font-size: 14px;
+        line-height: 20px
+    }
+
+    main .confirm-mobile-container .form__inputs .input .informations-content__text p {
+        margin-bottom: 5px
+    }
+}
+
+main .confirm-mobile-container .form__inputs .input .input-information {
+    background-image: url(/build/images/input-information.3ac05d6e.svg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    cursor: pointer;
+    display: block;
+    height: 100%;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    z-index: 3
+}
+
+main .confirm-mobile-container .form__inputs .input .input-information.show {
+    background-image: url(/build/images/input-information-hover.9874f39a.svg);
+    background-size: 20px
+}
+
+@media (min-width: 620px) {
+    main .confirm-mobile-container .form__inputs .input .input-information.show {
+        background-size:25px
+    }
+
+    main .confirm-mobile-container .form__inputs .input .input-information {
+        background-size: 25px;
+        height: 100%;
+        width: 25px
+    }
+}
+
+@media (min-width: 1000px) {
+    main .confirm-mobile-container .form__inputs .input .input-information:hover {
+        background-image:url(/build/images/input-information-hover.9874f39a.svg)
+    }
+}
+
+@media (min-width: 620px) {
+    main .confirm-mobile-container .form__inputs .input {
+        height:50px;
+        margin-bottom: 22px;
+        min-height: 50px
+    }
+
+    main .confirm-mobile-container .form__inputs .input label {
+        width: 100%
+    }
+
+    main .confirm-mobile-container .form__inputs .input label input {
+        font-size: 14px
+    }
+
+    main .confirm-mobile-container .form__inputs .input label .label-text {
+        font-size: 12px;
+        line-height: 14px;
+        top: -6px!important
+    }
+
+    main .confirm-mobile-container .form__inputs .input--error {
+        margin-bottom: 35px
+    }
+
+    main .confirm-mobile-container .form__inputs .input--error .error-message {
+        font-size: 14px
+    }
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile {
+    z-index: 5
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .label-text {
+    z-index: 15
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input {
+    border: unset!important;
+    border-radius: 50px!important;
+    box-shadow: unset!important;
+    height: 100%;
+    position: relative
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__selection:hover {
+    background: transparent!important
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__selection .vti__flag {
+    left: 12px;
+    position: relative;
+    z-index: 11
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__selection .vti__dropdown-arrow {
+    background-image: url(/build/images/arrow-down_green.dc6adeda.svg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+    color: transparent!important;
+    font-size: 0;
+    height: 15px;
+    left: -4px;
+    margin-left: 12px;
+    position: relative;
+    top: 1px;
+    transform: unset;
+    width: 22px;
+    z-index: 11
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown {
+    height: 100%;
+    position: absolute
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown.open .vti__selection .vti__dropdown-arrow {
+    left: -5px;
+    transform: rotate(180deg)
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown.open,main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown:hover {
+    background: none
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown-list {
+    background: #232323;
+    border: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: none;
+    list-style: none;
+    margin: 0;
+    max-height: 264px;
+    overflow-y: scroll;
+    padding: 0;
+    position: static;
+    white-space: nowrap;
+    z-index: 5
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown-list::-webkit-scrollbar {
+    width: 6px
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown-list::-webkit-scrollbar-thumb {
+    background-color: #ffba00;
+    border-radius: 10px
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown-list::-webkit-scrollbar-track {
+    background-color: #b8b8b8;
+    border-radius: 10px
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown-list:after {
+    background-color: #232323;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 10px;
+    left: 0;
+    position: absolute;
+    width: 100%
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown-list li {
+    -webkit-text-fill-color: #fff;
+    align-items: center;
+    color: #fff;
+    display: flex;
+    font-family: roboto-regular-webfont,sans-serif;
+    line-height: 32px;
+    margin: 0 auto;
+    max-width: 84%;
+    padding: 0!important
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown-list li span,main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown-list li strong {
+    font-weight: 500
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown-list li strong {
+    margin-right: 5px
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown-list li.highlighted {
+    background: transparent!important
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown-list li.preferred {
+    margin-bottom: 5px
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown-list li.highlighted,main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown-list li:hover {
+    -webkit-text-fill-color: #ffba00;
+    color: #ffba00
+}
+
+@media (min-width: 620px) {
+    main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input .vti__dropdown-list li {
+        max-width:100%
+    }
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input input {
+    background: #fff;
+    padding: 0 20px 0 65px!important;
+    position: relative;
+    z-index: 10
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input input::placeholder {
+    -webkit-text-fill-color: #a0a0a0;
+    color: #a0a0a0;
+    font-size: 16px
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input input::-moz-placeholder {
+    -webkit-text-fill-color: #a0a0a0;
+    color: #a0a0a0;
+    font-size: 16px
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input input::-ms-input-placeholder {
+    -webkit-text-fill-color: #a0a0a0;
+    color: #a0a0a0;
+    font-size: 16px
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input input::-webkit-input-placeholder {
+    -webkit-text-fill-color: #a0a0a0;
+    color: #a0a0a0;
+    font-size: 16px
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile .vti__dropdown-list {
+    background: #232323!important;
+    background: #232323;
+    border: none;
+    box-shadow: none;
+    height: 270px;
+    left: 0!important;
+    list-style: none;
+    margin: 0;
+    max-height: 240px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 25px 0 15px!important;
+    position: absolute!important;
+    top: 23px!important;
+    white-space: nowrap;
+    width: 300px!important;
+    z-index: 2
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile .vti__dropdown-list::-webkit-scrollbar {
+    width: 3px
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile .vti__dropdown-list::-webkit-scrollbar-thumb {
+    background-color: #ffba00;
+    border-radius: 10px
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile .vti__dropdown-list::-webkit-scrollbar-track {
+    background-color: #dcdcdc;
+    border-radius: 10px
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile .vti__dropdown-list.highlighted {
+    background: transparent!important
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile .vti__dropdown-list.hidden {
+    display: none
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile .vti__dropdown-list li {
+    -webkit-text-fill-color: #fff;
+    color: #fff;
+    font-family: roboto-regular-webfont,sans-serif;
+    font-size: 12px;
+    line-height: 30px;
+    max-width: 95%;
+    padding: 0 20px 0 24px!important
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile .vti__dropdown-list li span:first-of-type {
+    margin-left: 0!important
+}
+
+main .confirm-mobile-container .form__inputs .input--mobile .vti__dropdown-list li:hover {
+    -webkit-text-fill-color: #ffba00;
+    color: #ffba00
+}
+
+@media (min-width: 620px) {
+    main .confirm-mobile-container .form__inputs .input--mobile .vti__dropdown-list li {
+        padding:0!important
+    }
+}
+
+@media (min-width: 700px) {
+    main .confirm-mobile-container .form__inputs .input--mobile .vti__dropdown-list li {
+        font-size:14px
+    }
+}
+
+@media (min-width: 620px) {
+    main .confirm-mobile-container .form__inputs .input--mobile .vti__dropdown-list {
+        height:275px;
+        margin: 0;
+        max-height: 275px!important;
+        max-width: none!important;
+        padding: 35px 20px 15px 24px!important;
+        width: 416px!important
+    }
+
+    main .confirm-mobile-container .form__inputs .input--mobile--error:last-of-type,main .confirm-mobile-container .form__inputs .input--mobile:last-of-type {
+        margin-bottom: 0
+    }
+
+    main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input {
+        width: 100%
+    }
+}
+
+@media (min-width: 620px) {
+    main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input input::placeholder {
+        font-size:14px;
+        font-weight: 400
+    }
+
+    main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input input::-moz-placeholder {
+        font-size: 14px;
+        font-weight: 400
+    }
+
+    main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input input::-ms-input-placeholder {
+        font-size: 14px;
+        font-weight: 400
+    }
+
+    main .confirm-mobile-container .form__inputs .input--mobile label .vue-tel-input input::-webkit-input-placeholder {
+        font-size: 14px;
+        font-weight: 400
+    }
+}
+
+main .confirm-mobile-container .form__submit input {
+    display: none
+}
+
+main .confirm-mobile-container .form__submit--error {
+    position: relative
+}
+
+main .confirm-mobile-container .form__submit--error .error-message {
+    -webkit-text-fill-color: #f01;
+    color: #f01;
+    content: attr(data-message-error);
+    display: block;
+    font-family: roboto-regular-webfont,sans-serif;
+    font-size: 12px;
+    line-height: 14px;
+    top: calc(100% + 2px)
+}
+
+main .confirm-mobile-container .form__submit--error .error-message:first-letter {
+    text-transform: capitalize
+}
+
+main .confirm-mobile-container .form__submit .button--submit-form {
+    -webkit-text-fill-color: #1a1a1a;
+    all: unset;
+    background: linear-gradient(180deg,#ffe600,#ffb800);
+    border-radius: 50px;
+    box-shadow: inset 0 -2px 0 #f90;
+    color: #1a1a1a;
+    cursor: pointer;
+    display: block;
+    font-family: roboto-medium-webfont,sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 auto 18px;
+    min-height: 40px;
+    padding: 0 28px;
+    text-align: center;
+    text-shadow: 0 1px 0 #ffe249;
+    text-transform: uppercase;
+    transition: all .1s linear
+}
+
+main .confirm-mobile-container .form__submit .button--submit-form:hover {
+    background: linear-gradient(180deg,#ffb800,#ffe600)
+}
+
+@media (min-width: 620px) {
+    main .confirm-mobile-container .form {
+        max-width:416px;
+        padding: 60px 0 0
+    }
+
+    main .confirm-mobile-container .form__submit .button--submit-form {
+        box-shadow: inset 0 -5px 0 #f90;
+        font-size: 18px;
+        height: 60px;
+        line-height: 60px;
+        min-width: 174px
+    }
+}
+
+main .confirm-mobile-container .form__submit--error .error-message {
+    margin-bottom: 10px
+}
+
+@media (min-width: 620px) {
+    main .confirm-mobile-container .form__submit--error .error-message {
+        font-size:14px
+    }
+}
+
+main .confirm-mobile-container .profile__section_heading {
+    margin-top: 20px!important
+}
+
+main .confirm-mobile-container .horizontal-line {
+    background-color: #b8b8b8;
+    border: unset;
+    display: block;
+    height: .5px;
+    margin: 15px 0 10px;
+    margin-inline:-10px;min-height: .5px
+}
+
+main .confirm-mobile-container .form {
+    max-width: 450px;
+    padding-top: 0
+}
+
+main .confirm-mobile-container .form .form__inputs {
+    position: relative
+}
+
+main .confirm-mobile-container .form .form__inputs .input--mobile {
+    display: flex;
+    flex-direction: column;
+    height: unset;
+    margin-bottom: 16px;
+    width: 100%
+}
+
+main .confirm-mobile-container .form .form__inputs .input--mobile.input--disabled {
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none
+}
+
+main .confirm-mobile-container .form .form__inputs .input--mobile .vue-tel-input {
+    max-height: 50px
+}
+
+main .confirm-mobile-container .form .form__inputs .input--mobile input {
+    height: 40px
+}
+
+main .confirm-mobile-container .form .form__inputs .input--mobile label {
+    margin-bottom: 0;
+    width: 100%
+}
+
+main .confirm-mobile-container .form .form__inputs .input--mobile label .label-text {
+    z-index: 15
+}
+
+main .confirm-mobile-container .form .form__inputs .input--error input {
+    border: 2px solid #fd0000!important
+}
+
+main .confirm-mobile-container .form .form__inputs .error-message {
+    font-size: 12px
+}
+
+main .confirm-mobile-container .form .submit-button-wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    max-width: 450px
+}
+
+@media (min-width: 1100px) {
+    main .confirm-mobile-container .form .submit-button-wrapper {
+        justify-content:flex-end
+    }
+}
+
+main .confirm-mobile-container .form .submit-button-wrapper .button {
+    box-sizing: border-box;
+    margin: 0;
+    min-width: 130px
+}
+
+main .confirm-mobile-container .form .submit-button-wrapper .button[disabled] {
+    cursor: default;
+    opacity: .5;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none
+}
+
+main .confirm-mobile-container .form .submit-button-wrapper p {
+    color: #3b3b3b;
+    flex-basis: 100%;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    margin: 0;
+    max-width: 300px
+}
+
+main .confirm-mobile-container .form .edit-button {
+    background-image: url(/build/images/pencil.f1a869dd.svg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 15px;
+    cursor: pointer;
+    height: 40px;
+    position: absolute;
+    right: 20px;
+    width: 15px;
+    z-index: 10
+}
+
+main .confirm-mobile-container .form .verification__status__message__box {
+    background-color: #ffdcdc;
+    border-radius: 12px;
+    color: #3b3b3b;
+    font-family: roboto-regular-webfont,Sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    grid-column: span 2;
+    line-height: 18px;
+    margin-right: auto;
+    margin-top: 10px;
+    padding: 12px
+}
+
+@media (min-width: 900px) {
+    main .confirm-mobile-container .form .verification__status__message__box {
+        border-radius:20px;
+        font-size: 14px;
+        line-height: 20px;
+        padding: 16px
+    }
+}
+
+main .confirm-mobile-container .form .verification__status__message__box span {
+    color: #fd0000
+}
+
+main .confirm-mobile-container .form .verification__status__message__box a {
+    color: inherit;
+    text-decoration: underline
+}
+
+main .confirm-mobile-container .form .verification__status__message__box a:hover {
+    text-decoration: none
+}
+
+main .confirm-mobile-container .form .verification__sumsub {
+    grid-column: 1/-1
+}
+
+main .confirm-mobile-container .form .verification__status__box {
+    display: grid!important;
+    grid-template-columns: min-content 1fr
+}
+
+@media (min-width: 900px) {
+    main .confirm-mobile-container .form .verification__status__box .status {
+        align-content:start;
+        grid-column: 1/3;
+        grid-row: 2/3
+    }
+}
+
+main .confirm-mobile-container .form .verification__status__box p {
+    color: #3b3b3b;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    margin: 0 17px 0 0;
+    padding: 0;
+    text-transform: capitalize
+}
+
+main .confirm-mobile-container .form .verification__status__box img {
+    margin-right: 7px
+}
+
+main .confirm-mobile-container .form .verification__status__box .status__message {
+    align-items: center;
+    display: flex
+}
+
+main .confirm-mobile-container .form .verification__status__box .status__text {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700!important;
+    line-height: 14px;
+    text-transform: uppercase
+}
+
+main .confirm-mobile-container .form .verification__status__box .status__approved {
+    display: flex!important
+}
+
+main .confirm-mobile-container .form .verification__status__box .status__approved .status__text {
+    color: #035d03
+}
+
+main .confirm-mobile-container .form .verification__status__box .status__message.status__not-approved {
+    align-items: center;
+    display: flex;
+    justify-content: flex-start
+}
+
+main .confirm-mobile-container .form .verification__status__box .status__message.status__not-approved .status__text {
+    color: #fd0000
+}
+
+main .confirm-mobile-container .confirm-mobile-code .spam-message {
+    color: red;
+    display: block;
+    font-family: roboto-regular-webfont,sans-serif;
+    font-size: 13px;
+    line-height: 14.06px;
+    margin-block:10px;max-width: 416px;
+    text-transform: uppercase
+}
+
+main .confirm-mobile-container .confirm-mobile-code .spam-message span {
+    font-weight: 700
+}
+
+@media (min-width: 900px) {
+    main .confirm-mobile-container .confirm-mobile-code .spam-message {
+        font-size:15px;
+        line-height: 18px;
+        margin-block:0 10px}
+}
+
+main .confirm-mobile-container .confirm-mobile-code__text {
+    color: #232323;
+    font-family: roboto-regular-webfont,sans-serif;
+    font-size: 14px!important;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    margin: unset;
+    text-align: left
+}
+
+@media (min-width: 620px) {
+    main .confirm-mobile-container .confirm-mobile-code__text {
+        font-size:18px
+    }
+}
+
+main .sms-code-texts {
+    display: block!important
+}
+
+@media (min-width: 620px) {
+    main .confirm-mobile-container .profile__section_heading {
+        margin-top:30px!important
+    }
+
+    main .confirm-mobile-container .form {
+        max-width: 100%
+    }
+
+    main .confirm-mobile-container .form .form__inputs .input--mobile {
+        margin-bottom: 16px;
+        width: 100%
+    }
+
+    main .confirm-mobile-container .form .form__inputs .input--mobile input {
+        height: 50px
+    }
+
+    main .confirm-mobile-container .form .form__inputs .input--mobile label {
+        width: 100%
+    }
+
+    main .confirm-mobile-container .form .form__inputs .input--mobile label .label-text {
+        z-index: 15
+    }
+
+    main .confirm-mobile-container .form .submit-button-wrapper {
+        max-width: 416px
+    }
+
+    main .confirm-mobile-container .form .submit-button-wrapper .button {
+        font-size: 14px;
+        height: 50px;
+        line-height: 50px;
+        min-width: 150px
+    }
+
+    main .confirm-mobile-container .form .submit-button-wrapper p {
+        font-size: 14px
+    }
+
+    main .confirm-mobile-container .form .confirm-code__inputs input {
+        height: 50px;
+        width: 50px
+    }
+
+    main .confirm-mobile-container .form .edit-button {
+        background-size: 20px;
+        height: 50px;
+        width: 20px
+    }
+
+    main .confirm-mobile-container .form .verification__status__box p {
+        font-size: 14px
+    }
+
+    main .confirm-mobile-container .form .verification__status__box img {
+        height: 20px;
+        width: 20px
+    }
+
+    main .confirm-mobile-container .form .verification__status__box .status__text {
+        font-size: 18px;
+        line-height: 21px
+    }
+}
+
+@media (min-width: 700px) {
+    main .confirm-mobile-container .form {
+        margin-inline:51px
+    }
+}
+
+@media (min-width: 900px) {
+    main .confirm-mobile-container .form {
+        display:grid;
+        grid-template-columns: max-content 1fr;
+        margin-bottom: 25px
+    }
+
+    main .confirm-mobile-container .form .form__inputs {
+        display: flex;
+        flex-direction: row;
+        grid-column: 1/2;
+        grid-row: 1/2
+    }
+
+    main .confirm-mobile-container .form .form__inputs .input--mobile {
+        margin-bottom: 0;
+        margin-right: 25px;
+        max-width: 416px;
+        min-width: 416px
+    }
+
+    main .confirm-mobile-container .form .form__inputs .input--mobile label {
+        margin-bottom: 0
+    }
+
+    main .confirm-mobile-container .form .form__inputs .input--mobile .input {
+        margin: 0
+    }
+
+    main .confirm-mobile-container .form__buttons {
+        grid-column: 1/2;
+        grid-row: 2/3;
+        margin: 25px 0 30px
+    }
+
+    main .confirm-mobile-container .form .edit-button {
+        left: 376px
+    }
+
+    main .confirm-mobile-container .form .verification__status__box {
+        align-content: start;
+        grid-column: 2/3;
+        grid-row: 1/3;
+        margin-bottom: 0!important;
+        width: -moz-fit-content!important;
+        width: fit-content!important
+    }
+
+    main .confirm-mobile-container .form .verification__status__box p {
+        margin-bottom: 9px
+    }
+}
+
+@media (min-width: 1000px) {
+    main .confirm-mobile-container .form .submit-button-wrapper .button {
+        justify-self:flex-end
+    }
+
+    main .confirm-mobile-container .form .confirm-code__inputs input {
+        height: 50px;
+        width: 50px
+    }
+}
+
+@media (min-width: 1100px) {
+    main .confirm-mobile-container {
+        margin:0 auto;
+        max-width: 860px
+    }
+
+    main .confirm-mobile-container .form {
+        margin: 0
+    }
+}
+
+@media (min-width: 1300px) {
+    main .confirm-mobile-container .profile__section_heading {
+        margin-top:0!important
+    }
+}

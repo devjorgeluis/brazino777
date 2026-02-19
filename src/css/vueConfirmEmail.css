@@ -1,0 +1,391 @@
+#vue-confirm-email-form-block .edit {
+    display: block!important
+}
+
+#vue-confirm-email-form-block .verification-wrapper {
+    margin: 0 auto;
+    max-width: 450px
+}
+
+@media (min-width: 620px) {
+    #vue-confirm-email-form-block .verification-wrapper {
+        margin:0;
+        max-width: none
+    }
+}
+
+@media (min-width: 700px) {
+    #vue-confirm-email-form-block .verification-wrapper {
+        margin:0 51px;
+        max-width: none
+    }
+}
+
+@media (min-width: 900px) {
+    #vue-confirm-email-form-block .verification-wrapper {
+        margin:0
+    }
+
+    #vue-confirm-email-form-block .form {
+        grid-gap: 25px 30px;
+        display: grid;
+        grid-template-columns: 416px 1fr;
+        margin: 0 0 25px 51px;
+        max-width: 860px
+    }
+}
+
+@media (min-width: 1100px) {
+    #vue-confirm-email-form-block .form {
+        margin:0 auto 25px
+    }
+}
+
+#vue-confirm-email-form-block .form__inputs .error-message {
+    color: #f01;
+    display: block;
+    font-family: roboto-regular-webfont,sans-serif;
+    font-size: 12px;
+    line-height: 14px;
+    margin: 5px 0
+}
+
+@media (min-width: 620px) {
+    #vue-confirm-email-form-block .form__inputs .error-message {
+        font-size:14px
+    }
+}
+
+#vue-confirm-email-form-block .form__inputs .error-message:first-letter {
+    text-transform: capitalize
+}
+
+#vue-confirm-email-form-block .form .input-wrapper {
+    position: relative
+}
+
+#vue-confirm-email-form-block .form .input-wrapper .edit {
+    background-image: url(/build/images/editPhoneInput.5b6d2d03.svg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 15px;
+    cursor: pointer;
+    height: 40px;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    transform: unset;
+    width: 15px;
+    z-index: 10
+}
+
+@media (min-width: 620px) {
+    #vue-confirm-email-form-block .form .input-wrapper .edit {
+        background-position:50%;
+        background-repeat: no-repeat;
+        background-size: 20px;
+        height: 50px;
+        width: 20px
+    }
+
+    #vue-confirm-email-form-block .form .input label {
+        height: 50px
+    }
+}
+
+@media (min-width: 900px) {
+    #vue-confirm-email-form-block .form .input label {
+        margin-bottom:0
+    }
+}
+
+#vue-confirm-email-form-block .form .input input {
+    border-color: #3b3b3b
+}
+
+#vue-confirm-email-form-block .form .input--disabled input {
+    border-color: #b8b8b8;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none
+}
+
+#vue-confirm-email-form-block .form__submit {
+    width: -moz-max-content;
+    width: max-content
+}
+
+#vue-confirm-email-form-block .form__submit .error-message {
+    display: none
+}
+
+#vue-confirm-email-form-block .form__submit button[disabled] {
+    cursor: default;
+    opacity: .5;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none
+}
+
+#vue-confirm-email-form-block .verification__sumsub {
+    grid-column: 1/-1
+}
+
+@media (min-width: 900px) {
+    #vue-confirm-email-form-block .verification-status {
+        grid-column:2/3;
+        grid-row: 1/3
+    }
+}
+
+#vue-confirm-email-form-block .verification-status__box {
+    align-items: center;
+    display: flex;
+    width: -moz-max-content;
+    width: max-content
+}
+
+@media (min-width: 900px) {
+    #vue-confirm-email-form-block .verification-status__box {
+        align-items:flex-start;
+        flex-direction: column
+    }
+}
+
+#vue-confirm-email-form-block .verification-status__box p {
+    color: #3b3b3b;
+    font-family: roboto-regular-webfont,Sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    margin: 0 17px 0 0;
+    padding: 0;
+    text-transform: capitalize
+}
+
+@media (min-width: 620px) {
+    #vue-confirm-email-form-block .verification-status__box p {
+        font-size:14px
+    }
+}
+
+@media (min-width: 900px) {
+    #vue-confirm-email-form-block .verification-status__box p {
+        margin-bottom:9px
+    }
+}
+
+#vue-confirm-email-form-block .verification-status__type {
+    color: red
+}
+
+#vue-confirm-email-form-block .verification-status__type.verified {
+    color: #035d03
+}
+
+#vue-confirm-email-form-block .verification-status__message {
+    align-items: center;
+    display: flex
+}
+
+#vue-confirm-email-form-block .verification-status__message img {
+    display: block;
+    height: 15px;
+    margin-right: 7px;
+    width: 15px
+}
+
+@media (min-width: 620px) {
+    #vue-confirm-email-form-block .verification-status__message img {
+        height:20px;
+        width: 20px
+    }
+}
+
+#vue-confirm-email-form-block .verification-status__message__box {
+    background-color: #ffdcdc;
+    border-radius: 12px;
+    color: #3b3b3b;
+    font-family: roboto-regular-webfont,Sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    grid-column: span 2;
+    line-height: 18px;
+    margin-right: auto;
+    margin-top: 10px;
+    padding: 12px;
+    width: -moz-fit-content;
+    width: fit-content
+}
+
+@media (min-width: 900px) {
+    #vue-confirm-email-form-block .verification-status__message__box {
+        border-radius:20px;
+        font-size: 14px;
+        line-height: 20px;
+        padding: 16px
+    }
+}
+
+#vue-confirm-email-form-block .verification-status__message__box span {
+    color: #fd0000
+}
+
+#vue-confirm-email-form-block .verification-status__message__box a {
+    color: inherit;
+    text-decoration: underline
+}
+
+#vue-confirm-email-form-block .verification-status__message__box a:hover {
+    text-decoration: none
+}
+
+#vue-confirm-email-form-block .verification-status__text {
+    font-family: roboto-regular-webfont,Sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700!important;
+    line-height: 14px;
+    text-transform: uppercase
+}
+
+@media (min-width: 620px) {
+    #vue-confirm-email-form-block .verification-status__text {
+        font-size:18px;
+        line-height: 21px
+    }
+}
+
+#vue-confirm-email-form-block .verification__request {
+    display: flex;
+    justify-content: flex-start
+}
+
+@media (min-width: 1100px) {
+    #vue-confirm-email-form-block .verification__request {
+        justify-content:flex-end
+    }
+}
+
+#vue-confirm-email-form-block .confirm-email-code .spam-message {
+    color: red;
+    display: block;
+    font-family: roboto-regular-webfont,sans-serif;
+    font-size: 13px;
+    line-height: 14.06px;
+    margin-block:10px;text-transform: uppercase
+}
+
+#vue-confirm-email-form-block .confirm-email-code .spam-message span {
+    font-weight: 700
+}
+
+@media (min-width: 900px) {
+    #vue-confirm-email-form-block .confirm-email-code .spam-message {
+        font-size:15px;
+        line-height: 18px;
+        margin-block:0 10px}
+}
+
+#vue-confirm-email-form-block .confirm-email-code__text {
+    color: #232323;
+    font-family: roboto-regular-webfont,sans-serif;
+    font-size: 14px!important;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    margin: unset;
+    text-align: left
+}
+
+@media (min-width: 620px) {
+    #vue-confirm-email-form-block .confirm-email-code__text {
+        font-size:18px
+    }
+}
+
+.confirm-code {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 10px
+}
+
+.confirm-code__inputs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 0!important
+}
+
+.confirm-code__inputs input {
+    border: 2px solid #3b3b3b;
+    border-radius: 10px;
+    font-family: roboto-regular-webfont,sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    height: 40px;
+    line-height: normal;
+    text-align: center;
+    text-transform: uppercase;
+    width: 40px
+}
+
+@media (min-width: 620px) {
+    .confirm-code__inputs input {
+        font-size:24px;
+        height: 50px;
+        width: 50px
+    }
+}
+
+.confirm-code__inputs input:focus {
+    border: 2px solid #035d03
+}
+
+.confirm-code__inputs input.error {
+    border: 2px solid #fd0000
+}
+
+.confirm-code-error {
+    color: #fd0000;
+    font-family: roboto-regular-webfont,sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    margin-top: 10px;
+    text-align: center
+}
+
+@media (min-width: 620px) {
+    .confirm-code-error {
+        font-size:14px;
+        margin-top: 11px
+    }
+}
+
+.confirm-code-resend {
+    color: #3b3b3b;
+    cursor: pointer;
+    font-family: roboto-regular-webfont,sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    margin-top: 10px;
+    text-align: center;
+    text-decoration: underline
+}
+
+@media (min-width: 620px) {
+    .confirm-code-resend {
+        font-size:14px;
+        margin-top: 11px
+    }
+}

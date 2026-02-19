@@ -1,17 +1,20 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import { AppContext } from "../../AppContext";
-import Footer from "../../components/Layout/Footer";
-import ProfileHistory from "./ProfileHistory";
-import ProfileTransaction from "./ProfileTransaction";
+import { LayoutContext } from "../../components/Layout/LayoutContext";
+import ImgDefaultUser from "/src/assets/svg/general-avatar.svg";
+
+const HASH_SECTION_MAP = {
+    "#info": 1,
+};
 
 const Profile = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { contextData } = useContext(AppContext);
-
-    const [activeMainTab, setActiveMainTab] = useState("profile");
-    const [activeRecordTab, setActiveRecordTab] = useState("transactions");
+    const { handleLogoutClick } = useContext(LayoutContext);
+    const { isMobile } = useOutletContext();
+    const [activeSection, setActiveSection] = useState(0);
 
     useEffect(() => {
         if (!contextData?.session) {
@@ -24,30 +27,18 @@ const Profile = () => {
     }, [location.pathname]);
 
     useEffect(() => {
-        const hash = location.hash.replace('#', '');
-        
-        if (hash === 'transaction' || hash === 'transactions') {
-            setActiveMainTab("record");
-            setActiveRecordTab("transactions");
-        } else if (hash === 'history') {
-            setActiveMainTab("record");
-            setActiveRecordTab("history");
-        } else {
-            setActiveMainTab("profile");
-        }
+        const section = HASH_SECTION_MAP[location.hash] ?? 0;
+        setActiveSection(section);
     }, [location.hash]);
 
-    const TabButton = ({ active, onClick, icon, label }) => {
-        return (
-            <button
-                type="button"
-                className={`nav-link ${active ? "active" : ""}`}
-                onClick={onClick}
-            >
-                {icon ? <i className={icon}></i> : null}
-                <span className="name">{label}</span>
-            </button>
-        );
+    const handleNavClick = (e, hash, sectionId) => {
+        e.preventDefault();
+        navigate(`/profile${hash}`);
+        setActiveSection(sectionId);
+    };
+
+    const handleGoBack = () => {
+        navigate("/profile");
     };
 
     const formatBalance = (value) => {
@@ -59,197 +50,186 @@ const Profile = () => {
         });
     };
 
+    const formatDate = (dateValue) => {
+        if (!dateValue) return "";
+        const date = new Date(dateValue);
+        if (isNaN(date.getTime())) return "";
+        const yyyy = date.getFullYear();
+        const mm = String(date.getMonth() + 1).padStart(2, "0");
+        const dd = String(date.getDate()).padStart(2, "0");
+        return `${yyyy}-${mm}-${dd}`;
+    };
+
+    // On mobile: show nav only when no section is active, show content only when a section is active
+    // On desktop: always show both
+    const showNav = !isMobile || activeSection === 0;
+    const showContent = !isMobile || activeSection !== 0;
+
     return (
         <>
-            <div className="jel-wallet">
-                <div className="container">
-                    <div className="jel-wallet-header">
-                        <div className="jel-wallet-header-top">
-                            <div className="jel-wallet-header-user">
-                                <div className="figure avatar-wrapper-panel">
-                                    <div className="personal-image">
-                                        <label className="label">
-                                            <input
-                                                type="file"
-                                                accept="image/jpg, image/jpeg, image/png, image/gif"
-                                            />
-                                        </label>
-                                    </div>
+            <main className="profile--page">
+                <div className="profile--outer_wrapper">
 
-                                    <div className="name">{contextData?.session?.user?.username}</div>
-                                    <div className="mail">{contextData?.session?.user?.id}</div>
+                    {showNav && (
+                        <section className="profile-page__navigation-menu">
+                            <div className="navigation-menu__image">
+                                <div className="user-image">
+                                    <img
+                                        id="user-image"
+                                        className="user__avatar"
+                                        src={contextData?.session?.user?.profile_image || ImgDefaultUser}
+                                        alt="avatar image"
+                                    />
+                                </div>
+                                <div className="register-date">
+                                    <p className="username">{contextData?.session?.user?.username}</p>
+                                    <p className="date">
+                                        Fecha de registro : &nbsp;<span>{formatDate(contextData?.session?.user?.created_at)}</span>
+                                    </p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div className="jel-wallet-body">
-                        <div className="jel-wallet-body-header">
-                            <ul className="nav nav-tabs nav-tabs-primary" role="tablist">
-                                <li className="nav-item">
-                                    <TabButton
-                                        active={activeMainTab === "profile"}
-                                        onClick={() => setActiveMainTab("profile")}
-                                        icon="fa-solid fa-user-shield"
-                                        label="Perfil"
-                                    />
-                                </li>
-
-                                <li className="nav-item">
-                                    <TabButton
-                                        active={activeMainTab === "record"}
-                                        onClick={() => setActiveMainTab("record")}
-                                        icon="fa-solid fa-money-bill-transfer"
-                                        label="Historial"
-                                    />
-                                </li>
-                            </ul>
-
-                            <div className="tab-content tab-content-primary">
-                                {activeMainTab === "profile" && (
-                                    <div className="tab-pane fade show active">
-                                        <div className="tap-pane-ex">
-                                            <div className="nav-tabs-ex-mobile">
-                                                <ul className="nav nav-tabs nav-tabs-ex" role="tablist">
-                                                    <li className="nav-item">
-                                                        <button
-                                                            type="button"
-                                                            className="nav-link active"
-                                                        >
-                                                            Mis datos
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-                                            <div className="tab-content tab-content-ex">
-                                                <div className="tab-pane fade show active">
-                                                    <form className="row" noValidate>
-                                                        <h6 className="mb-4">Información personal</h6>
-
-                                                        <div className="col-md-6">
-                                                            <div className="mb-3">
-                                                                <label htmlFor="username" className="form-label">
-                                                                    Usuario
-                                                                </label>
-                                                                <input
-                                                                    id="username"
-                                                                    type="text"
-                                                                    className="form-control disabled"
-                                                                    disabled
-                                                                    readOnly
-                                                                    value={contextData?.session?.user?.username}
-                                                                />
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="col-md-6">
-                                                            <div className="mb-3">
-                                                                <label htmlFor="email" className="form-label">
-                                                                    Correo electrónico
-                                                                </label>
-                                                                <input
-                                                                    id="email"
-                                                                    type="email"
-                                                                    className="form-control disabled"
-                                                                    disabled
-                                                                    readOnly
-                                                                    value={contextData?.session?.user?.email || "-"}
-                                                                />
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="col-md-6">
-                                                            <div className="mb-3">
-                                                                <label htmlFor="firstname" className="form-label">
-                                                                    Nombres
-                                                                </label>
-                                                                <input
-                                                                    id="firstname"
-                                                                    type="text"
-                                                                    className="form-control disabled"
-                                                                    disabled
-                                                                    readOnly
-                                                                    value={contextData?.session?.user?.first_name || "-"}
-                                                                />
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="col-md-6">
-                                                            <div className="mb-3">
-                                                                <label htmlFor="lastname" className="form-label">
-                                                                    Apellidos
-                                                                </label>
-                                                                <input
-                                                                    id="lastname"
-                                                                    type="text"
-                                                                    className="form-control disabled"
-                                                                    disabled
-                                                                    readOnly
-                                                                    value={contextData?.session?.user?.last_name || "-"}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
+                            <div className="navigation-menu__deposit">
+                                <div className="vue-balances" id="vue-balances-profile">
+                                    <div className="balance">
+                                        <span>Saldo de juego</span>
+                                        <div className="balance_wrapper">
+                                            <span className="user_main_currency">$</span>
+                                            <span className="user_main_balance">{formatBalance(contextData?.session?.user?.balance)}</span>
                                         </div>
                                     </div>
-                                )}
-
-                                {/* ===================== RECORD ===================== */}
-                                {activeMainTab === "record" && (
-                                    <div className="tab-pane fade show active">
-                                        <div className="tap-pane-ex">
-                                            <div className="nav-tabs-ex-mobile">
-                                                <ul className="nav nav-tabs nav-tabs-ex" role="tablist">
-                                                    <li className="nav-item">
-                                                        <button
-                                                            type="button"
-                                                            className={`nav-link ${activeRecordTab === "transactions" ? "active" : ""
-                                                                }`}
-                                                            onClick={() => setActiveRecordTab("transactions")}
-                                                        >
-                                                            Transacciones
-                                                        </button>
-                                                    </li>
-
-                                                    <li className="nav-item">
-                                                        <button
-                                                            type="button"
-                                                            className={`nav-link ${activeRecordTab === "history" ? "active" : ""
-                                                                }`}
-                                                            onClick={() => setActiveRecordTab("history")}
-                                                        >
-                                                            Historial del Juego
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-                                            <div className="tab-content tab-content-ex">
-                                                {activeRecordTab === "transactions" && (
-                                                    <div className="tab-pane fade show active">
-                                                        <ProfileTransaction />
-                                                    </div>
-                                                )}
-
-                                                {activeRecordTab === "history" && (
-                                                    <div className="tab-pane fade show active">
-                                                        <ProfileHistory />
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <Footer />
+                            <div className="navigation-menu__links">
+                                <a
+                                    href="/profile#info"
+                                    className={`menu-avatars ${activeSection === 1 ? "active" : ""}`}
+                                    onClick={(e) => handleNavClick(e, "#info", 1)}
+                                >
+                                    <span>Mis datos</span>
+                                </a>
+                                <a
+                                    className="logout"
+                                    onClick={handleLogoutClick}
+                                >
+                                    <span>Salir</span>
+                                </a>
+                            </div>
+                        </section>
+                    )}
+
+                    {showContent && (
+                        <section className="profile-page__content-wrapper">
+                            {activeSection === 1 && (
+                                <article className="profile-page__content verification profile-page__content--active">
+                                    <span className="go-back" onClick={handleGoBack}>Atrás</span>
+                                    <div id="vue-confirm-email-form-block">
+                                        <div className="verification__wrapper">
+                                            <section className="main__contact_wrapper">
+                                                <div className="verification__block verification__block--email verification__block--verified">
+                                                    <div className="header_wrapper">
+                                                        <h2 className="profile__section_heading">Email</h2>
+                                                        <div className="main_contact_message">Contacto general</div>
+                                                    </div>
+                                                    <div id="vue-confirm-email-form-block">
+                                                        <div className="verification-wrapper">
+                                                            <form method="post" className="form" noValidate>
+                                                                <div className="form__inputs">
+                                                                    <div className="input-wrapper">
+                                                                        <div className="input input--email input--active input--disabled">
+                                                                            <label htmlFor="email">
+                                                                                <span className="label-text">Correo electrónico</span>
+                                                                                <input
+                                                                                    type="email"
+                                                                                    name="email"
+                                                                                    autoComplete="false"
+                                                                                    placeholder=""
+                                                                                    value={contextData?.session?.user?.email}
+                                                                                    disabled
+                                                                                />
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="verification__block verification__block--username verification__block--email verification__block--verified">
+                                                    <div className="header_wrapper">
+                                                        <h2 className="profile__section_heading">Usuario</h2>
+                                                        <div className="main_contact_message">Usuario</div>
+                                                    </div>
+                                                    <div id="vue-confirm-email-form-block">
+                                                        <div className="verification-wrapper">
+                                                            <form method="post" className="form" noValidate>
+                                                                <div className="form__inputs">
+                                                                    <div className="input-wrapper">
+                                                                        <div className="input input--email input--active input--disabled">
+                                                                            <label htmlFor="email">
+                                                                                <span className="label-text">Usuario</span>
+                                                                                <input
+                                                                                    type="email"
+                                                                                    name="email"
+                                                                                    autoComplete="false"
+                                                                                    placeholder=""
+                                                                                    value={contextData?.session?.user?.username}
+                                                                                    disabled
+                                                                                />
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Phone Block */}
+                                                <div className="verification__block verification__block--phone">
+                                                    <div className="confirm-mobile-container">
+                                                        <div className="profile__section_heading">Celular</div>
+                                                        <p className="confirm-mobile-text"></p>
+                                                        <form method="post" className="form" noValidate>
+                                                            <div className="form__inputs">
+                                                                <div className="input input--mobile input--active">
+                                                                    <label htmlFor="mobile">
+                                                                        <span className="label-text">Celular </span>
+                                                                        <div className="vue-tel-input">
+                                                                            <div className="vti__dropdown">
+                                                                                <span className="vti__selection">
+                                                                                    <span className="vti__flag ar"></span>
+                                                                                    <span className="vti__dropdown-arrow">▼</span>
+                                                                                </span>
+                                                                            </div>
+                                                                            <input
+                                                                                type="tel"
+                                                                                autoComplete="mobile"
+                                                                                className="vti__input"
+                                                                                name="mobile"
+                                                                                placeholder="+54"
+                                                                                value={contextData?.session?.user?.phone}
+                                                                                disabled
+                                                                            />
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </article>
+                            )}
+                        </section>
+                    )}
+
+                </div>
+            </main>
         </>
     );
 };

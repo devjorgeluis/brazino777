@@ -13,6 +13,10 @@ import './css/gamesBlock.css'
 import './css/vueSearchFormBlock.css'
 import './css/vueProducerBlock.css'
 import './css/vueLoginFormBlock.css'
+import './css/vueConfirmEmail.css'
+import './css/vueConfirmMobileFormBlock.css'
+import './css/flag.css'
+import './css/profileFormBlock.css'
 
 import App from './App.jsx'
 

@@ -1117,6 +1117,18 @@
     width: 32px;
 }
 
+@media (max-width: 576px) {
+    .button-support {
+        margin-right: 10px;
+        height: 30px;
+        min-width: 30px;
+    }
+
+    .button-support>img {
+        width: 27px;
+    }
+}
+
 .apigames-popup {
     position: fixed;
     width: 100%;
