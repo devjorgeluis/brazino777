@@ -1545,7 +1545,7 @@ aside {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 400
+    z-index: 1000
 }
 
 aside.mobile-show {

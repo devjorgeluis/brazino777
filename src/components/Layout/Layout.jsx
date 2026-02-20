@@ -309,10 +309,12 @@ const Layout = () => {
                         setIsUserMenuOpen={setIsUserMenuOpen}
                     />
                     <Outlet context={{ isSlotsOnly, isLogin, isMobile, topGames, topArcade, topCasino, topLiveCasino }} />
-
-                    <Footer
-                        isSlotsOnly={isSlotsOnly}
-                    />
+                    
+                    {!isSportsPage &&
+                        <Footer
+                            isSlotsOnly={isSlotsOnly}
+                        />
+                    }
                 </div>
 
                 {shouldShowGameModal && gameModalData.gameUrl && (
