@@ -4,7 +4,7 @@ import { AppContext } from "../AppContext";
 import { LayoutContext } from "../components/Layout/LayoutContext";
 import { NavigationContext } from "../components/Layout/NavigationContext";
 import { callApi } from "../utils/Utils";
-import LiveCasinoGameCard from "../components/LiveCasinoGameCard.jsx";
+import GameCard from "../components/GameCard.jsx";
 import GameModal from "../components/Modal/GameModal";
 import HotGameSlideshow from "../components/Home/HotGameSlideshow";
 import ProviderContainer from "../components/ProviderContainer";
@@ -399,6 +399,7 @@ const LiveCasino = () => {
   // ── Game launch ──────────────────────────────────────────────────────────────
 
   const launchGame = (game, type, launcher) => {
+    setShowFullDivLoading(true);
     if (isMobile) {
       selectedGameId = game.id;
       selectedGameType = type;
@@ -530,9 +531,9 @@ const LiveCasino = () => {
                       )}
                     </h2>
 
-                    <div className="body-games-lc">
+                    <div className="games-block">
                       {games.map((game) => (
-                        <LiveCasinoGameCard
+                        <GameCard
                           key={"lc-game-" + game.id}
                           id={game.id}
                           provider={activeCategory?.name || "Casino en Vivo"}
@@ -546,11 +547,9 @@ const LiveCasino = () => {
                     {isLoadingGames && <div className="my-3"><LoadApi width={60} /></div>}
 
                     {!isSearchView && (
-                      <div className="text-center mb-4">
-                        <a className="btn btn-theme btn-h-custom" onClick={loadMoreGames}>
-                          Mostrar todo
-                        </a>
-                      </div>
+                      <button onClick={loadMoreGames} type="button" className="button button--load-games">
+                        <span className="button--load-games__text">Mostrar más</span>
+                      </button>
                     )}
                   </div>
                 </div>
