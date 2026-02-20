@@ -562,7 +562,7 @@ const Home = () => {
   };
 
   return (
-    <main className="index--page">
+    <>
       {shouldShowGameModal && selectedGameId !== null ? (
         <GameModal
           gameUrl={gameUrl}
@@ -603,7 +603,7 @@ const Home = () => {
           gameLauncher={selectedGameLauncher}
         />
       ) : (
-        <>
+        <main className="index--page">
           {!selectedProvider && !isSearchView && (
             <Slideshow />
           )}
@@ -755,9 +755,9 @@ const Home = () => {
             setSelectedProvider={setSelectedProvider}
             onProviderSelect={handleProviderSelect}
           />
-        </>
+        </main>
       )}
-    </main>
+    </>
   );
 };
 
