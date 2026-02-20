@@ -299,6 +299,8 @@ const Layout = () => {
 
                     <Sidebar
                         isSlotsOnly={isSlotsOnly}
+                        userBalance={userBalance}
+                        refreshBalance={refreshBalance}
                         isMobile={isMobile}
                         isLogin={isLogin}
                         supportParent={supportParent}

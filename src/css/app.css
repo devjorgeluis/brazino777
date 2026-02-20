@@ -3230,7 +3230,6 @@ aside .aside__balance p span.balance-amount {
     left: 55%;
     position: absolute;
     transform: translateX(-50%);
-    width: 100%
 }
 
 aside .aside__balance p span.balance-amount span:first-of-type {

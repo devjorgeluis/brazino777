@@ -10,11 +10,12 @@ import ImgPhone from "/src/assets/svg/phone.svg";
 import ImgRefresh from "/src/assets/svg/refresh_menu_2.svg";
 import ImgRefreshHover from "/src/assets/svg/refresh_menu-hover_2.svg";
 
-const Sidebar = ({ isSlotsOnly, isLogin, isMobile, supportParent, openSupportModal, isUserMenuOpen, setIsUserMenuOpen }) => {
+const Sidebar = ({ isSlotsOnly, isLogin, isMobile, supportParent, openSupportModal, userBalance, refreshBalance }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const { contextData } = useContext(AppContext);
     const [expandedMenus, setExpandedMenus] = useState([]);
+    const [isRefreshing, setIsRefreshing] = useState(false)
     const iconRefs = useRef({});
     const isMenuExpanded = (menuId) => expandedMenus.includes(menuId);
 
@@ -106,23 +107,16 @@ const Sidebar = ({ isSlotsOnly, isLogin, isMobile, supportParent, openSupportMod
         return false;
     };
 
-    const closeUserMenu = () => {
-        setIsUserMenuOpen(false);
-    };
-
     const handleMenuClick = (href, item, e) => {
         e.preventDefault();
         handleCloseMenu();
 
         if (item && item.action) {
-            closeUserMenu();
             item.action();
             return;
         }
 
         if (href && href !== "#") {
-            closeUserMenu();
-
             if (href === location.pathname + location.hash) {
                 window.scrollTo({
                     top: 0,
@@ -148,6 +142,14 @@ const Sidebar = ({ isSlotsOnly, isLogin, isMobile, supportParent, openSupportMod
         return num.toLocaleString("de-DE", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
+        });
+    };
+
+    const handleRefreshBalance = () => {
+        if (isRefreshing) return;
+        setIsRefreshing(true);
+        refreshBalance(() => {
+            setIsRefreshing(false);
         });
     };
 
@@ -186,10 +188,10 @@ const Sidebar = ({ isSlotsOnly, isLogin, isMobile, supportParent, openSupportMod
                                         <p className="main_balance_code">
                                             <span>Saldo de juego</span>
                                             <span className="balance-amount">
-                                                <span className="balance-amount__amount">{formatBalance(contextData?.session?.user?.balance)}</span>
+                                                <span className="balance-amount__amount">{formatBalance(userBalance)}</span>
                                                 <span className="balance-amount__currency">$</span>
                                             </span>
-                                            <span className="reload-balance">
+                                            <span className={`reload-balance ${isRefreshing ? "spin" : ""}`} onClick={handleRefreshBalance}>
                                                 <img
                                                     src={ImgRefresh}
                                                     alt="refresh"
