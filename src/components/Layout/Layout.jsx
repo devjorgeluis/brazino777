@@ -9,7 +9,6 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import SupportModal from "../Modal/SupportModal";
-import MyProfileModal from "../Modal/MyProfileModal";
 import FullDivLoading from "../Loading/FullDivLoading";
 import GameModal from "../Modal/GameModal";
 import ChatButton from "../ChatButton";
@@ -27,7 +26,6 @@ const Layout = () => {
     const [supportParent, setSupportParent] = useState("");
     const [showSupportModal, setShowSupportModal] = useState(false);
     const [supportParentOnly, setSupportParentOnly] = useState(false);
-    const [showMyProfileModal, setShowMyProfileModal] = useState(false);
     const [topGames, setTopGames] = useState([]);
     const [topArcade, setTopArcade] = useState([]);
     const [topCasino, setTopCasino] = useState([]);
@@ -281,13 +279,6 @@ const Layout = () => {
                 <FullDivLoading show={showFullDivLoading} />
                 {!isSportsPage && <ChatButton />}
                 <ScrollButton />
-
-                {showMyProfileModal && (
-                    <MyProfileModal
-                        isOpen={showMyProfileModal}
-                        onClose={() => setShowMyProfileModal(false)}
-                    />
-                )}
 
                 <div id="orbit-container">
                     <Header

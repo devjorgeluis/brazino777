@@ -53,28 +53,41 @@ const GameModal = ({
   if (isMobile) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className={`iframe-content ${isFullscreen ? 'fullscreen' : ''}`}>
-        <div className="button-container">
-          <button className="icon-button" onClick={toggleFullscreen}>
-            <i className={`fas ${isFullscreen ? 'fa-compress' : 'fa-expand'}`}></i>
-          </button>
-          <button className="icon-button" onClick={onClose}>
-            <i className="fas fa-times"></i>
-          </button>
+    <div className="game--page">
+      {!iframeLoaded && <LoadPage />}
+      <div className={`game-wrapper game-wrapper--desktop ${isFullscreen ? "game-wrapper--fullscreen" : ""}`}>
+        <div className="game-controls">
+          <div className="game-controls__left">
+            <a className="game-control-button go-back" onClick={onClose}></a>
+            <h1 className="game-title">{gameName}</h1>
+          </div>
+          <div className="game-controls__right">
+            <span className="game-control-button fullscreen" onClick={toggleFullscreen}>
+              <span></span>
+            </span>
+            <a className="game-control-button exit" onClick={onClose}></a>
+          </div>
         </div>
-        <>
-          {!iframeLoaded && <LoadPage />}
-          {gameUrl && (
-            <iframe
-              src={gameUrl}
-              allow="autoplay"
-              className="iframe-style"
-              onLoad={handleIframeLoad}
-              style={{ display: iframeLoaded ? 'block' : 'none' }}
-            ></iframe>
-          )}
-        </>
+        <div className="game">
+          <div className="overlay overlay--initial">
+            <img
+              src={gameImg}
+              alt="image overlay"
+            />
+            <div className="overlay-content"></div>
+          </div>
+          <div id="game_wrapper">
+            {gameUrl && (
+              <iframe
+                src={gameUrl}
+                allow="autoplay"
+                className="iframe-style"
+                onLoad={handleIframeLoad}
+                style={{ display: iframeLoaded ? 'block' : 'none' }}
+              ></iframe>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

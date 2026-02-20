@@ -546,7 +546,7 @@ const Casino = () => {
                         provider={activeCategory?.name || "Casino"}
                         title={game.name}
                         imageSrc={game.image_local !== null ? contextData.cdnUrl + game.image_local : game.image_url}
-                        onClick={() => (isLogin ? launchGame(game, "slot", "modal") : handleLoginClick())}
+                        onGameClick={() => (isLogin ? launchGame(game, "slot", "modal") : handleLoginClick())}
                       />
                     ))}
                   </div>

@@ -359,6 +359,11 @@ const Home = () => {
   };
 
   const launchGame = (game, type, launcher) => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'auto'
+    });    
     // Only show modal when explicitly using modal launcher
     if (launcher === "modal") {
       setShouldShowGameModal(true);
@@ -732,7 +737,7 @@ const Home = () => {
                       provider={activeCategory?.name || 'Casino'}
                       title={game.name}
                       imageSrc={game.image_local !== null ? contextData.cdnUrl + game.image_local : game.image_url}
-                      onClick={() => (isLogin ? launchGame(game, "slot", "tab") : handleLoginClick())}
+                      onGameClick={() => (isLogin ? launchGame(game, "slot", "tab") : handleLoginClick())}
                     />
                   ))}
                 </div>

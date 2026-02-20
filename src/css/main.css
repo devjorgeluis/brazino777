@@ -179,7 +179,7 @@
 }
 
 .index--page {
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     padding-bottom: 40px
 }
 

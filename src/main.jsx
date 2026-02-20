@@ -17,6 +17,7 @@ import './css/vueConfirmEmail.css'
 import './css/vueConfirmMobileFormBlock.css'
 import './css/flag.css'
 import './css/table.css'
+import './css/game.css'
 import './css/profileFormBlock.css'
 
 import App from './App.jsx'
