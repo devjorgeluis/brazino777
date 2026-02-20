@@ -394,6 +394,12 @@ const LiveCasino = () => {
     setGames([]);
     setIsSearchView(false);
     setIsLoadingGames(false);
+
+    if (selectedProvider) {
+      fetchContent(selectedProvider, selectedProvider.id, selectedProvider.table_name, selectedCategoryIndex, true);
+    } else {
+      setGames([]);
+    }
   };
 
   // ── Game launch ──────────────────────────────────────────────────────────────
