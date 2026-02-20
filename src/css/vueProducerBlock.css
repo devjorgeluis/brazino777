@@ -49,14 +49,17 @@
     font-family: roboto-medium-webfont,sans-serif;
     font-size: 10px;
     font-weight: 700;
-    line-height: 40px;
+    line-height: 1;
     margin: 0;
     padding: 0;
     position: relative;
     text-transform: uppercase;
     -webkit-user-select: none;
     -moz-user-select: none;
-    user-select: none
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .producer-block__dropdown-btn:after {
@@ -297,7 +300,8 @@
 
     .producer-block__dropdown-btn {
         font-size: 14px;
-        line-height: 50px
+        line-height: 1;
+        gap: 10px;
     }
 
     .producer-block__dropdown-btn:after {

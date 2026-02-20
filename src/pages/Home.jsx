@@ -48,6 +48,7 @@ const Home = () => {
   const [gameUrl, setGameUrl] = useState("");
   const [categoryType, setCategoryType] = useState("");
   const [isLoadingGames, setIsLoadingGames] = useState(false);
+  const [isSelectCategory, setIsSelectCategory] = useState(false);
   const [isSearchView, setIsSearchView] = useState(false);
   const [searchLabel, setSearchLabel] = useState("");
   const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
@@ -187,6 +188,7 @@ const Home = () => {
     setCategoryType(result.data?.page_group_type);
     setSelectedProvider(null);
     setIsSearchView(false);
+    setIsSelectCategory(false);
     setSearchLabel("");
     setPageData(result.data);
 
@@ -464,6 +466,7 @@ const Home = () => {
 
   const handleCategorySelect = (category) => {
     setIsSearchView(false);
+    setIsSelectCategory(true);
     setSearchLabel("");
     setActiveCategory(category);
     setSelectedProvider(null);
@@ -629,6 +632,7 @@ const Home = () => {
               selectedProvider={selectedProvider}
               setSelectedProvider={setSelectedProvider}
               onProviderSelect={handleProviderSelect}
+              isSelectCategory={isSelectCategory}
             />
             <SearchInput
               txtSearch={txtSearch}
@@ -730,7 +734,7 @@ const Home = () => {
                   ))}
                 </div>
 
-                {isLoadingGames && <LoadApi />}
+                {isLoadingGames && <div className="my-3"><LoadApi /></div>}
 
                 {
                   !isSearchView &&

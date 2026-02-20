@@ -1,10 +1,12 @@
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { AppContext } from "../AppContext";
+import LoadApi from "./Loading/LoadApi";
 
 const ProviderSelect = ({
     categories,
     onProviderSelect,
-    selectedProvider
+    selectedProvider,
+    isSelectCategory
 }) => {
     const { contextData } = useContext(AppContext);
     
@@ -82,6 +84,7 @@ const ProviderSelect = ({
                         aria-haspopup="listbox"
                     >
                         {selectedProvider ? selectedProvider?.name : "Proveedores"}
+                        {isSelectCategory && <LoadApi />}
                     </button>
                 </div>
                 <div className={`producer-block__wrapper ${isOpen ? 'show' : ''}`}>
