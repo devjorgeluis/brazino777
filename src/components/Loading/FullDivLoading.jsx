@@ -2,18 +2,26 @@ import { useEffect } from "react";
 
 const FullDivLoading = (props) => {
   useEffect(() => {
-    const splashPage = document.getElementById("splash-page");
-    if (!splashPage) return;
+    const loadPage = document.getElementById("vue-loader");
+    if (!loadPage) return;
 
     if (props.show === true) {
-      splashPage.classList.remove("d-none");
+      loadPage.classList.remove("d-none");
     } else {
-      splashPage.classList.add("d-none");
+      loadPage.classList.add("d-none");
     }
   }, [props.show]);
 
   return (
-    <></>
+    <div id="vue-loader">
+      <div className="loader-background loader loader-background--show">
+        <div className="loader-ring">
+          <div className="loader-ring__light"></div>
+          <div className="loader-ring__track"></div>
+        </div>
+        <div className="loader-image"></div>
+      </div>
+    </div>
   );
 };
 

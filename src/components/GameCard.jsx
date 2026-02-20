@@ -1,7 +1,7 @@
 const GameCard = (props) => {
   return (
     <div className="games-block__game games-block__game--interactive" onClick={props.onGameClick}>
-      <a href="#">
+      <a>
         <img className="game-image" src={props.imageSrc} loading="lazy" alt={props.title}></img>
       </a>
       <div className="game-hover">

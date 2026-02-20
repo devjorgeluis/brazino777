@@ -49,7 +49,7 @@ header .header--auth-buttons.mobile #vue-balances-header {
 .game iframe {
     border: 0;
     height: 100%;
-    width: 100%
+    width: 99%
 }
 
 .game .overlay {
@@ -190,14 +190,14 @@ header .header--auth-buttons.mobile #vue-balances-header {
 }
 
 .game--page {
-    min-height: 100vh;
+    /* min-height: 100vh; */
     min-width: 100vw;
     padding: 0 0 40px;
     position: relative
 }
 
 .game--page .game-wrapper {
-    border-radius: 0 0 10px 10px;
+    border-radius: 0;
     margin: 0 auto 20px;
     overflow: hidden
 }
@@ -261,7 +261,7 @@ header .header--auth-buttons.mobile #vue-balances-header {
     right: 0;
     top: 0;
     width: 100%;
-    z-index: 100
+    z-index: 1000
 }
 
 .game--page .game-wrapper--fullscreen:after,.game--page .game-wrapper--fullscreen:before {
@@ -279,7 +279,7 @@ header .header--auth-buttons.mobile #vue-balances-header {
 }
 
 .game--page .game-wrapper--fullscreen .game {
-    height: calc(100vh - 90px);
+    height: calc(100vh - 50px);
     max-width: none;
     position: relative;
     width: 100%;

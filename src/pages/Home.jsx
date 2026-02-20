@@ -66,7 +66,6 @@ const Home = () => {
       if (document.visibilityState === "visible") {
         const currentPath = window.location.pathname;
         if (currentPath === "/" || currentPath === "") {
-          setShowFullDivLoading(true);
           pendingPageRef.current.clear();
           lastProcessedPageRef.current = { page: null, ts: 0 };
 
@@ -157,7 +156,6 @@ const Home = () => {
     if (pendingPageRef.current.has(page)) return;
     pendingPageRef.current.add(page);
 
-    setShowFullDivLoading(true);
     setCategories([]);
     setGames([]);
 
@@ -174,7 +172,6 @@ const Home = () => {
     pendingPageRef.current.delete(page);
 
     if (result.status === 500 || result.status === 422) {
-      setShowFullDivLoading(false);
       return;
     }
 
@@ -183,7 +180,6 @@ const Home = () => {
       lastProcessedPageRef.current.page === page &&
       now - lastProcessedPageRef.current.ts < 3000
     ) {
-      setShowFullDivLoading(false);
       return;
     }
     lastProcessedPageRef.current = { page, ts: now };
@@ -208,7 +204,6 @@ const Home = () => {
       const firstFiveCategories = result.data.categories.slice(0, 5);
       if (firstFiveCategories.length > 0) {
         pendingCategoryFetchesRef.current = firstFiveCategories.length;
-        setShowFullDivLoading(true);
         firstFiveCategories.forEach((item, index) => {
           fetchContentForCategory(
             item,
@@ -225,16 +220,9 @@ const Home = () => {
     } else if (result.data && result.data.page_group_type === "games") {
       setCategories(mainCategories.length > 0 ? mainCategories : []);
       setGames(result.data.categories || []);
-
-      // const hashCode = location.hash.replace('#', '');
-      // const tagIndex = tags.findIndex(t => t.code === hashCode);
-      // setActiveCategory(tags[tagIndex] || { name: page });
       configureImageSrc(result);
       pageCurrent = 1;
-      setShowFullDivLoading(false);
     }
-
-    setShowFullDivLoading(false);
   };
 
   const handleLoginClick = () => {
@@ -291,7 +279,6 @@ const Home = () => {
 
   const callbackFetchContent = (result) => {
     if (result.status === 500 || result.status === 422) {
-      setShowFullDivLoading(false);
       setIsLoadingGames(false);
     } else {
       configureImageSrc(result);
@@ -305,7 +292,6 @@ const Home = () => {
       }
       pageCurrent += 1;
     }
-    setShowFullDivLoading(false);
     setIsLoadingGames(false);
   };
 
@@ -354,16 +340,18 @@ const Home = () => {
       pendingCategoryFetchesRef.current - 1,
     );
     if (pendingCategoryFetchesRef.current === 0) {
-      setShowFullDivLoading(false);
     }
   };
 
   const launchGame = (game, type, launcher) => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'auto'
-    });    
+    setShowFullDivLoading(true);
+    if (!isMobile) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'auto'
+      });
+    }
     // Only show modal when explicitly using modal launcher
     if (launcher === "modal") {
       setShouldShowGameModal(true);
@@ -604,7 +592,7 @@ const Home = () => {
                 name: selectedGameName,
                 image_local: selectedGameImg?.replace(contextData.cdnUrl, ""),
               };
-              launchGame(game, selectedGameType, "tab");
+              launchGame(game, selectedGameType, "modal");
             }
           }}
           ref={refGameModal}
@@ -737,7 +725,7 @@ const Home = () => {
                       provider={activeCategory?.name || 'Casino'}
                       title={game.name}
                       imageSrc={game.image_local !== null ? contextData.cdnUrl + game.image_local : game.image_url}
-                      onGameClick={() => (isLogin ? launchGame(game, "slot", "tab") : handleLoginClick())}
+                      onGameClick={() => (isLogin ? launchGame(game, "slot", "modal") : handleLoginClick())}
                     />
                   ))}
                 </div>

@@ -148,7 +148,6 @@ const Casino = () => {
   const callbackGetPage = (result, page) => {
     if (result.status === 500 || result.status === 422) {
       setIsLoadingGames(false);
-      setShowFullDivLoading(false);
     } else {
       setCategoryType(result.data.page_group_type);
       setSelectedProvider(null);
@@ -172,7 +171,6 @@ const Casino = () => {
         if (firstFiveCategories.length > 0) {
           setFirstFiveCategoriesGames([]);
           pendingCategoryFetchesRef.current = firstFiveCategories.length;
-          setShowFullDivLoading(true);
           firstFiveCategories.forEach((item, index) => {
             fetchContentForCategory(item, item.id, item.table_name, index, true, result.data.page_group_code);
           });
@@ -186,7 +184,6 @@ const Casino = () => {
         pageCurrent = 1;
       }
 
-      setShowFullDivLoading(false);
       setIsLoadingGames(false);
     }
   };
@@ -383,8 +380,8 @@ const Casino = () => {
   // ── Game launch ──────────────────────────────────────────────────────────────
 
   const launchGame = (game, type, launcher) => {
+    setShowFullDivLoading(true);
     if (isMobile) {
-      setShowFullDivLoading(true);
       setActiveCategory(null);
       selectedGameId = game.id;
       selectedGameType = type;
@@ -393,8 +390,12 @@ const Casino = () => {
       selectedGameImg = game?.image_local != null ? contextData.cdnUrl + game?.image_local : game.image_url;
       callApi(contextData, "GET", "/get-game-url?game_id=" + selectedGameId, callbackLaunchGame, null);
     } else {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'auto'
+      });
       setShouldShowGameModal(true);
-      setShowFullDivLoading(true);
       setActiveCategory(null);
       selectedGameId = game.id != null ? game.id : selectedGameId;
       selectedGameType = type != null ? type : selectedGameType;
@@ -469,7 +470,7 @@ const Casino = () => {
   const showProviderOrSearchGrid = selectedProvider?.name || isSearchView || isSingleCategoryView;
 
   return (
-    <main className="index--page">
+    <>
       {shouldShowGameModal && selectedGameId !== null ? (
         <GameModal
           gameUrl={gameUrl}
@@ -487,7 +488,7 @@ const Casino = () => {
           getPage={getPage}
         />
       ) : (
-        <>
+        <main className="index--page">
           <CategoryContainer
             categories={tags}
             selectedCategoryIndex={selectedCategoryIndex}
@@ -592,9 +593,9 @@ const Casino = () => {
             setSelectedProvider={setSelectedProvider}
             onProviderSelect={handleProviderSelect}
           />
-        </>
+        </main>
       )}
-    </main>
+    </>
   );
 };
 
