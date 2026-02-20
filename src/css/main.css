@@ -1380,6 +1380,18 @@
 
 @media(max-width: 992px) {
     .game-iframe-view_gameIframeWrapper.game-iframe-view_sportbook {
+        top: 70px;
+        z-index: 999;
+        height: 100% !important
+    }
+
+    .game-iframe-view_gameIframeWrapper.game-iframe-view_sportbook>.game-iframe-view_gameIframe {
+        height: calc(100% - 70px)
+    }
+}
+
+@media(max-width: 576px) {
+    .game-iframe-view_gameIframeWrapper.game-iframe-view_sportbook {
         top: 50px;
         z-index: 999;
         height: 100% !important
