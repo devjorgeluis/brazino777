@@ -117,6 +117,8 @@ const Casino = () => {
     if (!location.hash) {
       getPage("casino");
     }
+    
+    window.scrollTo(0, 0);
   }, [location.pathname]);
 
   useEffect(() => {

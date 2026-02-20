@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { callApi } from "../utils/Utils";
 import LoadPage from "../components/Loading/LoadPage";
@@ -12,6 +12,7 @@ const Login = () => {
     const [errorMsg, setErrorMsg] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleSubmit = () => {
         setIsLoading(true);
@@ -54,6 +55,10 @@ const Login = () => {
             passwordInput.setAttribute("type", showPassword ? "text" : "password");
         }
     }, [showPassword]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location.pathname]);
 
     return (
         <>

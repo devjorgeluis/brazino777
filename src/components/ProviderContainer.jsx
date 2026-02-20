@@ -80,7 +80,7 @@ const ProviderContainer = ({
                 </span>
                 <div className="title__text">Proveedores</div>
                 {
-                    providers.length > 5 &&
+                    providers.length > 7 &&
                     <span className="title__slider">
                         <span
                             className={`title__slider__left ${isPrevDisabled ? 'disabled' : ''}`}
