@@ -3,6 +3,10 @@ import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import { AppContext } from "../../AppContext";
 import { callApi } from "../../utils/Utils";
 import LoadApi from "../../components/Loading/LoadApi";
+import ImgArrowLeft from "/src/assets/svg/arrow-left1.svg";
+import ImgDoubleArrowLeft from "/src/assets/svg/double-arrow-left.svg";
+import ImgArrowRight from "/src/assets/svg/arrow-right1.svg";
+import ImgDoubleArrowRight from "/src/assets/svg/double-arrow-right.svg";
 
 const ProfileHistory = () => {
     const navigate = useNavigate();
@@ -139,7 +143,7 @@ const ProfileHistory = () => {
 
         return (
             <nav className="p-paginator-bottom">
-                {/* <div className="p-paginator p-component">
+                <div className="p-paginator p-component">
 
                     <button
                         className={`p-paginator-first p-paginator-element p-link ${isFirstPage ? "p-disabled" : ""}`}
@@ -185,20 +189,17 @@ const ProfileHistory = () => {
                     >
                         <img src={ImgDoubleArrowRight} alt="Last" />
                     </button>
-                </div> */}
+                </div>
             </nav>
         );
     };
 
     return (
         <>
-            <h6 className="mb-4">Historial del Juego</h6>
-
             <div className="p-datatable p-component p-datatable-responsive-scroll p-datatable-sm table-art">
-
                 <div className="p-datatable-wrapper">
                     {loading ? (
-                        <div className="flex justify-center items-center mt-3">
+                        <div className="flex justify-center items-center py-3">
                             <LoadApi />
                         </div>
                     ) : (

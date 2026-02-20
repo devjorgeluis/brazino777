@@ -2,10 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import { AppContext } from "../../AppContext";
 import { LayoutContext } from "../../components/Layout/LayoutContext";
+import ProfileTrasaction from "./ProfileTransaction";
+import ProfileHistory from "./ProfileHistory";
 import ImgDefaultUser from "/src/assets/svg/general-avatar.svg";
 
 const HASH_SECTION_MAP = {
     "#info": 1,
+    "#transaction": 2,
+    "#history": 3,
 };
 
 const Profile = () => {
@@ -108,6 +112,20 @@ const Profile = () => {
                                     onClick={(e) => handleNavClick(e, "#info", 1)}
                                 >
                                     <span>Mis datos</span>
+                                </a>
+                                <a
+                                    href="/profile#transaction"
+                                    className={`balance ${activeSection === 2 ? "active" : ""}`}
+                                    onClick={(e) => handleNavClick(e, "#transaction", 2)}
+                                >
+                                    <span>Transacciones</span>
+                                </a>
+                                <a
+                                    href="/profile#history"
+                                    className={`balance ${activeSection === 3 ? "active" : ""}`}
+                                    onClick={(e) => handleNavClick(e, "#history", 3)}
+                                >
+                                    <span>Historial del Juego</span>
                                 </a>
                                 <a
                                     className="logout"
@@ -225,6 +243,26 @@ const Profile = () => {
                                     </div>
                                 </article>
                             )}
+
+                            {
+                                activeSection === 2 &&
+                                <>
+                                    <article className="profile-page__content verification profile-page__content--active">
+                                        <span className="go-back" onClick={handleGoBack}>Atrás</span>
+                                    </article>
+                                    <ProfileTrasaction />
+                                </>
+                            }
+
+                            {
+                                activeSection === 3 &&
+                                <>
+                                    <article className="profile-page__content verification profile-page__content--active">
+                                        <span className="go-back" onClick={handleGoBack}>Atrás</span>
+                                    </article>
+                                    <ProfileHistory />
+                                </>
+                            }
                         </section>
                     )}
 

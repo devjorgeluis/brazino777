@@ -69,7 +69,7 @@ const Header = ({
                             {
                                 isLogin ? 
                                 <div className="header--auth-buttons desktop">
-                                    <a onClick={() => navigate("/profile")} className="button button--profile button--profile--unverified " aria-label="profile button">
+                                    <a onClick={() => navigate("/profile#info")} className="button button--profile button--profile--unverified " aria-label="profile button">
                                         <img id="user_avatar_img" src="https://brazww-cdn.com/files/avatars/general-avatar.svg?v1178" loading="lazy" alt="User image" className="user__avatar" width="40" height="40" />
                                         <span className="user_text">{contextData?.session?.user?.username}</span>
                                     </a>

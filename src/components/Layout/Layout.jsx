@@ -79,7 +79,7 @@ const Layout = () => {
 
     useEffect(() => {
         const checkIsMobile = () => {
-            return window.innerWidth <= 767;
+            return window.innerWidth <= 768;
         };
 
         const checkShouldCollapseSidebar = () => {

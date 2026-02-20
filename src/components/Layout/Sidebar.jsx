@@ -216,7 +216,10 @@ const Sidebar = ({ isSlotsOnly, isLogin, isMobile, supportParent, openSupportMod
                             </div>
                         </section> : 
                         <div className="auth-buttons">
-                            <a onClick={() => navigate("/login")} className="button button--register">Entrar</a>
+                            <a onClick={() => {
+                                navigate("/login"),
+                                handleCloseMenu();
+                            }} className="button button--register">Entrar</a>
                         </div>
                     }
                     <nav className="category-block">

@@ -162,7 +162,7 @@
 }
 
 .profile--page .profile-page__navigation-menu .navigation-menu__links a.balance:before {
-    background-image: url(/build/images/wallet.d9b896bc.svg);
+    background-image: url("../assets/svg/wallet.svg");
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: auto
@@ -896,7 +896,7 @@
 }
 
 .profile--page .profile-page__content-wrapper .profile-page__content .balance__section .profile__section_heading:before {
-    background-image: url(/build/images/wallet.fe29ec37.svg)
+    background-image: url("../assets/svg/wallet.svg");
 }
 
 .profile--page .profile-page__content-wrapper .profile-page__content .balance__section .profile__balance_update div {
@@ -7735,7 +7735,7 @@
     }
 
     .profile--page .profile--outer_wrapper .profile-page__navigation-menu .navigation-menu__links a.balance:before {
-        background-image: url(/build/images/wallet-desktop.6344469a.svg);
+        background-image: url("../assets/svg/wallet-desktop.svg");
         background-position: 50%;
         background-repeat: no-repeat;
         background-size: auto
