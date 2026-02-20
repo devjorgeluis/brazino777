@@ -197,7 +197,7 @@ const Home = () => {
         result.data.categories.length > 0
       ) {
         setCategories(result.data.categories);
-        if (page === "casino") {
+        if (page === "casino" || page === "home") {
           setMainCategories(result.data.categories);
         }
         const firstCategory = result.data.categories[0];
