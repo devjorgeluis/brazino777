@@ -40,7 +40,12 @@ const Login = () => {
             updateSession(result);
 
             setTimeout(() => {
-                navigate("/");
+                const canGoBack = window.history.length > 1;
+                if (canGoBack) {
+                    navigate(-1);
+                } else {
+                    navigate("/");
+                }
             }, 1000);
         } else if (result.status === "country") {
             setErrorMsg(result.message);
