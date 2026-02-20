@@ -40,6 +40,15 @@
     z-index: 5
 }
 
+.form-expand {
+    height: 40px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
 .form--search__input input {
     -webkit-text-fill-color: #3b3b3b;
     border: 2px solid #035d03;

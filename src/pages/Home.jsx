@@ -521,7 +521,7 @@ const Home = () => {
     setGames([]);
     setIsLoadingGames(true);
 
-    let pageSize = 50;
+    let pageSize = 500;
 
     let searchDelayTimerTmp = setTimeout(function () {
       callApi(

@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { LayoutContext } from "./Layout/LayoutContext";
 
 const SearchInput = ({
@@ -15,6 +14,7 @@ const SearchInput = ({
     onClear
 }) => {
     const { setShowMobileSearch } = useContext(LayoutContext);
+    const [mobileSearch, setMobileSearch] = useState(false);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const searchContainerRef = useRef(null);
     const suppressDropdownRef = useRef(false);
@@ -61,13 +61,14 @@ const SearchInput = ({
 
     return (
         <div id="vue-search-form-block">
-            <form className={`form form--search ${txtSearch.trim() !== "" ? 'active' : ''}`} ref={searchContainerRef}>
+            <form className={`form form--search ${txtSearch.trim() !== "" ? 'active' : ''} ${mobileSearch && "form--expand"}`} ref={searchContainerRef}>
                 <section className="form--search__input">
                     <span
                         className="close-search show"
                         onClick={() => {
                             setIsDropdownVisible(false),
-                                onClear();
+                            onClear();
+                            mobileSearch && setMobileSearch(false);
                         }}
                     ></span>
                     <p>
@@ -96,6 +97,7 @@ const SearchInput = ({
                             suppressDropdownRef.current = true;
                             setIsDropdownVisible(false);
                             onSearchSubmit();
+                            isMobile && setMobileSearch(true);
                         }}
                     ></button>
                 </section>

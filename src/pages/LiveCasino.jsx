@@ -348,7 +348,7 @@ const LiveCasino = () => {
     setGames([]);
     setIsLoadingGames(true);
 
-    const pageSize = 50;
+    const pageSize = 500;
     const timer = setTimeout(() => {
       callApi(
         contextData,
