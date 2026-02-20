@@ -40,6 +40,7 @@ const Home = () => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const [tags, setTags] = useState([]);
   const [games, setGames] = useState([]);
+  const [firstFiveCategoriesGames, setFirstFiveCategoriesGames] = useState([]);
   const [categories, setCategories] = useState([]);
   const [mainCategories, setMainCategories] = useState([]);
   const [selectedProvider, setSelectedProvider] = useState(null);
@@ -50,6 +51,7 @@ const Home = () => {
   const [isLoadingGames, setIsLoadingGames] = useState(false);
   const [isSelectCategory, setIsSelectCategory] = useState(false);
   const [isSearchView, setIsSearchView] = useState(false);
+  const [isSingleCategoryView, setIsSingleCategoryView] = useState(false);
   const [searchLabel, setSearchLabel] = useState("");
   const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
   const refGameModal = useRef();
@@ -61,6 +63,9 @@ const Home = () => {
   const searchRef = useRef(null);
   const [searchDelayTimer, setSearchDelayTimer] = useState();
   const navigate = useNavigate();
+
+  const isLobbyView = !selectedProvider && !isSearchView && !isSingleCategoryView && 
+  (!activeCategory?.code || activeCategory?.code === "home");
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -118,24 +123,25 @@ const Home = () => {
     setGameUrl("");
     setShouldShowGameModal(false);
     setActiveCategory({});
-    getPage("home");
     getStatus();
+    setIsSingleCategoryView(false);
 
-    window.scrollTo(0, 0);
+    if (!location.hash) {
+      getPage("home");
+    }
+
   }, [location.pathname]);
 
   useEffect(() => {
-    const hashCode = location.hash.replace('#', '') || 'home';
-    const tagIndex = tags.findIndex(t => t.code === hashCode);
+    const hashCode = location.hash.replace("#", "");
+    if (!hashCode || tags.length === 0) return;
 
-    const finalIndex = tagIndex !== -1 ? tagIndex : 0;
-    const finalCode = tagIndex !== -1 ? hashCode : 'casino';
-
-    setSelectedCategoryIndex(finalIndex);
-
-    getPage(finalCode);
-    window.scrollTo(0, 0);
-  }, [location.pathname, location.hash, tags]);
+    const tagIndex = tags.findIndex((t) => t.code === hashCode);
+    if (tagIndex !== -1) {
+      setSelectedCategoryIndex(tagIndex);
+      getPage(hashCode);
+    }
+  }, [location.hash, tags]);
 
   const getStatus = () => {
     callApi(contextData, "GET", "/get-status", callbackGetStatus, null);
@@ -159,6 +165,8 @@ const Home = () => {
 
     setCategories([]);
     setGames([]);
+    setFirstFiveCategoriesGames([]);
+    setIsSingleCategoryView(false);
 
     callApi(
       contextData,
@@ -170,60 +178,58 @@ const Home = () => {
   };
 
   const callbackGetPage = (result, page) => {
-    pendingPageRef.current.delete(page);
-
     if (result.status === 500 || result.status === 422) {
-      return;
-    }
+      setIsLoadingGames(false);
+      setShowFullDivLoading(false);
+    } else {
+      setCategoryType(result.data.page_group_type);
+      setSelectedProvider(null);
+      setPageData(result.data);
 
-    const now = Date.now();
-    if (
-      lastProcessedPageRef.current.page === page &&
-      now - lastProcessedPageRef.current.ts < 3000
-    ) {
-      return;
-    }
-    lastProcessedPageRef.current = { page, ts: now };
+      const hashCode = location.hash.replace("#", "");
+      const tagIndex = tags.findIndex((t) => t.code === hashCode);
+      setSelectedCategoryIndex(tagIndex !== -1 ? tagIndex : 0);
 
-    setCategoryType(result.data?.page_group_type);
-    setSelectedProvider(null);
-    setIsSearchView(false);
-    setIsSelectCategory(false);
-    setSearchLabel("");
-    setPageData(result.data);
+      if (
+        result.data &&
+        result.data.page_group_type === "categories" &&
+        result.data.categories &&
+        result.data.categories.length > 0
+      ) {
+        setCategories(result.data.categories);
+        if (page === "casino") {
+          setMainCategories(result.data.categories);
+        }
+        const firstCategory = result.data.categories[0];
+        setActiveCategory(firstCategory);
 
-    if (
-      result.data &&
-      result.data.page_group_type === "categories" &&
-      result.data.categories &&
-      result.data.categories.length > 0
-    ) {
-      setCategories(result.data.categories);
-      if (page === "home") {
-        setMainCategories(result.data.categories);
+        const firstFiveCategories = result.data.categories.slice(0, 5);
+        if (firstFiveCategories.length > 0) {
+          setFirstFiveCategoriesGames([]);
+          pendingCategoryFetchesRef.current = firstFiveCategories.length;
+          setShowFullDivLoading(true);
+          firstFiveCategories.forEach((item, index) => {
+            fetchContentForCategory(
+              item,
+              item.id,
+              item.table_name,
+              index,
+              true,
+              result.data.page_group_code,
+            );
+          });
+        }
+      } else if (result.data && result.data.page_group_type === "games") {
+        setIsSingleCategoryView(true);
+        setCategories(mainCategories.length > 0 ? mainCategories : []);
+        configureImageSrc(result);
+        setGames(result.data.categories || []);
+        setActiveCategory(tags[tagIndex] || { name: page });
+        pageCurrent = 1;
       }
 
-      const firstFiveCategories = result.data.categories.slice(0, 5);
-      if (firstFiveCategories.length > 0) {
-        pendingCategoryFetchesRef.current = firstFiveCategories.length;
-        firstFiveCategories.forEach((item, index) => {
-          fetchContentForCategory(
-            item,
-            item.id,
-            item.table_name,
-            index,
-            true,
-            result.data.page_group_code,
-          );
-        });
-      }
-      const firstCategory = result.data.categories[0];
-      setActiveCategory(firstCategory);
-    } else if (result.data && result.data.page_group_type === "games") {
-      setCategories(mainCategories.length > 0 ? mainCategories : []);
-      setGames(result.data.categories || []);
-      configureImageSrc(result);
-      pageCurrent = 1;
+      setShowFullDivLoading(false);
+      setIsLoadingGames(false);
     }
   };
 
@@ -233,7 +239,13 @@ const Home = () => {
 
   const loadMoreGames = () => {
     if (!activeCategory) return;
-    fetchContent(activeCategory, activeCategory.id, activeCategory.table_name, selectedCategoryIndex, false);
+    fetchContent(
+      activeCategory,
+      activeCategory.id,
+      activeCategory.table_name,
+      selectedCategoryIndex,
+      false,
+    );
   };
 
   const fetchContent = (
@@ -343,6 +355,26 @@ const Home = () => {
     );
     if (pendingCategoryFetchesRef.current === 0) {
     }
+
+    const content = result.content || [];
+    const gamesWithImages = content.map((game) => ({
+      ...game,
+      imageDataSrc:
+        game.image_local !== null
+          ? contextData.cdnUrl + game.image_local
+          : game.image_url,
+    }));
+
+    const categoryGames = {
+      category: category,
+      games: gamesWithImages,
+    };
+
+    setFirstFiveCategoriesGames((prev) => {
+      const updated = [...prev];
+      updated[categoryIndex] = categoryGames;
+      return updated;
+    });
   };
 
   const launchGame = (game, type, launcher) => {
@@ -351,7 +383,7 @@ const Home = () => {
       window.scrollTo({
         top: 0,
         left: 0,
-        behavior: 'auto'
+        behavior: "auto",
       });
     }
     // Only show modal when explicitly using modal launcher
@@ -452,7 +484,6 @@ const Home = () => {
     setSearchLabel("");
     setSelectedProvider(provider);
     setTxtSearch("");
-    window.scrollTo(0, 0);
 
     if (categories.length > 0 && provider) {
       setActiveCategory(provider);
@@ -460,17 +491,28 @@ const Home = () => {
     } else if (!provider && categories.length > 0) {
       const firstCategory = categories[0];
       setActiveCategory(firstCategory);
-      fetchContent(firstCategory, firstCategory.id, firstCategory.table_name, 0, true);
+      fetchContent(
+        firstCategory,
+        firstCategory.id,
+        firstCategory.table_name,
+        0,
+        true,
+      );
     }
   };
 
   const handleCategorySelect = (category) => {
     setIsSearchView(false);
-    setIsSelectCategory(true);
     setSearchLabel("");
     setActiveCategory(category);
     setSelectedProvider(null);
     setTxtSearch("");
+
+    if (category.code === "home") {
+      setIsSingleCategoryView(false);
+      setActiveCategory(category);
+      setGames([]);
+    }
   };
 
   const handleSearchClear = () => {
@@ -485,7 +527,11 @@ const Home = () => {
     let keyword = e.target.value;
     setTxtSearch(keyword);
 
-    if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
+    if (
+      navigator.userAgent.match(
+        /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i,
+      )
+    ) {
       do_search(keyword);
     } else {
       if (
@@ -498,7 +544,12 @@ const Home = () => {
       }
     }
 
-    if (e.key === "Enter" || e.keyCode === 13 || e.key === "Escape" || e.keyCode === 27) {
+    if (
+      e.key === "Enter" ||
+      e.keyCode === 13 ||
+      e.key === "Escape" ||
+      e.keyCode === 27
+    ) {
       searchRef.current?.blur();
     }
   };
@@ -523,9 +574,14 @@ const Home = () => {
       callApi(
         contextData,
         "GET",
-        "/search-content?keyword=" + txtSearch + "&page_group_code=" + "default_pages_home" + "&length=" + pageSize,
+        "/search-content?keyword=" +
+        txtSearch +
+        "&page_group_code=" +
+        "default_pages_home" +
+        "&length=" +
+        pageSize,
         callbackSearch,
-        null
+        null,
       );
     }, 1000);
 
@@ -534,7 +590,10 @@ const Home = () => {
 
   const configureImageSrc = (result) => {
     (result.content || []).forEach((element) => {
-      element.imageDataSrc = element.image_local !== null ? contextData.cdnUrl + element.image_local : element.image_url;
+      element.imageDataSrc =
+        element.image_local !== null
+          ? contextData.cdnUrl + element.image_local
+          : element.image_url;
     });
   };
 
@@ -607,9 +666,7 @@ const Home = () => {
         />
       ) : (
         <main className="index--page">
-          {!selectedProvider && !isSearchView && (
-            <Slideshow />
-          )}
+          {!selectedProvider && !isSearchView && <Slideshow />}
 
           <CategoryContainer
             categories={tags}
@@ -618,7 +675,6 @@ const Home = () => {
               if (window.location.hash !== `#${tag.code}`) {
                 window.location.hash = `#${tag.code}`;
               } else {
-                setSelectedCategoryIndex(index);
                 getPage(tag.code);
               }
             }}
@@ -648,7 +704,7 @@ const Home = () => {
             />
           </section>
 
-          {!selectedProvider && !isSearchView &&
+          {isLobbyView && (
             <div className="index--container">
               {topGames.length > 0 && (
                 <HotGameSlideshow
@@ -707,51 +763,90 @@ const Home = () => {
                 />
               )}
             </div>
-          }
+          )}
 
-          {(selectedProvider?.name || isSearchView) && <div className="category--page">
-            <div className="category--games">
-              <div className="games-block-wrapper">
-                <h2 className="title title--aviatrix title--producers">
-                  <a className="title__text">
-                    {selectedProvider?.name || `Resultados: "${searchLabel}"`}
-                  </a>
-                  <a className="see-all" onClick={loadMoreGames}>
-                    Ver más
-                  </a>
-                </h2>
+          {selectedProvider?.name || isSearchView || isSingleCategoryView ? (
+            <div className="category--page">
+              <div className="category--games">
+                <div className="games-block-wrapper">
+                  <h2 className="title title--aviatrix title--producers">
+                    <a className="title__text">
+                      {selectedProvider?.name || (isSearchView ? `Resultados: "${searchLabel}"` : activeCategory?.name)}
+                    </a>
+                    <a className="see-all" onClick={loadMoreGames}>
+                      Ver más
+                    </a>
+                  </h2>
 
-                <div className="games-block">
-                  {games.map((game) => (
-                    <GameCard
-                      key={"live-popular" + game.id}
-                      id={game.id}
-                      provider={activeCategory?.name || 'Casino'}
-                      title={game.name}
-                      imageSrc={game.image_local !== null ? contextData.cdnUrl + game.image_local : game.image_url}
-                      onGameClick={() => (isLogin ? launchGame(game, "slot", "modal") : handleLoginClick())}
-                    />
-                  ))}
+                  <div className="games-block">
+                    {games.map((game) => (
+                      <GameCard
+                        key={"live-popular" + game.id}
+                        id={game.id}
+                        provider={activeCategory?.name || "Casino"}
+                        title={game.name}
+                        imageSrc={
+                          game.image_local !== null
+                            ? contextData.cdnUrl + game.image_local
+                            : game.image_url
+                        }
+                        onGameClick={() =>
+                          isLogin
+                            ? launchGame(game, "slot", "modal")
+                            : handleLoginClick()
+                        }
+                      />
+                    ))}
+                  </div>
+
+                  {isLoadingGames && (
+                    <div className="my-3">
+                      <LoadApi />
+                    </div>
+                  )}
+
+                  {!isSearchView && (
+                    <button
+                      onClick={loadMoreGames}
+                      type="button"
+                      className="button button--load-games"
+                    >
+                      <span className="button--load-games__text">
+                        Mostrar más
+                      </span>
+                    </button>
+                  )}
                 </div>
-
-                {isLoadingGames && <div className="my-3"><LoadApi /></div>}
-
-                {
-                  !isSearchView &&
-                  <button
-                    onClick={loadMoreGames}
-                    type="button"
-                    className="button button--load-games"
-                  >
-                    <span className="button--load-games__text">
-                      Mostrar más
-                    </span>
-                  </button>
-                }
               </div>
             </div>
-          </div>
-          }
+          ) : (
+            <>
+              {firstFiveCategoriesGames &&
+                firstFiveCategoriesGames.map((entry, catIndex) => {
+                  if (!entry || !entry.games) return null;
+
+                  const categoryKey = entry.category?.id || `cat-${catIndex}`;
+                  if (entry.games.length === 0) return null;
+
+                  return (
+                    <div className="index--container" key={categoryKey}>
+                      <HotGameSlideshow
+                        games={entry.games.slice(0, 30)}
+                        name={entry.category.name}
+                        title={entry.category.name}
+                        onGameClick={(game) => {
+                          if (isLogin) {
+                            launchGame(game, "slot", "modal");
+                          } else {
+                            handleLoginClick();
+                          }
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+            </>
+          )}
 
           <ProviderContainer
             categories={categories}

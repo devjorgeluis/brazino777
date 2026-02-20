@@ -2,7 +2,7 @@ const GameCard = (props) => {
   return (
     <div className="games-block__game games-block__game--interactive" onClick={props.onGameClick}>
       <a>
-        <img className="game-image" src={props.imageSrc} loading="lazy" alt={props.title}></img>
+        <img className="game-image" src={props.imageSrc || null} loading="lazy" alt={props.title}></img>
       </a>
       <div className="game-hover">
         <p className="game-title">{props.title}</p>

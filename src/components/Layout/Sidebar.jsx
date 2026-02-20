@@ -19,14 +19,6 @@ const Sidebar = ({ isSlotsOnly, isLogin, isMobile, supportParent, openSupportMod
     const isMenuExpanded = (menuId) => expandedMenus.includes(menuId);
 
     useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'auto'
-        });
-    }, [location.pathname, location.hash]);
-
-    useEffect(() => {
         const currentPath = location.pathname;
         const hash = location.hash.slice(1);
 

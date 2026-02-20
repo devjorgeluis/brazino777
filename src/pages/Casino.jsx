@@ -96,7 +96,7 @@ const Casino = () => {
     const hashCode = location.hash.replace('#', '');
     const tagIndex = tags.findIndex(t => t.code === hashCode);
 
-    if (tagIndex !== -1 && selectedCategoryIndex !== tagIndex) {
+    if (tagIndex !== -1) {
       setSelectedCategoryIndex(tagIndex);
       setIsSingleCategoryView(false);
       getPage(hashCode);
@@ -113,7 +113,10 @@ const Casino = () => {
     setShouldShowGameModal(false);
     setActiveCategory({});
     setIsSingleCategoryView(false);
-    getPage("casino");
+    
+    if (!location.hash) {
+      getPage("casino");
+    }
   }, [location.pathname]);
 
   useEffect(() => {
@@ -142,6 +145,8 @@ const Casino = () => {
     setGames([]);
     setFirstFiveCategoriesGames([]);
     setIsSingleCategoryView(false);
+    setIsSearchView(false);
+    setSearchLabel("");
     callApi(contextData, "GET", "/get-page?page=" + page, (result) => callbackGetPage(result, page), null);
   };
 
@@ -195,12 +200,9 @@ const Casino = () => {
     const apiUrl =
       "/get-content?page_group_type=categories&page_group_code=" +
       groupCode +
-      "&table_name=" +
-      tableName +
-      "&apigames_category_id=" +
-      categoryId +
-      "&page=0&length=" +
-      pageSize +
+      "&table_name=" + tableName +
+      "&apigames_category_id=" + categoryId +
+      "&page=0&length=" + pageSize +
       (selectedProvider && selectedProvider.id ? "&provider=" + selectedProvider.id : "");
 
     callApi(contextData, "GET", apiUrl, (result) => callbackFetchContentForCategory(result, category, categoryIndex), null);
@@ -251,14 +253,10 @@ const Casino = () => {
     let apiUrl =
       "/get-content?page_group_type=categories&page_group_code=" +
       groupCode +
-      "&table_name=" +
-      tableName +
-      "&apigames_category_id=" +
-      categoryId +
-      "&page=" +
-      pageCurrent +
-      "&length=" +
-      pageSize;
+      "&table_name=" + tableName +
+      "&apigames_category_id=" + categoryId +
+      "&page=" + pageCurrent +
+      "&length=" + pageSize;
 
     if (selectedProvider && selectedProvider.id) {
       apiUrl += "&provider=" + selectedProvider.id;
@@ -362,7 +360,8 @@ const Casino = () => {
 
   const handleGameSelect = (game) => {
     const gameName = game.name || game.title || "Juego";
-    setTxtSearch(gameName);
+    setSearchLabel(gameName);
+    setTxtSearch("");
     setIsSearchView(true);
     setSelectedProvider(null);
     setIsSingleCategoryView(false);
@@ -390,11 +389,7 @@ const Casino = () => {
       selectedGameImg = game?.image_local != null ? contextData.cdnUrl + game?.image_local : game.image_url;
       callApi(contextData, "GET", "/get-game-url?game_id=" + selectedGameId, callbackLaunchGame, null);
     } else {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'auto'
-      });
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
       setShouldShowGameModal(true);
       setActiveCategory(null);
       selectedGameId = game.id != null ? game.id : selectedGameId;
@@ -460,9 +455,14 @@ const Casino = () => {
   const handleCategorySelect = (category) => {
     setIsSearchView(false);
     setSearchLabel("");
-    setActiveCategory(category);
     setSelectedProvider(null);
     setTxtSearch("");
+
+    if (category.code === "home") {
+      setIsSingleCategoryView(false);
+      setActiveCategory(category);
+      setGames([]);
+    }
   };
 
   // ── Render ───────────────────────────────────────────────────────────────────
@@ -496,7 +496,6 @@ const Casino = () => {
               if (window.location.hash !== `#${tag.code}`) {
                 window.location.hash = `#${tag.code}`;
               } else {
-                setSelectedCategoryIndex(index);
                 getPage(tag.code);
               }
             }}
@@ -532,7 +531,7 @@ const Casino = () => {
                 <div className="games-block-wrapper">
                   <h2 className="title title--aviatrix title--producers">
                     <a className="title__text">
-                      {selectedProvider?.name || (isSearchView ? `Resultados: "${txtSearch}"` : activeCategory?.name)}
+                      {selectedProvider?.name || (isSearchView ? `Resultados: "${searchLabel}"` : activeCategory?.name)}
                     </a>
                     {!isSearchView && (
                       <a className="see-all" onClick={loadMoreGames}>Ver más</a>
