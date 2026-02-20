@@ -119,6 +119,7 @@ const SearchInput = ({
                                                             suppressDropdownRef.current = true;
                                                             onGameSelect(game);
                                                             setIsDropdownVisible(false);
+                                                            setMobileSearch(false);
                                                         }}
                                                     >
                                                         {game.title || game.name || "Unnamed Game"}
