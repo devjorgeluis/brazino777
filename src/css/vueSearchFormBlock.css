@@ -210,7 +210,8 @@
     font-size: 14px;
     line-height: 30px;
     text-decoration: none;
-    text-transform: capitalize
+    text-transform: capitalize;
+    height: auto;
 }
 
 .form--search__games-search .games-list .game-not-found {
