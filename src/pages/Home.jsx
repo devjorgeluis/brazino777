@@ -173,7 +173,10 @@ const Home = () => {
       contextData,
       "GET",
       "/get-page?page=" + page,
-      (result) => callbackGetPage(result, page),
+      (result) => {
+        pendingPageRef.current.delete(page);
+        callbackGetPage(result, page);
+      },
       null,
     );
   };
@@ -508,6 +511,7 @@ const Home = () => {
     setActiveCategory(category);
     setSelectedProvider(null);
     setTxtSearch("");
+    pendingPageRef.current.clear();
 
     if (category.code === "home") {
       setIsSingleCategoryView(false);
